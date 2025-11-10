@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avaliação HGG</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<script src="scripts/data.js"></script>
+<body>
+  <header>
+    <div class="logo">
+      <h1>Avaliação Geriátrica Ampla do Serviço de Geriatria do Hospital Estadual Dr. Alberto Rassi</h1>
+      <!-- <div class="help">Selecione a alternativa que melhor descreve o desempenho.</div> -->
+    </div>
+  </header>
+  <main>
+    <div class="grid-container">
+      <div class="q">
+        <label for="nome">NOME</label>
+        <input class="form-input" type="text" id="nome" name="nome" />
+      </div>
+      <div class="q">
+        <label for="data_avaliacao" class="label--center">DATA DA AVALIAÇÃO</label>
+        <input class="form-input form-input--date" type="text" id="data_avaliacao" name="data_avaliacao" placeholder="DD-MM-YYYY" inputmode="numeric" />
+      </div>
+    </div>
+    <h1>Rastreio</h1>
+      <form id="form-ivcf">
+        <section class="collapsible">
+          <h2>SRH — Pergunta Única Global</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q">
+              <label>“Como você classificaria sua saúde em geral?”</label>
+              <div class="column">
+                <label><input type="radio" name="srh" value="0" required /> Excelente</label>
+                <label><input type="radio" name="srh" value="0" /> Muito Boa</label>
+                <label><input type="radio" name="srh" value="0" /> Boa</label>
+                <label><input type="radio" name="srh" value="1" /> Regular</label>
+                <label><input type="radio" name="srh" value="1" /> Ruim</label>
+              </div>
+            </div>
+          </div>
+          <div id="resultado-srh" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-srh">Limpar</button>
+          </div>
+          </div>
+        </section>
+        <section class="collapsible">
+          <h2>IVCF‑20 — Índice de Vulnerabilidade Clínico‑Funcional</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q" data-weight="idade">
+              <label>1) Qual é a sua idade?</label>
+              <div class="column">
+                <label><input type="radio" name="idade" value="0" required /> 60–74 anos (0)</label>
+                <label><input type="radio" name="idade" value="1" /> 75–84 anos (1)</label>
+                <label><input type="radio" name="idade" value="3" /> ≥ 85 anos (3)</label>
+              </div>
+            </div>
+
+            <div class="q" data-weight="percepcao">
+              <label>2) Em geral, comparando com pessoas da sua mesma idade, você diria que a sua saúde é:</label>
+              <div class="column">
+                <label><input type="radio" name="percepcao" value="0" required /> Excelente/Muito boa/Boa (0)</label>
+                <label><input type="radio" name="percepcao" value="1" /> Regular ou Ruim (1)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>3) Por causa de sua saúde ou condição física, você deixou de fazer compras?</label>
+              <div class="column">
+                <label><input type="radio" name="q3" value="4" required /> Sim (4)</label>
+                <label><input type="radio" name="q3" value="0" /> Não/por outros motivos (0)</label>
+              </div>
+              <div class="help">AVD instrumental — pontuação máx. desta sub‑seção: 4</div>
+            </div>
+
+            <div class="q">
+              <label>4) Por causa de sua saúde ou condição física, você deixou de controlar seu dinheiro, gasto, ou pagar as contas de sua casa?</label>
+              <div class="column">
+                <label><input type="radio" name="q4" value="4" required /> Sim (4)</label>
+                <label><input type="radio" name="q4" value="0" /> Não/por outros motivos (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>5) Por causa de sua saúde ou condição física, você deixou de realizar pequenos trabalhos domésticos, como lavar louça, arrumar a casa ou fazer limpeza leve?</label>
+              <div class="column">
+                <label><input type="radio" name="q5" value="4" required /> Sim (4)</label>
+                <label><input type="radio" name="q5" value="0" /> Não/por outros motivos (0)</label>
+              </div>
+            </div>
+            <div class="help">Observação: AVD instrumental tem pontuação máxima combinada 4, mesmo com múltiplos “Sim”. O cálculo abaixo aplica este teto.</div>
+
+            <div class="q">
+              <label>6) Por causa da saúde, deixou de tomar banho sozinho?</label>
+              <div class="column">
+                <label><input type="radio" name="q6" value="6" required /> Sim (6)</label>
+                <label><input type="radio" name="q6" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>7) Algum familiar ou amigo falou que você está ficando esquecido?</label>
+              <div class="column">
+                <label><input type="radio" name="q7" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="q7" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>8) Este esquecimento está piorando nos últimos meses?</label>
+              <div class="column">
+                <label><input type="radio" name="q8" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="q8" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>9) Este esquecimento está impedindo alguma atividade do cotidiano?</label>
+              <div class="column">
+                <label><input type="radio" name="q9" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q9" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>10) No último mês, ficou com desânimo, tristeza ou desesperança?</label>
+              <div class="column">
+                <label><input type="radio" name="q10" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q10" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>11) No último mês, perdeu o interesse ou prazer em atividades?</label>
+              <div class="column">
+                <label><input type="radio" name="q11" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q11" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>12) Incapaz de elevar os braços acima dos ombros?</label>
+              <div class="column">
+                <label><input type="radio" name="q12" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="q12" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>13) Incapaz de manusear/segurar pequenos objetos?</label>
+              <div class="column">
+                <label><input type="radio" name="q13" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="q13" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>14) Alguma das condições abaixo?</label>
+              <div class="column">
+                <label><input type="radio" name="q14" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q14" value="0" /> Não (0)</label>
+              </div>
+              <div class="help">Ex.: perda de peso não intencional de 4,5kg ou 5% do peso corporal no último ano, ou 6kg nos últimos 6 meses ou 3kg no último mês, IMC&lt;22, panturrilha &lt;31 cm, velocidade de marcha 4m &gt;5s.</div>
+            </div>
+
+            <div class="q">
+              <label>15) Dificuldade para caminhar que impede alguma atividade?</label>
+              <div class="column">
+                <label><input type="radio" name="q15" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q15" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>16) Duas ou mais quedas no último ano?</label>
+              <div class="column">
+                <label><input type="radio" name="q16" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q16" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>17) Perde urina ou fezes sem querer?</label>
+              <div class="column">
+                <label><input type="radio" name="q17" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q17" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>18) Problemas de visão que impedem alguma atividade? (uso de óculos permitido)</label>
+              <div class="column">
+                <label><input type="radio" name="q18" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q18" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>19) Problemas de audição que impedem alguma atividade? (aparelho permitido)</label>
+              <div class="column">
+                <label><input type="radio" name="q19" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="q19" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>20) Alguma das condições: ≥5 doenças crônicas; uso regular de ≥5 medicamentos; internação nos últimos 6 meses?</label>
+              <div class="column">
+                <label><input type="radio" name="q20" value="4" required /> Sim (4)</label>
+                <label><input type="radio" name="q20" value="0" /> Não (0)</label>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar">Limpar</button>
+          </div>
+          <div id="resultado-ivcf" class="resultado"></div>
+          <div class="help" id="legenda-ivcf">
+            <strong>Risco de fragilidade clínico funcional:</strong><br />
+            Baixa (0 a 6 pontos),<br />
+            Moderada (7 a 14 pontos)<br />
+            Alta vulnerabilidade (≥ 15 pontos) clínico funcional
+          </div>
+          </div>
+        </section>
+      </form>
+    <h1>Dimensão Física</h1>
+      <form id="form-fisica">
+        <section class="collapsible">
+          <h2>Escala clínica de fragilidade</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="help">Selecione apenas uma opção (1 a 9).</div>
+            <div class="column">
+              <label class="row"><input type="radio" name="cfs" value="1" required /> <strong>1 - Muito ativo:</strong> Pessoas que estão robustas, ativas, com energia e motivadas. Essas pessoas normalmente se exercitam regularmente. Elas estão entre as mais ativas para a sua idade.</label>
+              <label class="row"><input type="radio" name="cfs" value="2" /> <strong>2 - Ativo:</strong> Pessoas que não apresentam nenhum sintoma ativo de doença, mas estão menos ativas que as da categoria 1. Frequentemente se exercitam ou são muito ativas ocasionalmente. Ex: em determinada época do ano.</label>
+              <label class="row"><input type="radio" name="cfs" value="3" /> <strong>3 - Regular:</strong> Pessoas com problemas de saúde bem controlados, mas não se exercitam regularmente além da caminhada de rotina.</label>
+              <label class="row"><input type="radio" name="cfs" value="4" /> <strong>4 - Vulnerável:</strong> Apesar de não depender dos outros para ajuda diária, frequentemente os sintomas limitam as atividades. Uma queixa comum é sentir-se mais lento e/ou mais cansado ao longo do dia.</label>
+              <label class="row"><input type="radio" name="cfs" value="5" /> <strong>5 - Levemente frágil:</strong> Estas pessoas frequentemente apresentam lentidão evidente e precisam de ajuda para atividades instrumentais de vida diária (AIVD) mais complexas (finanças, transporte, trabalho doméstico pesado, medicações). Tipicamente a fragilidade leve progressivamente prejudica as compras e passeios desacompanhados, preparo de refeições e tarefas domésticas.</label>
+              <label class="row"><input type="radio" name="cfs" value="6" /> <strong>6 - Moderadamente frágil:</strong> Pessoas que precisam de ajuda em todas as atividades externas e na manutenção da casa. Em casa, frequentemente têm dificuldades com escadas e necessitam de ajuda no banho e podem necessitar de ajuda mínima (apoio próximo) para se vestirem.</label>
+              <label class="row"><input type="radio" name="cfs" value="7" /> <strong>7 - Muito frágil:</strong> Pessoas completamente dependentes para cuidados pessoais por qualquer causa (física ou cognitiva). No entanto, são aparentemente estáveis e sem alto risco de morte (dentro de 6 meses).</label>
+              <label class="row"><input type="radio" name="cfs" value="8" /> <strong>8 - Severamente frágil:</strong> Pessoas completamente dependentes, aproximando-se do fim da vida. Tipicamente incapazes de se recuperarem de uma doença leve.</label>
+              <label class="row"><input type="radio" name="cfs" value="9" /> <strong>9 - Doente terminal:</strong> Aproximando-se do fim da vida. Esta categoria se aplica a pessoas com expectativa de vida menor do que 6 meses, sem outra evidência de fragilidade.</label>
+            </div>
+          </div>
+        <div id="resultado-cfs" class="resultado"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-action="limpar-cfs">Limpar</button>
+        </div>
+          </div>
+        </section>
+        <section class="collapsible">
+          <h2>Escala FRAIL</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q">
+              <label>1) Fadiga — Quanto tempo se sentiu cansado(a) nas últimas semanas?</label>
+              <div class="column">
+                <label><input type="radio" name="frail_fadiga" value="1" required /> O tempo todo ou a maior parte do tempo (1)</label>
+                <label><input type="radio" name="frail_fadiga" value="0" /> Nunca ou quase nunca (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>2) Resistência — Tem dificuldade para subir um lance de escadas sem ajuda?</label>
+              <div class="row">
+                <label><input type="radio" name="frail_resistencia" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="frail_resistencia" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>3) Deambulação — Tem dificuldade para andar um quarteirão sem ajuda?</label>
+              <div class="row">
+                <label><input type="radio" name="frail_deambulacao" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="frail_deambulacao" value="0" /> Não (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>4) Doenças</label>
+              <div class="row">
+                <label><input type="radio" name="frail_doencas" value="1" required /> Cinco ou mais doenças (1)</label>
+                <label><input type="radio" name="frail_doencas" value="0" /> Quatro ou menos (0)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>5) Perda de peso nos últimos seis meses</label>
+              <div class="row">
+                <label><input type="radio" name="frail_peso" value="1" required /> Perda de peso maior ou igual a 5% (1)</label>
+                <label><input type="radio" name="frail_peso" value="0" /> Menor ou igual a 5% (0)</label>
+              </div>
+            </div>
+            <div class="help">Interpretação: Frágil 3–5; Pré‑frágil 1–2; Robusto 0.</div>
+          </div>
+        <div id="resultado-frail" class="resultado"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-action="limpar-frail">Limpar</button>
+        </div>
+          </div>
+        </section>
+        <section class="collapsible">
+          <h2>SARC-F</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q">
+              <label>1) Quanto de dificuldade você tem para carregar 5 kg:</label>
+              <div class="row">
+                <label><input type="radio" name="sarcf1" value="0" required /> Nenhuma (0)</label>
+                <label><input type="radio" name="sarcf1" value="1" /> Alguma (1)</label>
+                <label><input type="radio" name="sarcf1" value="2" /> Muita (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>2) Quanto de dificuldade você tem para atravessar um cômodo:</label>
+              <div class="row">
+                <label><input type="radio" name="sarcf2" value="0" required /> Nenhuma (0)</label>
+                <label><input type="radio" name="sarcf2" value="1" /> Alguma (1)</label>
+                <label><input type="radio" name="sarcf2" value="2" /> Muita (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>3) Quanto de dificuldade você tem para levantar de uma cama ou cadeira:</label>
+              <div class="row">
+                <label><input type="radio" name="sarcf3" value="0" required /> Nenhuma (0)</label>
+                <label><input type="radio" name="sarcf3" value="1" /> Alguma (1)</label>
+                <label><input type="radio" name="sarcf3" value="2" /> Muita (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>4) Quanto de dificuldade você tem para subir um lance de escadas (10 degraus):</label>
+              <div class="row">
+                <label><input type="radio" name="sarcf4" value="0" required /> Nenhuma (0)</label>
+                <label><input type="radio" name="sarcf4" value="1" /> Alguma (1)</label>
+                <label><input type="radio" name="sarcf4" value="2" /> Muita (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>5) Quantas vezes você caiu no último ano:</label>
+              <div class="row">
+                <label><input type="radio" name="sarcf5" value="0" required /> Nenhuma (0)</label>
+                <label><input type="radio" name="sarcf5" value="1" /> 1 a 3 quedas (1)</label>
+                <label><input type="radio" name="sarcf5" value="2" /> 4 ou mais (2)</label>
+              </div>
+            </div>
+          </div>
+        <div id="resultado-sarcf" class="resultado"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-action="limpar-sarcf">Limpar</button>
+        </div>
+        </section>
+      </form>
+
+    <h1>Dimensão Funcional</h1>
+      <h2>Atividades básicas da vida diária</h2>
+        <form id="form-funcional">
+          <section class="collapsible">
+            <h2>Índice de Barthel</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="q">
+                <label>Alimentação</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_alimentacao" value="10" required /> Independente (10)<div class="help"> Capaz de usar qualquer talher. Come em tempo razoável</div></label>
+                  <label class="row"><input type="radio" name="barthel_alimentacao" value="5" /> Ajuda (5)<div class="help"> Necessita de ajuda para passar manteiga, usar sal e pimenta etc</div></label>
+                  <label class="row"><input type="radio" name="barthel_alimentacao" value="0" /> Dependente (0)<div class="help"> Não consegue levar comida do prato à boca</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Banho</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_banho" value="5" required /> Independente (5)<div class="help"> Capaz de tomar banho (esfregar-se) sozinho, em chuveiro ou banheira</div></label>
+                  <label class="row"><input type="radio" name="barthel_banho" value="0" /> Dependente (0)<div class="help"> Necessita de auxilio de outra pessoa para o banho</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Vestuário</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_vestuario" value="10" required /> Independente (10)<div class="help"> Capaz de pegar as roupas, vestir-se, amarrar sapatos e despir-se</div></label>
+                  <label class="row"><input type="radio" name="barthel_vestuario" value="5" /> Ajuda (5)<div class="help"> Necessita de ajuda, mas realiza pelo menos 1/2 das tarefas em tempo razoável</div></label>
+                  <label class="row"><input type="radio" name="barthel_vestuario" value="0" /> Dependente (0)<div class="help"> Necessita de ajuda, não cumpre a condição</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Higiene pessoal</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_higiene" value="5" required /> Independente (5)<div class="help"> Capaz de lavar as mãos e o rosto, escovar os dentes e barbear-se, sem ajuda</div></label>
+                  <label class="row"><input type="radio" name="barthel_higiene" value="0" /> Dependente (0)<div class="help"> Necessita de ajuda de outra pessoa em qualquer das atividades do item anterior</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Evacuações</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_evacuacoes" value="10" required /> Continente (10)<div class="help"> Não apresenta incontinência, consegue usar supositórios ou enemas, sozinho.</div></label>
+                  <label class="row"><input type="radio" name="barthel_evacuacoes" value="5" /> Incontinente ocasional (5)<div class="help"> Apresenta episódios ocasionais de incontinência (a acidentes) ou necessita de ajuda para uso de <br />supositórios ou enemas</div></label>
+                  <label class="row"><input type="radio" name="barthel_evacuacoes" value="0" /> Incontinente (0)<div class="help"> Apresenta incontinência fecal</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Micção</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_miccao" value="10" required /> Continente (10)<div class="help"> Não apresenta incontinência; quando necessário é capaz de lidar sozinho com sonda vesical ou outro dispositivo </div></label>
+                  <label class="row"><input type="radio" name="barthel_miccao" value="5" /> Incontinente ocasional (5)<div class="help"> Apresenta episódios ocasionais de incontinência (acidentes) ou não consegue lidar, sem ajuda, com<br /> sonda vesical ou outro dispositivo.</div></label>
+                  <label class="row"><input type="radio" name="barthel_miccao" value="0" /> Incontinente (0)<div class="help"> Apresenta incontinência urinária</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Uso do vaso sanitário</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_vaso" value="10" required /> Independente (10)<div class="help"> Usa o vaso sanitário ou urinol. Senta-se e levanta-se sem ajuda, mesmo que use barras de apoio. <br />Limpa-se e veste-se sem ajuda</div></label>
+                  <label class="row"><input type="radio" name="barthel_vaso" value="5" /> Ajuda (5)<div class="help"> Necessita de ajuda para manter o equilíbrio, limpar-se e vestir-se</div></label>
+                  <label class="row"><input type="radio" name="barthel_vaso" value="0" /> Dependente (0)<div class="help"> Recebe auxílio direto de outra pessoa ou não desempenha a função</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Passagem cadeira-cama (transferência)</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_transfer" value="15" required /> Independente (15)<div class="help"> Não necessita de ajuda na transferêcia. Se utiliza cadeira de rodas, faz tudo sozinho.</div></label>
+                  <label class="row"><input type="radio" name="barthel_transfer" value="10" /> Ajuda mínima (10)<div class="help"> Requer supervisão ou apoio para efetuar transferência</div></label>
+                  <label class="row"><input type="radio" name="barthel_transfer" value="5" /> Grande ajuda (5)<div class="help"> Capaz de sentar, mas necessita de assistência total para passagem.</div></label>
+                  <label class="row"><input type="radio" name="barthel_transfer" value="0" /> Dependente (0)<div class="help"> Incapaz de sentar-se e incapaz de colaborar durante as transferências</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Deambulação</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_deambulacao" value="15" required /> Independente (15)<div class="help"> Capaz de caminhar sem ajuda pelo menos 50 metros, mesmo com bengalas, muletas, prótese ou andador.</div></label>
+                  <label class="row"><input type="radio" name="barthel_deambulacao" value="10" /> Ajuda (10)<div class="help"> Capaz de caminhar pelo menos 50 metros, mas necessita de ajuda ou supervisão.</div></label>
+                  <label class="row"><input type="radio" name="barthel_deambulacao" value="5" /> Independente em cadeira de rodas (5)<div class="help"> Capaz de manobrar a cadeira de rodas e movimentar-se por pelo menos 50 metros.</div></label>
+                  <label class="row"><input type="radio" name="barthel_deambulacao" value="0" /> Dependente (0)<div class="help"> Incapaz de caminhar ou utilizar cadeira de rodas conforme definido.</div></label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Escadas</label>
+                <div class="column">
+                  <label class="row"><input type="radio" name="barthel_escadas" value="10" required /> Independente (10)<div class="help"> Capaz de subir ou descer escadas sem ajuda ou supervisão, mesmo com muletas, bengalas ou apoio no corrimão</div></label>
+                  <label class="row"><input type="radio" name="barthel_escadas" value="5" /> Ajuda (5)<div class="help"> Necessita de ajuda física ou supervisão, ao descer e subir escadas</div></label>
+                  <label class="row"><input type="radio" name="barthel_escadas" value="0" /> Dependente (0)<div class="help"> Incapaz de subir escadas</div></label>
+                </div>
+              </div>
+            </div>
+          <div id="resultado-barthel" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-barthel">Limpar</button>
+          </div>
+            </div>
+          </section>
+
+          <section class="collapsible">
+            <h2>Escala de Katz Modificada</h2>
+            <div class="section-body">
+              <div class="group">
+                <div class="q">
+                  <label>1) Banho</label>
+                  <div class="help">Não recebe ajuda ou somente recebe ajuda para uma parte do corpo</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_banho" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_banho" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>2) Vestir-se</label>
+                  <div class="help">Pega as roupas e se veste sem qualquer ajuda, exceto amarrar os sapatos</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_vestir" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_vestir" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>3) Uso do banheiro</label>
+                  <div class="help">Vai ao banheiro, usa, veste-se e retorna sem qualquer ajuda</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_banheiro" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_banheiro" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>4) Mobilidade</label>
+                  <div class="help">Consegue deitar na cama, sentar na cadeira e levantar sem ajuda</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_mobilidade" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_mobilidade" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>5) Continência</label>
+                  <div class="help">Controla completamente urina e fezes</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_continencia" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_continencia" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>6) Alimentação</label>
+                  <div class="help">Come sem ajuda - exceto para cortar carne ou passar manteiga no pão</div>
+                  <div class="row">
+                    <label><input type="radio" name="katz_alimentacao" value="1" required /> Independente (1)</label>
+                    <label><input type="radio" name="katz_alimentacao" value="0" /> Dependente (0)</label>
+                  </div>
+                </div>
+              </div>
+            <div id="resultado-katz" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-funcional">Limpar</button>
+            </div>
+          
+          </section>
+
+      <h2>Atividades instrumentais da vida diária</h2>
+        <section class="collapsible">
+          <h2>Lawton</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="help">Cada atividade de 1 a 3 pontos. Soma típica: 9 a 27 pontos. Quanto maior, mais independente.</div>
+            <div class="q">
+              <label>Capacidade para usar o telefone</label>
+              <div class="column">
+                <label><input type="radio" name="lw1" value="3" required /> É capaz de utilizar o telefone por iniciativa própria. (3)</label>
+                <label><input type="radio" name="lw1" value="2" /> É capaz de responder às ligações, porém necessita de ajuda ou aparelho especial para discar. (2)</label>
+                <label><input type="radio" name="lw1" value="1" /> Completamente incapaz para o uso do telefone. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Compras</label>
+              <div class="column">
+                <label><input type="radio" name="lw2" value="3" required /> É capaz de realizar todas as compras sem ajuda ou supervisão. (3)</label>
+                <label><input type="radio" name="lw2" value="2" /> Necessita de supervisão para fazer compras. (2)</label>
+                <label><input type="radio" name="lw2" value="1" /> É incapaz de preparar refeições. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Preparar refeições</label>
+              <div class="column">
+                <label><input type="radio" name="lw3" value="3" required /> É capaz de preparar refeições sem ajuda ou supervisão. (3)</label>
+                <label><input type="radio" name="lw3" value="2" /> É capaz de preparar refeições com supervisão ou ajuda parcial. (2)</label>
+                <label><input type="radio" name="lw3" value="1" /> É incapaz de preparar refeições. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Tarefas domésticas</label>
+              <div class="column">
+                <label><input type="radio" name="lw4" value="3" required /> É capaz de realizar todo o trabalho sem ajuda ou supervisão. (3)</label>
+                <label><input type="radio" name="lw4" value="2" /> É capaz de realizar apenas o trabalho doméstico leve ou necessita de ajuda ou supervisão. (2)</label>
+                <label><input type="radio" name="lw4" value="1" /> Incapaz de realizar qualquer trabalho doméstico. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Trabalhos manuais e pequenos reparos na casa</label>
+              <div class="column">
+                <label><input type="radio" name="lw5" value="3" required /> É capaz sem ajuda ou supervisão. (3)</label>
+                <label><input type="radio" name="lw5" value="2" /> Realiza pequenos trabalhos com ajuda ou supervisão. (2)</label>
+                <label><input type="radio" name="lw5" value="1" /> Incapaz de realizar trabalhos manuais e pequenos reparos na casa. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Lavar roupas</label>
+              <div class="column">
+                <label><input type="radio" name="lw6" value="3" required /> É capaz de lavar toda sua roupa sem ajuda ou supervisão. (3)</label>
+                <label><input type="radio" name="lw6" value="2" /> É capaz de lavar apenas peças pequenas ou necessita de ajuda ou supervisão. (2)</label>
+                <label><input type="radio" name="lw6" value="1" /> Incapaz de de lavar qualquer peça de roupa. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Meio de transporte</label>
+              <div class="column">
+                <label><input type="radio" name="lw7" value="3" required /> É incapaz de dirigir carros ou viajar sozinho de ônibus, trem, metrô e táxi. (3)</label>
+                <label><input type="radio" name="lw7" value="2" /> Necessita de ajuda e/ou supervisão quando viaja de ônibus, trem, metrô e táxi. (2)</label>
+                <label><input type="radio" name="lw7" value="1" /> Incapaz de utilizar qualquer meio de transporte. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Manuseio de medicação</label>
+              <div class="column">
+                <label><input type="radio" name="lw8" value="3" required /> É capaz de tomar toda e qualquer medicação na hora e doses corretas sem supervisão. (3)</label>
+                <label><input type="radio" name="lw8" value="2" /> Necessita de lembretes de supervisão para tomar a medicação nos horários e doses corretas. (2)</label>
+                <label><input type="radio" name="lw8" value="1" /> É incapaz de tomar a medicação. (1)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Manuseio de dinheiro</label>
+              <div class="column">
+                <label><input type="radio" name="lw9" value="3" required /> É capaz de administrar seus assuntos econômicos, pagar contas, manusear dinheiro, preencher cheques. (3)</label>
+                <label><input type="radio" name="lw9" value="2" /> É capaz de administrar sus assuntos econômicos, porém necessita de ajuda com cheques e pagamentos de contas. (2)</label>
+                <label><input type="radio" name="lw9" value="1" /> Incapaz de lidar com dinheiro. (1)</label>
+              </div>
+            </div>
+          </div>
+          <div id="resultado-lawton" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-lawton">Limpar</button>
+          </div>
+          </div>
+        </section>
+        <section class="collapsible">
+          <h2>Pfeffer</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="help">Cada item: <br />0 - normal / nunca o fez mas poderia fazê-lo; <br />1 - faz, com dificuldade / nunca o fez e agora teria dificuldade;<br /> 2 - necessita de ajuda;<br /> 3 - não é capaz.</div>
+            <div class="q">
+              <label>1) Ele(a) é capaz de cuidar do seu próprio dinheiro?</label>
+              <div class="row">
+                <label><input type="radio" name="pf1" value="0" required /> 0</label>
+                <label><input type="radio" name="pf1" value="1" /> 1</label>
+                <label><input type="radio" name="pf1" value="2" /> 2</label>
+                <label><input type="radio" name="pf1" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>2) Ele(a) é capaz de fazer compras sozinho (a)?</label>
+              <div class="row">
+                <label><input type="radio" name="pf2" value="0" required /> 0</label>
+                <label><input type="radio" name="pf2" value="1" /> 1</label>
+                <label><input type="radio" name="pf2" value="2" /> 2</label>
+                <label><input type="radio" name="pf2" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>3) Ele(a) é capaz de esquentar água para o café ou chá e apagar o fogo?</label>
+              <div class="row">
+                <label><input type="radio" name="pf3" value="0" required /> 0</label>
+                <label><input type="radio" name="pf3" value="1" /> 1</label>
+                <label><input type="radio" name="pf3" value="2" /> 2</label>
+                <label><input type="radio" name="pf3" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>4) Ele(a) é capaz de preparar comida?</label>
+              <div class="row">
+                <label><input type="radio" name="pf4" value="0" required /> 0</label>
+                <label><input type="radio" name="pf4" value="1" /> 1</label>
+                <label><input type="radio" name="pf4" value="2" /> 2</label>
+                <label><input type="radio" name="pf4" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>5) Ele(a) é capaz de manter-se em dia com as atualidades, com os acontecimentos da comunidade ou da vizinhança?</label>
+              <div class="row">
+                <label><input type="radio" name="pf5" value="0" required /> 0</label>
+                <label><input type="radio" name="pf5" value="1" /> 1</label>
+                <label><input type="radio" name="pf5" value="2" /> 2</label>
+                <label><input type="radio" name="pf5" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>6) Ele(a) é capaz de prestar atenção, entender e discutir um programa de rádio ou televisão, um jornal ou uma revista?</label>
+              <div class="row">
+                <label><input type="radio" name="pf6" value="0" required /> 0</label>
+                <label><input type="radio" name="pf6" value="1" /> 1</label>
+                <label><input type="radio" name="pf6" value="2" /> 2</label>
+                <label><input type="radio" name="pf6" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>7) Ele(a) é capaz de lembrar-se de compromissos, acontecimentos, familiares, feriados?</label>
+              <div class="row">
+                <label><input type="radio" name="pf7" value="0" required /> 0</label>
+                <label><input type="radio" name="pf7" value="1" /> 1</label>
+                <label><input type="radio" name="pf7" value="2" /> 2</label>
+                <label><input type="radio" name="pf7" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>8) Ele(a) é capaz de cuidar de seus próprios medicamentos?</label>
+              <div class="row">
+                <label><input type="radio" name="pf8" value="0" required /> 0</label>
+                <label><input type="radio" name="pf8" value="1" /> 1</label>
+                <label><input type="radio" name="pf8" value="2" /> 2</label>
+                <label><input type="radio" name="pf8" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>9) Ele(a) é capaz de passear pela vizinhança e encontrar o caminho de volta para casa?</label>
+              <div class="row">
+                <label><input type="radio" name="pf9" value="0" required /> 0</label>
+                <label><input type="radio" name="pf9" value="1" /> 1</label>
+                <label><input type="radio" name="pf9" value="2" /> 2</label>
+                <label><input type="radio" name="pf9" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>10) Ele(a) é capaz de cumprimentar seus amigos adequadamente?</label>
+              <div class="row">
+                <label><input type="radio" name="pf10" value="0" required /> 0</label>
+                <label><input type="radio" name="pf10" value="1" /> 1</label>
+                <label><input type="radio" name="pf10" value="2" /> 2</label>
+                <label><input type="radio" name="pf10" value="3" /> 3</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>11) Ele(a) pode ser deixado(a) em casa sozinho(a) de forma segura?</label>
+              <div class="row">
+                <label><input type="radio" name="pf11" value="0" required /> 0</label>
+                <label><input type="radio" name="pf11" value="1" /> 1</label>
+                <label><input type="radio" name="pf11" value="2" /> 2</label>
+                <label><input type="radio" name="pf11" value="3" /> 3</label>
+              </div>
+            </div>
+          </div>
+          <div id="resultado-pfeffer" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-pfeffer">Limpar</button>
+          </div>
+        </section>
+      </form>
+      <h1>Dimensão Nutricional</h1>
+        <section class="collapsible">
+          <h2>MAN — Mini Avaliação Nutricional (triagem curta)</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q">
+              <label>Nos últimos 3 meses houve diminuição da ingesta alimentar?</label>
+              <div class="column">
+                <label><input type="radio" name="man1" value="0" required /> Diminuição severa (0)</label>
+                <label><input type="radio" name="man1" value="1" /> Diminuição moderada (1)</label>
+                <label><input type="radio" name="man1" value="2" /> Sem diminuição (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Perda de peso nos últimos 3 meses:</label>
+              <div class="column">
+                <label><input type="radio" name="man2" value="0" required /> &gt; 3 kg (0)</label>
+                <label><input type="radio" name="man2" value="1" /> Não sabe (1)</label>
+                <label><input type="radio" name="man2" value="2" /> Entre 1 e 3 kg (2)</label>
+                <label><input type="radio" name="man2" value="3" /> Sem perda (3)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Mobilidade:</label>
+              <div class="column">
+                <label><input type="radio" name="man3" value="0" required /> Restrito ao leito/cadeira (0)</label>
+                <label><input type="radio" name="man3" value="1" /> Deambula, mas não sai de casa (1)</label>
+                <label><input type="radio" name="man3" value="2" /> Normal (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Estresse psicológico ou doença aguda nos últimos 3 meses?</label>
+              <div class="column">
+                <label><input type="radio" name="man4" value="0" required /> Sim (0)</label>
+                <label><input type="radio" name="man4" value="2" /> Não (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Problemas neuropsicológicos:</label>
+              <div class="column">
+                <label><input type="radio" name="man5" value="0" required /> Demência ou depressão graves (0)</label>
+                <label><input type="radio" name="man5" value="1" /> Demência leve (1)</label>
+                <label><input type="radio" name="man5" value="2" /> Sem problemas (2)</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>Índice de Massa Corporal (IMC):</label>
+              <div class="column">
+                <label><input type="radio" name="man6" value="0" required /> IMC &lt; 19 (0)</label>
+                <label><input type="radio" name="man6" value="1" /> 19–21 (1)</label>
+                <label><input type="radio" name="man6" value="2" /> 21–23 (2)</label>
+                <label><input type="radio" name="man6" value="3" /> ≥ 23 (3)</label>
+              </div>
+            </div>
+            
+          </div>
+          <div id="resultado-man" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-man">Limpar</button>
+          </div>
+          </div>
+        </section>
+
+      <h1>Dimensao Cognitiva</h1>
+        <section class="collapsible">
+          <h2>Cognição — 10-CS</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="q">
+              <label>Orientação temporal (1 ponto por acerto)</label>
+              <div class="column">
+                <div class="column">
+                  <span class="help"><strong>Em que ano nós estamos?</strong></span>
+                  <label><input type="radio" name="cs_orient_ano" value="1" required /> Acertou (1)</label>
+                  <label><input type="radio" name="cs_orient_ano" value="0" /> Errou (0)</label>
+                </div>
+                <div class="column">
+                  <span class="help"><strong>Qual mês é este?</strong></span>
+                  <label><input type="radio" name="cs_orient_mes" value="1" required /> Acertou (1)</label>
+                  <label><input type="radio" name="cs_orient_mes" value="0" /> Errou (0)</label>
+                </div>
+                <div class="column">
+                  <span class="help"><strong>Qual a data de hoje?</strong></span>
+                  <label><input type="radio" name="cs_orient_data" value="1" required /> Acertou (1)</label>
+                  <label><input type="radio" name="cs_orient_data" value="0" /> Errou (0)</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="help">Vou falar três objetos, preste atenção, você terá que repetir os três quando eu pedir: Vaso, carro, tijolo
+  (pode repetir 3 vezes). Guarde os 3 objetos, logo irei pedir para você falar novamente.</div>
+
+            <div class="q">
+              <label>Fluência verbal (animais em 60 segundos)</label>
+              <div class="column">
+                <label><input type="radio" name="cs_fluencia" value="0" required /> 0–5 animais — 0 pontos</label>
+                <label><input type="radio" name="cs_fluencia" value="1" /> 6–8 animais — 1 ponto</label>
+                <label><input type="radio" name="cs_fluencia" value="2" /> 9–11 animais — 2 pontos</label>
+                <label><input type="radio" name="cs_fluencia" value="3" /> 12–14 animais — 3 pontos</label>
+                <label><input type="radio" name="cs_fluencia" value="4" /> 15 ou mais animais — 4 pontos</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>Memória (1 ponto por objeto recordado)</label>
+              <div class="column">
+                <div class="column">
+                  <span class="help"><strong>Vaso</strong></span>
+                  <label><input type="radio" name="cs_mem_vaso" value="1" required /> Recordou (1)</label>
+                  <label><input type="radio" name="cs_mem_vaso" value="0" /> Não recordou (0)</label>
+                </div>
+                <div class="column">
+                  <span class="help"><strong>Carro</strong></span>
+                  <label><input type="radio" name="cs_mem_carro" value="1" required /> Recordou (1)</label>
+                  <label><input type="radio" name="cs_mem_carro" value="0" /> Não recordou (0)</label>
+                </div>
+                <div class="column">
+                  <span class="help"><strong>Tijolo</strong></span>
+                  <label><input type="radio" name="cs_mem_tijolo" value="1" required /> Recordou (1)</label>
+                  <label><input type="radio" name="cs_mem_tijolo" value="0" /> Não recordou (0)</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>Ajuste por escolaridade</label>
+              <div class="column">
+                <label><input type="radio" name="cs_escolaridade" value="2" required /> Sem educação formal (+2 pontos)</label>
+                <label><input type="radio" name="cs_escolaridade" value="1" /> 1 a 3 anos de escolaridade (+1 ponto)</label>
+                <label><input type="radio" name="cs_escolaridade" value="0" /> 4 anos ou mais (0 ponto)</label>
+              </div>
+              <div class="help">Adicionar os pontos correspondentes ao total obtido nas etapas anteriores.</div>
+            </div>
+          </div>
+          <div id="resultado-10cs" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-10cs">Limpar</button>
+          </div>
+          </div>
+        </section>
+
+        <section class="collapsible">
+          <h2>Zucchelli — Risco de Delirium</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="help">Rastreio de pacientes com alto risco de delirium. Some os fatores de risco abaixo.</div>
+            <div class="q">
+              <label>Idade maior ou igual a 75 anos</label>
+              <div class="row">
+                <label><input type="radio" name="zuc_idade" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="zuc_idade" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>Diagnóstico de demência</label>
+              <div class="row">
+                <label><input type="radio" name="zuc_demencia" value="3" required /> Sim (3)</label>
+                <label><input type="radio" name="zuc_demencia" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>Déficit auditivo</label>
+              <div class="row">
+                <label><input type="radio" name="zuc_auditivo" value="2" required /> Sim (2)</label>
+                <label><input type="radio" name="zuc_auditivo" value="0" /> Não (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>Uso de medicações psicotrópicas</label>
+              <div class="help">Uso crônico de pelo menos uma das classes: antidepressivos, antipsicóticos, benzodiazepínicos, opioides, anticonvulsivantes, anticolinesterásicos, memantina, antiparkinsonianos.</div>
+              <div class="row">
+                <label><input type="radio" name="zuc_psicotropicos" value="1" required /> Sim (1)</label>
+                <label><input type="radio" name="zuc_psicotropicos" value="0" /> Não (0)</label>
+              </div>
+            </div>
+          </div>
+          <div id="resultado-zucchelli" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-zucchelli">Limpar</button>
+          </div>
+          </div>
+        </section>
+
+        <section class="collapsible">
+          <h2>CAM — Confusion Assessment Method</h2>
+          <div class="section-body">
+          <div class="group">
+            <div class="help">Diagnóstico de delirium: requer 1) Início agudo/curso flutuante E 2) Desatenção E (3) Pensamento desorganizado OU (4) Alteração do nível de consciência.</div>
+
+            <div class="q">
+              <label>1) Início agudo e curso flutuante</label>
+              <div class="help">Pergunte a familiar/enfermagem: houve mudança aguda do estado mental em relação ao basal? O comportamento flutuou ao longo do dia?</div>
+              <div class="row">
+                <label><input type="radio" name="cam1" value="1" required /> Presente (1)</label>
+                <label><input type="radio" name="cam1" value="0" /> Ausente (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>2) Desatenção</label>
+              <div class="help">Teve dificuldade em concentrar a atenção? Distraía-se facilmente ou tinha dificuldade em acompanhar o que era dito?</div>
+              <div class="row">
+                <label><input type="radio" name="cam2" value="1" required /> Presente (1)</label>
+                <label><input type="radio" name="cam2" value="0" /> Ausente (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>3) Pensamento desorganizado</label>
+              <div class="help">Conversas confusas/irrelevantes, fluxo de ideias pouco claro/ilógico, mudanças imprevisíveis de assunto?</div>
+              <div class="row">
+                <label><input type="radio" name="cam3" value="1" required /> Presente (1)</label>
+                <label><input type="radio" name="cam3" value="0" /> Ausente (0)</label>
+              </div>
+            </div>
+
+            <div class="q">
+              <label>4) Alteração do nível de consciência</label>
+              <div class="help">Classifique: Alerta (normal); Vigilante (hiperalerta); Letárgico (sonolento, desperta fácil); Estupor (difícil de despertar); Coma (indespertável).</div>
+              <div class="row">
+                <label><input type="radio" name="cam4" value="0" required /> Alerta (0)</label>
+                <label><input type="radio" name="cam4" value="1" /> Vigilante/letárgico/estupor/coma (1)</label>
+              </div>
+            </div>
+          </div>
+          <div id="resultado-cam" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-cam">Limpar</button>
+          </div>
+          </div>
+        </section>
+      </form>
+
+
+      <h1>Dimensao Psicologica</h1>
+      <section class="collapsible">
+        <h2>GDS-15 — Escala de Depressão Geriátrica</h2>
+        <div class="section-body">
+        <div class="group">
+          <div class="help">Responda "Sim" ou "Não" para cada uma das perguntas abaixo. A cada resposta compatível com depressão, some 1 ponto.</div>
+          <div class="q">
+            <label>1. O Sr. (a) está satisfeito com a vida?</label>
+            <div class="row">
+              <label><input type="radio" name="gds1" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds1" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>2. O Sr. (a) se afastou das atividades e das “coisas” que lhe interessavam?</label>
+            <div class="row">
+              <label><input type="radio" name="gds2" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds2" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>3. O Sr.(a) sente que sua vida é vazia?</label>
+            <div class="row">
+              <label><input type="radio" name="gds3" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds3" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>4. O Sr.(a) se sente frequentemente aborrecido?</label>
+            <div class="row">
+              <label><input type="radio" name="gds4" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds4" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>5. O Sr. (a) está de bom humor na maior parte do tempo?</label>
+            <div class="row">
+              <label><input type="radio" name="gds5" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds5" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>6. O Sr. (a) tem medo que algo de mal vá lhe acontecer?</label>
+            <div class="row">
+              <label><input type="radio" name="gds6" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds6" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>7. O Sr. (a) se sente feliz na maior parte do tempo?</label>
+            <div class="row">
+              <label><input type="radio" name="gds7" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds7" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>8. O Sr. (a) se sente abandonado, a maior parte do tempo?</label>
+            <div class="row">
+              <label><input type="radio" name="gds8" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds8" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>9. O Sr. (a) prefere ficar em casa do que sair e fazer coisas diferentes?</label>
+            <div class="row">
+              <label><input type="radio" name="gds9" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds9" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>10. O Sr. (a) acha que tem mais dificuldade com a memória, do que a maioria das pessoas?</label>
+            <div class="row">
+              <label><input type="radio" name="gds10" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds10" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>11. O Sr. (a) acha que no momento viver é algo maravilhoso?</label>
+            <div class="row">
+              <label><input type="radio" name="gds11" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds11" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>12. O Sr. (a) julga-se inútil?</label>
+            <div class="row">
+              <label><input type="radio" name="gds12" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds12" value="0" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>13. O Sr. (a) se sente cheio de energia?</label>
+            <div class="row">
+              <label><input type="radio" name="gds13" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds13" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>14. O Sr. (a) se sente esperançoso em relação à sua situação atual?</label>
+            <div class="row">
+              <label><input type="radio" name="gds14" value="0" required /> Sim</label>
+              <label><input type="radio" name="gds14" value="1" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>15. O Sr. (a) crê que a maioria das pessoas estão em situação melhor que a sua?</label>
+            <div class="row">
+              <label><input type="radio" name="gds15" value="1" required /> Sim</label>
+              <label><input type="radio" name="gds15" value="0" /> Não</label>
+            </div>
+          </div>
+        </div>
+        <div id="resultado-gds" class="resultado"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-action="limpar-gds">Limpar</button>
+        </div>
+      </section>
+      <h1>Dimensao Social</h1>
+      <section class="collapsible">
+        <h2>APGAR da Família</h2>
+        <div class="section-body">
+        <div class="group">
+          <div class="help">Interpretação: (0-3) Disfuncional; (4-6) Moderadamente disfuncional; (7-10) Funcional.</div>
+          <div class="q">
+            <label>A (Adaptabilidade) - Você sente que sua família o ajuda quando precisa?</label>
+            <div class="row">
+              <label><input type="radio" name="apgar_a" value="0" required /> Raramente (0)</label>
+              <label><input type="radio" name="apgar_a" value="1" /> Algumas vezes (1)</label>
+              <label><input type="radio" name="apgar_a" value="2" /> Quase sempre (2)</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>P (Participação) - Você pode contar com sua família para decisões importantes?</label>
+            <div class="row">
+              <label><input type="radio" name="apgar_p" value="0" required /> Raramente (0)</label>
+              <label><input type="radio" name="apgar_p" value="1" /> Algumas vezes (1)</label>
+              <label><input type="radio" name="apgar_p" value="2" /> Quase sempre (2)</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>G (Gradiente de recursos) - Sua família mostra interesse em seus problemas ou preocupações?</label>
+            <div class="row">
+              <label><input type="radio" name="apgar_g" value="0" required /> Raramente (0)</label>
+              <label><input type="radio" name="apgar_g" value="1" /> Algumas vezes (1)</label>
+              <label><input type="radio" name="apgar_g" value="2" /> Quase sempre (2)</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>A (Afeição) - Você se sente amado por sua família?</label>
+            <div class="row">
+              <label><input type="radio" name="apgar_af" value="0" required /> Raramente (0)</label>
+              <label><input type="radio" name="apgar_af" value="1" /> Algumas vezes (1)</label>
+              <label><input type="radio" name="apgar_af" value="2" /> Quase sempre (2)</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>R (Resolução) - Quando há dificuldades, sua família tenta resolvê-las junto com você?</label>
+            <div class="row">
+              <label><input type="radio" name="apgar_r" value="0" required /> Raramente (0)</label>
+              <label><input type="radio" name="apgar_r" value="1" /> Algumas vezes (1)</label>
+              <label><input type="radio" name="apgar_r" value="2" /> Quase sempre (2)</label>
+            </div>
+          </div>
+        </div>
+        <div id="resultado-apgar" class="resultado"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-action="limpar-apgar">Limpar</button>
+        </div>
+        </div>
+      </section>
+
+    <section class="collapsible open">
+      <h2>Resumo dos Testes Aplicados</h2>
+      <div class="section-body">
+        <div class="group">
+          <div id="resumo-tests" class="resultado"></div>
+          <div class="actions">
+            <button type="button" class="secondary" data-action="limpar-resumo">Limpar resumo</button>
+            <button type="button" id="btn-resumo">Resumo</button>
+            <button type="button" id="visualizar-resultado">Visualizar Resultado</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="scripts/app.js"></script>
+  <script>
+    // Inicialização quando DOM estiver pronto (para garantir que app.js tenha carregado)
+    const formElement = document.getElementById('form-ivcf');
+    const formFuncional = document.getElementById('form-funcional');
+
+    // Constantes de campos por escala
+    const camposAVDInstrumentais = ['q3', 'q4', 'q5'];
+    const camposFuncionais = ['q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20'];
+    const camposIVCF = ['idade', 'percepcao', ...camposAVDInstrumentais, ...camposFuncionais];
+    const camposMAN = ['man1', 'man2', 'man3', 'man4', 'man5', 'man6'];
+    const camposLawton = ['lw1', 'lw2', 'lw3', 'lw4', 'lw5', 'lw6', 'lw7', 'lw8'];
+    const camposFrail = ['frail_fadiga', 'frail_resistencia', 'frail_deambulacao', 'frail_doencas', 'frail_peso'];
+    const camposSarcF = ['sarcf1', 'sarcf2', 'sarcf3', 'sarcf4', 'sarcf5'];
+    const camposBarthel = [
+      'barthel_alimentacao', 'barthel_banho', 'barthel_vestuario', 'barthel_higiene',
+      'barthel_evacuacoes', 'barthel_miccao', 'barthel_vaso', 'barthel_transfer',
+      'barthel_deambulacao', 'barthel_escadas'
+    ];
+    const camposKatz = ['katz_banho', 'katz_vestir', 'katz_banheiro', 'katz_mobilidade', 'katz_continencia', 'katz_alimentacao'];
+    const camposGDS = Array.from({ length: 15 }, (_, i) => `gds${i + 1}`);
+    const camposApgar = ['apgar_a', 'apgar_p', 'apgar_g', 'apgar_af', 'apgar_r'];
+    const camposPfeffer = Array.from({ length: 11 }, (_, index) => `pf${index + 1}`);
+    const campos10CSOrientacao = ['cs_orient_ano', 'cs_orient_mes', 'cs_orient_data'];
+    const campos10CSMemoria = ['cs_mem_vaso', 'cs_mem_carro', 'cs_mem_tijolo'];
+    const campos10CS = [...campos10CSOrientacao, ...campos10CSMemoria, 'cs_fluencia', 'cs_escolaridade'];
+    const resultadoIds = ['resultado-srh', 'resultado-ivcf', 'resultado-cfs', 'resultado-frail', 'resultado-sarcf', 'resultado-barthel', 'resultado-katz', 'resultado-lawton', 'resultado-pfeffer', 'resultado-man', 'resultado-10cs', 'resultado-zucchelli', 'resultado-cam', 'resultado-gds', 'resultado-apgar'];
+
+    // Utilitários
+    function getCheckedValue(name) {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : null;
+    }
+
+    function collectFromNames(fd, names) {
+      names.forEach((n) => {
+        const v = getCheckedValue(n);
+        if (v !== null) fd.set(n, v);
+      });
+    }
+
+    function getFormData() {
+      const fd = new FormData();
+      if (formElement) new FormData(formElement).forEach((v, k) => fd.set(k, v));
+      if (formFuncional) new FormData(formFuncional).forEach((v, k) => fd.set(k, v));
+      collectFromNames(fd, [...camposMAN, ...camposFrail, ...camposSarcF, ...camposGDS, ...camposApgar, ...campos10CS]);
+      return fd;
+    }
+
+    function somarCampos(fd, campos) {
+      return campos.reduce((total, campo) => total + parseInt(fd.get(campo) ?? '0', 10), 0);
+    }
+
+    function contarRespostas(fd, campos) {
+      return campos.reduce((total, campo) => total + (fd.get(campo) !== null ? 1 : 0), 0);
+    }
+
+    function exibirResultado(elementId, calcular, formatar, shouldScroll = false) {
+      // Deferir para app.js quando presente: ele também atualiza o resumo geral.
+      if (window.exibirResultado && window.exibirResultado !== exibirResultado) {
+        return window.exibirResultado(elementId, calcular, formatar, shouldScroll);
+      }
+      const container = document.getElementById(elementId);
+      if (!container) return;
+      const resultado = calcular();
+      container.innerHTML = resultado ? formatar(resultado).trim() : '';
+      if (typeof window.atualizarResumo === 'function') window.atualizarResumo();
+      if (shouldScroll && resultado) container.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function limparResultados() {
+      // Deferir para app.js quando presente para manter o resumo sincronizado.
+      if (window.limparResultados && window.limparResultados !== limparResultados) {
+        return window.limparResultados();
+      }
+      resultadoIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '';
+      });
+      if (typeof window.atualizarResumo === 'function') window.atualizarResumo();
+    }
+
+    function calcularIVCF() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposIVCF);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposIVCF.length;
+      const completo = respondidas === totalPerguntas;
+      let total = 0;
+      total += parseInt(fd.get('idade') ?? '0', 10);
+      total += parseInt(fd.get('percepcao') ?? '0', 10);
+      total += Math.min(4, somarCampos(fd, camposAVDInstrumentais));
+      total += somarCampos(fd, camposFuncionais);
+
+      let risco = null;
+      if (completo) {
+        if (total <= 6) {
+          risco = 'Baixa (0–6)';
+        } else if (total <= 14) {
+          risco = 'Moderada (7–14)';
+        } else {
+          risco = 'Alta vulnerabilidade (≥15)';
+        }
+      }
+
+      return { pontos: total, risco, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarIVCF() {
+      exibirResultado(
+        'resultado-ivcf',
+        calcularIVCF,
+        ({ pontos, risco, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Risco de fragilidade clínico funcional:</strong><br />
+              Baixa (0 a 6 pontos),<br />
+              Moderada (7 a 14 pontos)<br />
+              Alta vulnerabilidade (≥ 15 pontos) clínico funcional
+            </div>
+          `;
+          return `
+            <div><strong>Pontuação IVCF‑20:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${risco}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularSRH() {
+      const fd = getFormData();
+      const valor = fd.get('srh');
+      if (valor === null) {
+        return null;
+      }
+      const descricao = parseInt(valor, 10) === 0 ? 'Boa/Muito boa/Excelente' : 'Regular/Ruim';
+      return { descricao };
+    }
+
+    function mostrarSRH() {
+      exibirResultado(
+        'resultado-srh',
+        calcularSRH,
+        ({ descricao }) => `
+          <div><strong>SRH:</strong> ${descricao}</div>
+        `
+      );
+    }
+
+    function calcularMAN() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposMAN);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposMAN.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposMAN);
+      let classe = null;
+      if (completo) {
+        if (pontos >= 12) {
+          classe = 'Estado nutricional normal (12–14)';
+        } else if (pontos >= 8) {
+          classe = 'Risco de desnutrição (8–11)';
+        } else {
+          classe = 'Desnutrido (0–7)';
+        }
+      }
+      return { pontos, classe, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarMAN() {
+      exibirResultado(
+        'resultado-man',
+        calcularMAN,
+        ({ pontos, classe, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          return `
+            <div><strong>MAN:</strong> ${pontos} pontos - ${classe}</div>
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularPfeffer() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposPfeffer);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposPfeffer.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposPfeffer);
+      const interpretacao = completo
+        ? (pontos >= 6 ? 'Sugere declínio funcional (≥6)' : 'Sem evidência de declínio (<6)')
+        : null;
+
+      return { pontos, interpretacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarPfeffer() {
+      exibirResultado(
+        'resultado-pfeffer',
+        calcularPfeffer,
+        ({ pontos, interpretacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          return `
+            <div><strong>Pfeffer:</strong> ${pontos} pontos — ${interpretacao}</div>
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcular10CS() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, campos10CS);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = campos10CS.length;
+      const completo = respondidas === totalPerguntas;
+      let total = 0;
+      total += somarCampos(fd, campos10CSOrientacao);
+      total += parseInt(fd.get('cs_fluencia') ?? '0', 10);
+      total += somarCampos(fd, campos10CSMemoria);
+      total += parseInt(fd.get('cs_escolaridade') ?? '0', 10);
+
+      let interpretacao = null;
+      if (completo) {
+        if (total >= 8) {
+          interpretacao = 'Normal (≥ 8 pontos)';
+        } else if (total >= 6) {
+          interpretacao = 'Possível comprometimento (6–7 pontos)';
+        } else {
+          interpretacao = 'Provável comprometimento (0–5 pontos)';
+        }
+      }
+
+      return { pontos: total, interpretacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrar10CS() {
+      exibirResultado(
+        'resultado-10cs',
+        calcular10CS,
+        ({ pontos, interpretacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Interpretação 10-CS:</strong><br />
+              Normal (≥ 8 pontos)<br />
+              Possível comprometimento (6–7 pontos)<br />
+              Provável comprometimento (0–5 pontos)
+            </div>
+          `;
+          return `
+            <div><strong>10-CS:</strong> ${pontos} pontos — ${interpretacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function mostrarCFS() {
+      exibirResultado(
+        'resultado-cfs',
+        () => {
+          const el = document.querySelector('input[name="cfs"]:checked');
+          if (!el) { return null; }
+          const v = parseInt(el.value, 10);
+          const descs = {
+            1: 'Muito ativo',
+            2: 'Ativo',
+            3: 'Regular',
+            4: 'Vulnerável',
+            5: 'Levemente frágil',
+            6: 'Moderadamente frágil',
+            7: 'Muito frágil',
+            8: 'Severamente frágil',
+            9: 'Doente terminal',
+          };
+          return { valor: v, descricao: descs[v] ?? '' };
+        },
+        ({ valor, descricao }) => `
+          <div><strong>CFS:</strong> ${valor} - ${descricao}</div>
+        `
+      );
+    }
+
+    function calcularLawton() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposLawton);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposLawton.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposLawton);
+      return { pontos, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarLawton() {
+      exibirResultado(
+        'resultado-lawton',
+        calcularLawton,
+        ({ pontos, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          return `
+            <div><strong>Lawton:</strong> ${pontos} pontos (quanto maior, mais independente)</div>
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularFrail() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposFrail);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposFrail.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposFrail);
+      let classificacao = null;
+      if (completo) {
+        if (pontos >= 3) {
+          classificacao = 'Frágil (3-5 pontos)';
+        } else if (pontos >= 1) {
+          classificacao = 'Pré-frágil (1-2 pontos)';
+        } else {
+          classificacao = 'Robusto (0 ponto)';
+        }
+      }
+      return { pontos, classificacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarFrail() {
+      exibirResultado(
+        'resultado-frail',
+        calcularFrail,
+        ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Interpretação (FRAIL):</strong><br />
+              Frágil: 3-5 pontos<br />
+              Pré-frágil: 1-2 pontos<br />
+              Robusto: 0 ponto
+            </div>
+          `;
+          return `
+            <div><strong>FRAIL:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+    function calcularSarcF() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposSarcF);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposSarcF.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposSarcF);
+      // Avoid non-ASCII comparison symbol which can break some parsers
+      const risco = completo ? (pontos >= 4 ? \u0027Risco de sarcopenia (>= 4)\u0027 : \u0027Sem risco (< 4)\u0027) : null;
+      return { pontos, risco, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarSarcF() {
+      exibirResultado(
+        \u0027resultado-sarcf\u0027,
+        calcularSarcF,
+        ({ pontos, risco, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Corte SARC-F:</strong> pontuação maior ou igual a 4 indica risco de sarcopenia.
+            </div>
+          `;
+          return `
+            <div><strong>SARC-F:</strong> ${pontos} pontos - ${risco}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularBarthel() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposBarthel);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposBarthel.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposBarthel);
+      let classificacao = null;
+      if (completo) {
+        if (pontos < 20) {
+          classificacao = 'Dependência total (<20)';
+        } else if (pontos <= 35) {
+          classificacao = 'Dependência grave (20-35)';
+        } else if (pontos <= 55) {
+          classificacao = 'Dependência moderada (40-55)';
+        } else if (pontos <= 95) {
+          classificacao = 'Dependência leve (60-95)';
+        } else {
+          classificacao = 'Independente (100)';
+        }
+      }
+      return { pontos, classificacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarBarthel() {
+      exibirResultado(
+        'resultado-barthel',
+        calcularBarthel,
+        ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Classificação (Índice de Barthel):</strong><br />
+              < 20: Dependência total<br />
+              20 a 35: Dependência grave<br />
+              40 a 55: Dependência moderada<br />
+              60 a 95: Dependência leve<br />
+              100: Independente
+            </div>
+          `;
+          return `
+            <div><strong>Barthel:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularGDS() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposGDS);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposGDS.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposGDS);
+      let classificacao = null;
+      if (completo) {
+        if (pontos <= 5) {
+          classificacao = 'Normal (0-5 pontos)';
+        } else if (pontos <= 10) {
+          classificacao = 'Depressão leve (6-10 pontos)';
+        } else {
+          classificacao = 'Depressão severa (11-15 pontos)';
+        }
+      }
+      return { pontos, classificacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarGDS() {
+      exibirResultado(
+        'resultado-gds',
+        calcularGDS,
+        ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Interpretação (GDS-15):</strong><br />
+              0-5: Normal<br />
+              6-10: Depressão leve<br />
+              11-15: Depressão severa
+            </div>
+          `;
+          return `
+            <div><strong>GDS-15:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularApgar() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposApgar);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposApgar.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposApgar);
+      let classificacao = null;
+      if (completo) {
+        if (pontos <= 3) {
+          classificacao = 'Disfuncional (0-3 pontos)';
+        } else if (pontos <= 6) {
+          classificacao = 'Moderadamente disfuncional (4-6 pontos)';
+        } else {
+          classificacao = 'Funcional (7-10 pontos)';
+        }
+      }
+      return { pontos, classificacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarApgar() {
+      exibirResultado(
+        'resultado-apgar',
+        calcularApgar,
+        ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Interpretação (APGAR):</strong><br />
+              0-3: Disfuncional<br />
+              4-6: Moderadamente disfuncional<br />
+              7-10: Funcional
+            </div>
+          `;
+          return `
+            <div><strong>APGAR da Família:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function calcularKatz() {
+      const fd = getFormData();
+      const respondidas = contarRespostas(fd, camposKatz);
+      if (!respondidas) {
+        return null;
+      }
+      const totalPerguntas = camposKatz.length;
+      const completo = respondidas === totalPerguntas;
+      const pontos = somarCampos(fd, camposKatz);
+      let classificacao = null;
+      if (completo) {
+        if (pontos === 6) {
+          classificacao = 'Independente';
+        } else if (pontos >= 4) {
+          classificacao = 'Dependência moderada';
+        } else {
+          classificacao = 'Dependência severa';
+        }
+      }
+      return { pontos, classificacao, respondidas, totalPerguntas, completo };
+    }
+
+    function mostrarKatz() {
+      exibirResultado(
+        'resultado-katz',
+        calcularKatz,
+        ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
+          const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+          if (!completo) {
+            return `
+              <div><strong>Pontuação parcial:</strong> ${pontos} pontos</div>
+              ${progresso}
+            `;
+          }
+          const legenda = `
+            <div class="help">
+              <strong>Classificação (Escala de Katz):</strong><br />
+              6 pontos: Independente<br />
+              4 pontos: Dependência moderada<br />
+              2 ou menos pontos: Dependência severa
+            </div>
+          `;
+          return `
+            <div><strong>Katz:</strong> ${pontos} pontos</div>
+            <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+            ${legenda}
+            ${progresso}
+          `;
+        }
+      );
+    }
+
+    function aoAlterarResposta(event) {
+      const { name } = event.target;
+      if (!name) return;
+      if (camposIVCF.includes(name)) mostrarIVCF();
+      if (name === 'srh') mostrarSRH();
+      if (camposMAN.includes(name)) mostrarMAN();
+      if (camposPfeffer.includes(name)) mostrarPfeffer();
+      if (campos10CS.includes(name)) mostrar10CS();
+      if (camposLawton.includes(name)) mostrarLawton();
+      if (camposBarthel.includes(name)) mostrarBarthel();
+      if (camposKatz.includes(name)) mostrarKatz();
+      if (camposFrail.includes(name)) mostrarFrail();
+      if (camposSarcF.includes(name)) mostrarSarcF();
+      if (name === 'cfs') mostrarCFS();
+      if (camposGDS.includes(name)) mostrarGDS();
+      if (camposApgar.includes(name)) mostrarApgar();
+      // Deferir resumo para app.js quando disponível
+      if (typeof window.atualizarResumo === 'function') window.atualizarResumo();
+    }
+
+    function resetRadiosByNames(names) {
+      names.forEach((nome) => {
+        document.querySelectorAll(`input[name="${nome}"]`).forEach((el) => {
+          if (el instanceof HTMLInputElement && el.type === 'radio') el.checked = false;
+        });
+      });
+    }
+
+    function bindActions() {
+      if (formElement) {
+        formElement.addEventListener('submit', (e) => e.preventDefault());
+      }
+
+      const mainElement = document.querySelector('main');
+      if (mainElement) mainElement.addEventListener('change', aoAlterarResposta);
+
+      const limparButton = document.querySelector('[data-action="limpar"]');
+      if (limparButton && formElement) {
+        limparButton.addEventListener('click', () => {
+          formElement.reset();
+          limparResultados();
+        });
+      }
+
+      const limparFuncionalButton = document.querySelector('[data-action="limpar-funcional"]');
+      if (limparFuncionalButton && formFuncional) {
+        limparFuncionalButton.addEventListener('click', () => {
+          formFuncional.reset();
+          ['resultado-barthel', 'resultado-katz'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '';
+          });
+        });
+      }
+
+      const limparFisicaButton = document.querySelector('[data-action="limpar-fisica"]');
+      if (limparFisicaButton) {
+        limparFisicaButton.addEventListener('click', () => {
+          resetRadiosByNames([...camposFrail, ...camposSarcF, 'cfs']);
+          ['resultado-frail', 'resultado-sarcf', 'resultado-cfs'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '';
+          });
+        });
+      }
+
+      const btnResumo = document.getElementById('btn-resumo');
+      if (btnResumo) {
+        const syncResumoStorage = () => {
+          try {
+            if (typeof window.atualizarResumo === 'function') window.atualizarResumo();
+          } catch(_) {}
+        };
+
+        const isResumoVazio = () => {
+          const el = document.getElementById('resumo-tests');
+          return !el || !el.innerHTML || !el.innerHTML.trim();
+        };
+
+        // Opção A: manter o botão sempre habilitado; usar apenas o título como dica
+        const toggleResumoBtn = () => {
+          const vazio = isResumoVazio();
+          btnResumo.disabled = false;
+          btnResumo.title = vazio ? 'Você pode abrir o resumo; se não houver dados, a página informará.' : '';
+        };
+
+        // Observar mudanças no resumo para habilitar/desabilitar
+        const resumoEl = document.getElementById('resumo-tests');
+        if (resumoEl && 'MutationObserver' in window) {
+          const obs = new MutationObserver(toggleResumoBtn);
+          obs.observe(resumoEl, { childList: true, subtree: true, characterData: true });
+        }
+        toggleResumoBtn();
+
+        btnResumo.addEventListener('click', () => {
+          console.log('[Resumo] Clique detectado no botão #btn-resumo');
+          // Opção B: sempre sincronizar o storage antes de navegar
+          try {
+            syncResumoStorage();
+            console.log('[Resumo] syncResumoStorage executado com sucesso');
+          } catch (e) {
+            console.error('[Resumo] Erro ao sincronizar resumo:', e);
+          }
+
+          const resumoEl = document.getElementById('resumo-tests');
+          const resumoHTML = resumoEl?.innerHTML;
+          console.log('[Resumo] resumo-tests presente?', !!resumoEl, 'tamanho HTML:', resumoHTML ? resumoHTML.length : 0);
+          if (resumoHTML) {
+            localStorage.setItem('resumoTestsHTML', resumoHTML);
+            console.log('[Resumo] resumoTestsHTML salvo no localStorage');
+            // Também salvar um snapshot estruturado como fallback
+            try {
+              const nome = (document.getElementById('nome')?.value || '').trim();
+              const data = (document.getElementById('data_avaliacao')?.value || '').trim();
+              const secoes = [];
+              const coleta = [
+                ['SRH', 'resultado-srh'],
+                ['IVCF-20', 'resultado-ivcf'],
+                ['CFS', 'resultado-cfs'],
+                ['FRAIL', 'resultado-frail'],
+                ['SARC-F', 'resultado-sarcf'],
+                ['Barthel', 'resultado-barthel'],
+                ['Katz', 'resultado-katz'],
+                ['Lawton', 'resultado-lawton'],
+                ['Pfeffer', 'resultado-pfeffer'],
+                ['MAN', 'resultado-man'],
+                ['10-CS', 'resultado-10cs'],
+                ['Zucchelli', 'resultado-zucchelli'],
+                ['CAM', 'resultado-cam'],
+                ['GDS-15', 'resultado-gds'],
+                ['APGAR da Família', 'resultado-apgar']
+              ];
+              coleta.forEach(([titulo, id]) => {
+                const el = document.getElementById(id);
+                const html = el ? el.innerText.trim() : '';
+                if (html) secoes.push({ titulo, resultado: html });
+              });
+              const dados = { nome, data, secoes };
+              localStorage.setItem('dadosAvaliacao', JSON.stringify(dados));
+              console.log('[Resumo] dadosAvaliacao salvo no localStorage com', secoes.length, 'seções');
+            } catch (e) {
+              console.warn('[Resumo] Falha ao salvar dadosAvaliacao:', e);
+            }
+          } else {
+            console.warn('[Resumo] Sem conteúdo no resumo-tests; página de resumo pode exibir mensagem vazia');
+          }
+
+          try {
+            console.log('[Resumo] Tentando navegar para ./resumo-resultados.html via assign');
+            window.location.assign('./resumo-resultados.html');
+          } catch (e) {
+            console.error('Falha ao navegar para resumo-resultados.html via assign', e);
+            console.log('[Resumo] Tentando fallback via location.href');
+            window.location.href = './resumo-resultados.html';
+          }
+        });
+      }
+    }
+
+    // Script inline ativo
+  </script>
+  <script>
+    // Inicializador simples e independente para garantir o click do botão Resumo
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('btn-resumo');
+      console.log('[Resumo:init] DOMContentLoaded. btn-resumo encontrado?', !!btn);
+      if (!btn) return;
+      if (!btn.__resumoBound) {
+        btn.__resumoBound = true;
+        btn.addEventListener('click', () => {
+          console.log('[Resumo:click] iniciando navegação para resumo-resultados.html');
+          try {
+            window.location.assign('./resumo-resultados.html');
+          } catch (e) {
+            console.error('[Resumo:click] erro no assign', e);
+            window.location.href = './resumo-resultados.html';
+          }
+        });
+      }
+    });
+  </script>
+  
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #f7f7fb;
+      color: #222;
+      line-height: 1.4;
+    }
+
+    header {
+      background: #3f51b5;
+      color: #fff;
+      /* padding: 16px 20px; */
+    }
+
+    main {
+      max-width: 920px;
+      margin: 24px auto;
+      padding: 0 16px 48px;
+    }
+
+    section {
+      background: #fff;
+      border: 1px solid #e6e6ef;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    section > h2 {
+      margin: 0;
+      padding: 14px 16px;
+      background: #f1f3ff;
+      border-bottom: 1px solid #e6e6ef;
+      font-size: 18px;
+    }
+
+    .group {
+      padding: 16px;
+    }
+
+    .q {
+      margin: 12px 0;
+    }
+
+    .q > label:first-child {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .help {
+      color: #555;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .column,
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex-direction: column;
+    }
+
+    .column > label,
+    .row > label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f7f8ff;
+      border: 1px solid #e6e6ef;
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .row > label {
+      justify-content: center;
+      min-width: 60px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding: 12px 16px;
+      border-top: 1px solid #eee;
+      background: #fafafa;
+    }
+
+    button {
+      background: #3f51b5;
+      border: none;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #2f3fa0;
+    }
+
+    button.secondary {
+      background: #e0e0f7;
+      color: #1b1b3a;
+    }
+
+    button.secondary:hover {
+      background: #c7c7ee;
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(63, 81, 181, 0.35);
+      outline-offset: 2px;
+    }
+
+    .resultado {
+      padding: 12px 16px;
+    }
+
+    .score {
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .data_avaliacao-container {
+      text-align: center;
+    }
+
+    /* .grid-container {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+      align-items: flex-end;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font: inherit;
+      background: #fff;
+    }
+
+    .form-input--date {
+      max-width: 140px;
+      text-align: center;
+    } */
+
+    @media (max-width: 720px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</body>
+</html>

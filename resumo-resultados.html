@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultado da Avaliação</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <h1>Resultado da Avaliação</h1>
+      </div>
+    </header>
+    <main id="resultado-container">
+      <section aria-label="Resumo dos testes aplicados">
+        <h2>Resumo dos Testes Aplicados</h2>
+        <div class="resultado meta" id="resumo-meta" hidden>
+          <div><strong>Paciente:</strong> <span id="resumo-meta-nome">-</span></div>
+          <div><strong>Data:</strong> <span id="resumo-meta-data">-</span></div>
+        </div>
+        <div id="resumo-tests" class="resultado" aria-live="polite"></div>
+        <p id="resumo-vazio" role="status" hidden>Não há dados para exibir. Volte e realize a avaliação.</p>
+      </section>
+    </main>
+    <div class="actions">
+      <button type="button" class="secondary" onclick="window.location.href='index.html'">Voltar</button>
+      <button id="salvar-pdf-resultado">Salvar como PDF</button>    
+    </div>
+  </div>
+
+  <!-- Botão flutuante para salvar como PDF -->
+  <button id="fab-pdf" type="button" title="Salvar como PDF" aria-label="Salvar como PDF">
+    <img src="assets/pdf-logo-sem-fundo.png" alt="" width="24" height="24" />
+  </button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="scripts/resumo-resultado.js"></script>
+</body>
+</html>
