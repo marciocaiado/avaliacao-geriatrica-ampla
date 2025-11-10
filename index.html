@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Avaliação HGG</title>
+  <title>Avaliação Geriátrica</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <script src="scripts/data.js"></script>
 <body>
   <header>
     <div class="logo">
-      <h1>Avaliação Geriátrica Ampla do Serviço de Geriatria do Hospital Estadual Dr. Alberto Rassi</h1>
+      <h1>Avaliação Geriátrica Ampla</h1>
       <!-- <div class="help">Selecione a alternativa que melhor descreve o desempenho.</div> -->
     </div>
   </header>
@@ -1885,21 +1885,17 @@
         toggleResumoBtn();
 
         btnResumo.addEventListener('click', () => {
-          console.log('[Resumo] Clique detectado no botão #btn-resumo');
           // Opção B: sempre sincronizar o storage antes de navegar
           try {
             syncResumoStorage();
-            console.log('[Resumo] syncResumoStorage executado com sucesso');
           } catch (e) {
             console.error('[Resumo] Erro ao sincronizar resumo:', e);
           }
 
           const resumoEl = document.getElementById('resumo-tests');
           const resumoHTML = resumoEl?.innerHTML;
-          console.log('[Resumo] resumo-tests presente?', !!resumoEl, 'tamanho HTML:', resumoHTML ? resumoHTML.length : 0);
           if (resumoHTML) {
             localStorage.setItem('resumoTestsHTML', resumoHTML);
-            console.log('[Resumo] resumoTestsHTML salvo no localStorage');
             // Também salvar um snapshot estruturado como fallback
             try {
               const nome = (document.getElementById('nome')?.value || '').trim();
@@ -1929,7 +1925,6 @@
               });
               const dados = { nome, data, secoes };
               localStorage.setItem('dadosAvaliacao', JSON.stringify(dados));
-              console.log('[Resumo] dadosAvaliacao salvo no localStorage com', secoes.length, 'seções');
             } catch (e) {
               console.warn('[Resumo] Falha ao salvar dadosAvaliacao:', e);
             }
@@ -1938,11 +1933,10 @@
           }
 
           try {
-            console.log('[Resumo] Tentando navegar para ./resumo-resultados.html via assign');
             window.location.assign('./resumo-resultados.html');
           } catch (e) {
             console.error('Falha ao navegar para resumo-resultados.html via assign', e);
-            console.log('[Resumo] Tentando fallback via location.href');
+            
             window.location.href = './resumo-resultados.html';
           }
         });
@@ -1955,12 +1949,10 @@
     // Inicializador simples e independente para garantir o click do botão Resumo
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('btn-resumo');
-      console.log('[Resumo:init] DOMContentLoaded. btn-resumo encontrado?', !!btn);
       if (!btn) return;
       if (!btn.__resumoBound) {
         btn.__resumoBound = true;
         btn.addEventListener('click', () => {
-          console.log('[Resumo:click] iniciando navegação para resumo-resultados.html');
           try {
             window.location.assign('./resumo-resultados.html');
           } catch (e) {

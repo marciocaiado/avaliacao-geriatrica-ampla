@@ -160,7 +160,7 @@ body.resultado {
 
 @media (max-width: 720px) {
   header { padding: 12px 14px; }
-  .logo { text-align: left; }
+  .logo { text-align: center; }
   .grid-container { grid-template-columns: 1fr; }
   .actions {
     flex-wrap: wrap;
