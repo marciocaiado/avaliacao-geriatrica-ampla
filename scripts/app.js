@@ -641,11 +641,11 @@ function bindActions() {
   const mainElement = document.querySelector('main');
   if (mainElement) {
     mainElement.addEventListener('change', aoAlterarResposta);
-    // Toggle de colapsáveis ao clicar no h2
+    // Toggle de colapsáveis ao clicar no h2, h3 ou h4
     mainElement.addEventListener('click', (e) => {
-      const h2 = e.target.closest('section.collapsible > h2');
-      if (h2) {
-        const section = h2.parentElement;
+      const header = e.target.closest('section.collapsible > h1, section.collapsible > h2, section.collapsible > h3, section.collapsible > h4');
+      if (header) {
+        const section = header.parentElement;
         section.classList.toggle('open');
       }
     });
@@ -655,6 +655,7 @@ function bindActions() {
   if (visualizarResultadoButton) {
     visualizarResultadoButton.addEventListener('click', visualizarResultado);
   }
+
 
   // Ref ref: atualizar SRH imediatamente ao clique
   const srhInputs = document.querySelectorAll('input[name="srh"]');
@@ -830,5 +831,56 @@ function bindActions() {
   }
 }
 
+// Função para formatar datas automaticamente (DD/MM/AAAA)
+function formatDateInput(input) {
+  input.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+
+    if (value.length >= 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2);
+    }
+    if (value.length >= 5) {
+      value = value.substring(0, 5) + '/' + value.substring(5, 9);
+    }
+
+    e.target.value = value;
+  });
+}
+
 // Inicializa
-document.addEventListener('DOMContentLoaded', bindActions);
+document.addEventListener('DOMContentLoaded', () => {
+  bindActions();
+
+  // Aplica formatação automática no campo de data de nascimento
+  const dataNascimentoInput = document.getElementById('anamnese_data_nascimento');
+  if (dataNascimentoInput) {
+    formatDateInput(dataNascimentoInput);
+
+    // Função para calcular a idade
+    const calculateAge = (birthDateString) => {
+      const parts = birthDateString.split('/');
+      if (parts.length !== 3) return '';
+
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10);
+      const year = parseInt(parts[2], 10);
+
+      if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear()) return '';
+
+      const birthDate = new Date(year, month - 1, day);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age >= 0 ? age.toString() : '';
+    };
+
+    const idadeInput = document.getElementById('anamnese_idade');
+    dataNascimentoInput.addEventListener('input', () => {
+      idadeInput.value = calculateAge(dataNascimentoInput.value);
+    });
+  }
+});
