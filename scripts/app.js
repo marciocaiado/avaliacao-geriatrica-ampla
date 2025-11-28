@@ -313,15 +313,15 @@ function calcularZucchelli() {
 
 function mostrarZucchelli() {
   exibirResultado('resultado-zucchelli', calcularZucchelli, ({ pontos, risco, respondidas, totalPerguntas, completo }) => {
-    const progresso = `<div class=\"score\">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+    const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
     const legenda = `
-      <div class=\"help\">
+      <div class="help">
         Pacientes com pontuação ≥ 3 pontos têm alto risco de delirium.
       </div>
     `;
     return `
       <div><strong>${completo ? 'Zucchelli' : 'Zucchelli (parcial)'}:</strong> ${pontos} pontos</div>
-      <div class=\"score\"><strong>Classificação:</strong> ${risco}</div>
+      <div class="score"><strong>Classificação:</strong> ${risco}</div>
       ${legenda}
       ${progresso}
     `;
@@ -345,9 +345,9 @@ function calcularCAM() {
 
 function mostrarCAM() {
   exibirResultado('resultado-cam', calcularCAM, ({ status, respondidas, totalPerguntas, completo }) => {
-    const progresso = `<div class=\"score\">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+    const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
     const legenda = `
-      <div class=\"help\">O diagnóstico de delirium requer: (1) Início agudo/curso flutuante E (2) Desatenção E (3) Pensamento desorganizado OU (4) Alteração do nível de consciência.</div>
+      <div class="help">O diagnóstico de delirium requer: (1) Início agudo/curso flutuante E (2) Desatenção E (3) Pensamento desorganizado OU (4) Alteração do nível de consciência.</div>
     `;
     return `
       <div><strong>${completo ? 'CAM' : 'CAM (parcial)'}:</strong> ${status}</div>
@@ -475,13 +475,17 @@ function calcularKatz() {
 
 function mostrarKatz() {
   exibirResultado('resultado-katz', calcularKatz, ({ pontos, classificacao, respondidas, totalPerguntas, completo }) => {
-    const progresso = `<div class=\"score\">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+    const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
     const legenda = `
-      <div class=\"help\">\n        <strong>Classificação (Escala de Katz):</strong><br>\n        6 pontos: Independente<br>\n        4–5 pontos: Dependência moderada<br>\n        0–3 pontos: Dependência severa\n      </div>
+      <div class="help">        <strong>Classificação (Escala de Katz):</strong><br>
+        6 pontos: Independente<br>
+        4–5 pontos: Dependência moderada<br>
+        0–3 pontos: Dependência severa
+      </div>
     `;
     return `
       <div><strong>${completo ? 'Katz' : 'Katz (parcial)'}:</strong> ${pontos} pontos</div>
-      <div class=\"score\"><strong>Classificação:</strong> ${classificacao}</div>
+      <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
       ${legenda}
       ${progresso}
     `;
@@ -883,4 +887,82 @@ document.addEventListener('DOMContentLoaded', () => {
       idadeInput.value = calculateAge(dataNascimentoInput.value);
     });
   }
+
+  // Medication Modal Logic
+  const modal = document.getElementById('medicamento-modal');
+  const btnOpenModal = document.getElementById('btn-adicionar-medicamento');
+  const spanClose = document.getElementsByClassName('close-button')[0];
+  const formModal = document.getElementById('form-medicamento-modal');
+  const medicamentosContainer = document.getElementById('medicamentos-container');
+  const addMedicationButtonContainer = btnOpenModal.parentElement;
+
+  btnOpenModal.onclick = function() {
+    modal.style.display = 'block';
+  }
+
+  spanClose.onclick = function() {
+    modal.style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  formModal.onsubmit = function(event) {
+    event.preventDefault();
+    const newId = (document.querySelectorAll('.medicamento-item').length || 0) + 1;
+
+    const nome = document.getElementById('modal_med_nome').value;
+    const justificativa = document.getElementById('modal_med_justificativa').value;
+    const dose = document.getElementById('modal_med_dose').value;
+    const tempo = document.getElementById('modal_med_tempo').value;
+
+    const newMedicamento = document.createElement('div');
+    newMedicamento.className = 'medicamento-item';
+    newMedicamento.setAttribute('data-medicamento-id', newId);
+    newMedicamento.innerHTML = `
+      <section class="open">
+        <h4 style="margin: 8px;">Medicamento ${newId} <span class="delete-medicamento" style="margin: 8px;" data-id="${newId}">&times;</span></h4>
+        <div class="section-body">
+          <div class="q">
+            <label for="med${newId}_nome">Nome</label>
+            <input class="form-input" type="text" id="med${newId}_nome" name="med${newId}_nome" value="${nome}" />
+          </div>
+          <div class="q">
+            <label for="med${newId}_justificativa">Justificativa de uso</label>
+            <input class="form-input" type="text" id="med${newId}_justificativa" name="med${newId}_justificativa" value="${justificativa}" />
+          </div>
+          <div class="q">
+            <label for="med${newId}_dose">Dose e posologia</label>
+            <input class="form-input" type="text" id="med${newId}_dose" name="med${newId}_dose" value="${dose}" />
+          </div>
+          <div class="q">
+            <label for="med${newId}_tempo">Tempo de uso</label>
+            <input class="form-input" type="text" id="med${newId}_tempo" name="med${newId}_tempo" value="${tempo}" />
+          </div>
+        </div>
+      </section>
+    `;
+
+    medicamentosContainer.appendChild(newMedicamento);
+    // Move the button container after the new element
+    medicamentosContainer.insertAdjacentElement('afterend', addMedicationButtonContainer);
+
+
+    formModal.reset();
+    modal.style.display = 'none';
+  }
+
+  // Event delegation for delete medication buttons
+  medicamentosContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-medicamento')) {
+      const medicamentoId = event.target.getAttribute('data-id');
+      const medicamentoItem = document.querySelector(`.medicamento-item[data-medicamento-id="${medicamentoId}"]`);
+      if (medicamentoItem) {
+        medicamentoItem.remove();
+      }
+    }
+  });
 });
