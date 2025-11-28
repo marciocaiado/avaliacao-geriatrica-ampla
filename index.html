@@ -15,7 +15,454 @@
     </div>
   </header>
   <main>
-    <div class="grid-container">
+    <section class="collapsible">
+      <h1>Anamnese</h1>
+      <div class="section-body">
+        <h3>MAIS IMPORTANTE</h3>
+        <div class="group">
+          <h4>Identificação</h4>
+          <div class="q">
+            <label for="anamnese_nome">Nome</label>
+            <input class="form-input" type="text" id="anamnese_nome" name="anamnese_nome" />
+          </div>
+          <div class="grid-container-3">
+            <div class="q">
+              <label for="anamnese_data_nascimento">Data de nascimento</label>
+              <input class="form-input form-input--date" type="text" id="anamnese_data_nascimento" name="anamnese_data_nascimento" placeholder="DD/MM/AAAA" inputmode="numeric" maxlength="10" />
+            </div>
+            <div class="q">
+              <label for="anamnese_idade">Idade</label>
+              <input class="form-input" type="text" id="anamnese_idade" name="anamnese_idade" inputmode="numeric" />
+            </div>
+            <div class="q">
+              <label for="anamnese_num_atendimento">Número de Atendimento</label>
+              <input class="form-input" type="text" id="anamnese_num_atendimento" name="anamnese_num_atendimento" />
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="q">
+              <label>Sexo</label>
+              <div class="row">
+                <label><input type="radio" name="anamnese_sexo" value="masculino" /> M</label>
+                <label><input type="radio" name="anamnese_sexo" value="feminino" /> F</label>
+              </div>
+            </div>
+            <div class="q">
+              <label for="anamnese_aposentado">Aposentado</label>
+              <div class="row">
+                <label><input type="radio" name="anamnese_aposentado" value="sim" /> Sim</label>
+                <label><input type="radio" name="anamnese_aposentado" value="nao" /> Não</label>
+              </div>
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="q">
+              <label for="anamnese_profissao">Profissão</label>
+              <input class="form-input" type="text" id="anamnese_profissao" name="anamnese_profissao" />
+            </div>
+            <div class="q">
+              <label for="anamnese_renda">Renda</label>
+              <input class="form-input" type="text" id="anamnese_renda" name="anamnese_renda" inputmode="numeric"/>
+            </div>
+          </div>     
+          <div class="grid-container">
+            <div class="q">
+              <label for="anamnese_naturalidade">Naturalidade</label>
+              <input class="form-input" type="text" id="anamnese_naturalidade" name="anamnese_naturalidade" />
+            </div>
+            <div class="q">
+              <label for="anamnese_escolaridade">Escolaridade</label>
+              <input class="form-input" type="text" id="anamnese_escolaridade" name="anamnese_escolaridade" />
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="q">
+              <label for="anamnese_cor">Cor</label>
+              <input class="form-input" type="text" id="anamnese_cor" name="anamnese_cor" />
+            </div>
+            <div class="q">
+              <label for="anamnese_estado_civil">Estado Civil</label>
+              <input class="form-input" type="text" id="anamnese_estado_civil" name="anamnese_estado_civil" />
+            </div>
+          </div>
+          <div class="q">
+            <label for="anamnese_acompanhante">Nome do Acompanhante</label>
+            <input class="form-input" type="text" id="anamnese_acompanhante" name="anamnese_acompanhante" />
+          </div>
+          <div class="grid-container">
+            <div class="q">
+              <label for="anamnese_grau_parentesco">Grau de Parentesco</label>
+              <input class="form-input" type="text" id="anamnese_grau_parentesco" name="anamnese_grau_parentesco" />
+            </div>
+            <div class="q">
+              <label for="anamnese_filhos">Filhos</label>
+              <input class="form-input" type="text" id="anamnese_filhos" name="anamnese_filhos" />
+            </div>
+          </div>
+
+          <h4>Valores</h4>
+          <div class="q">
+            <label for="anamnese_bom_dia">O que é um bom dia para você?</label>
+            <textarea class="form-input" id="anamnese_bom_dia" name="anamnese_bom_dia" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_importante">Quem é importante para você?</label>
+            <textarea class="form-input" id="anamnese_importante" name="anamnese_importante" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_alegria">O que lhe traz alegria?</label>
+            <textarea class="form-input" id="anamnese_alegria" name="anamnese_alegria" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_vale_pena">O que faz a vida valer a pena?</label>
+            <textarea class="form-input" id="anamnese_vale_pena" name="anamnese_vale_pena" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_medos">Quais são seus medos e preocupações sobre sua saúde, incluindo sua doença e o tratamento?</label>
+            <textarea class="form-input" id="anamnese_medos" name="anamnese_medos" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_resultado_hospital">Qual o resultado que você mais deseja ao estar no hospital?</label>
+            <textarea class="form-input" id="anamnese_resultado_hospital" name="anamnese_resultado_hospital" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_gostaria_fazer">O que você mais gostaria de poder fazer como resultado de estar no hospital?</label>
+            <textarea class="form-input" id="anamnese_gostaria_fazer" name="anamnese_gostaria_fazer" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_objetivos">Quais são seus objetivos mais importantes se sua situação de saúde piorar?</label>
+            <textarea class="form-input" id="anamnese_objetivos" name="anamnese_objetivos" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="anamnese_confia_decisoes">Existe uma pessoa em quem você confie para tomar decisões sobre a sua saúde em momentos que você não consiga mais tomar essas decisões?</label>
+            <textarea class="form-input" id="anamnese_confia_decisoes" name="anamnese_confia_decisoes" rows="2"></textarea>
+          </div>
+        </div>
+
+        <h3>MEDICAMENTOS</h3>
+        <div class="group">
+          <div id="medicamentos-container">
+          </div>
+          <div class="actions">
+            <button type="button" id="btn-adicionar-medicamento">Adicionar Medicamento</button>
+          </div>
+
+          <div class="q">
+            <label>Presença de polifarmácia (uso de 5 ou mais medicações)</label>
+            <div class="column">
+              <label><input type="radio" name="polifarmacia" value="sim" /> Sim</label>
+              <label><input type="radio" name="polifarmacia" value="nao" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <label>Presença de Prescrição Potencialmente Inapropriada</label>
+            <div class="column">
+              <label><input type="checkbox" name="ppi_benzodiazepinicos" /> Benzodiazepínicos</label>
+              <label><input type="checkbox" name="ppi_opioides" /> Opioides</label>
+              <label><input type="checkbox" name="ppi_anticolinergicos" /> Medicamentos altamente anticolinérgicos (por exemplo, difenidramina)</label>
+              <label><input type="checkbox" name="ppi_sedativos" /> Todos os sedativos e medicamentos para dormir com ou sem receita médica</label>
+              <label><input type="checkbox" name="ppi_relaxantes" /> Relaxantes musculares</label>
+              <label><input type="checkbox" name="ppi_antidepressivos" /> Antidepressivos tricíclicos</label>
+              <label><input type="checkbox" name="ppi_antipsicoticos" /> Antipsicóticos</label>
+              <label><input type="checkbox" name="ppi_estabilizadores" /> Estabilizadores de humor</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <label for="medicamentos_alergia">Medicamentos e Alimentos que não pode ou tem alergia</label>
+            <textarea class="form-input" id="medicamentos_alergia" name="medicamentos_alergia" rows="2"></textarea>
+          </div>
+        </div>
+
+        <h3>MULTICOMPLEXIDADE</h3>
+        <div class="group">
+          <div class="q">
+            <label>Internações não programadas no último ano</label>
+            <div class="row">
+              <label><input type="radio" name="internacoes" value="1" /> 1</label>
+              <label><input type="radio" name="internacoes" value="2" /> 2</label>
+              <label><input type="radio" name="internacoes" value="3+" /> 3 ou mais</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <label>Vacinas atualizadas</label>
+            <div class="column">
+              <div class="row">
+                <label><input type="checkbox" name="vacina_influenza" /> Influenza</label>
+                <label><input type="checkbox" name="vacina_pneumonia" /> Pneumonia</label>
+                <label><input type="checkbox" name="vacina_covid" /> COVID-19</label>
+                <label><input type="checkbox" name="vacina_tetano" /> Tétano</label>
+              </div>
+              <div class="row">
+                <label><input type="checkbox" name="vacina_herpes" /> Herpes Zoster</label>
+                <label><input type="checkbox" name="vacina_vsr" /> VSR</label>
+                <label><input type="checkbox" name="vacina_meningococica" /> Menincocócica</label>
+                <label><input type="checkbox" name="vacina_hepatite" /> Hepatite B</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <label>Morbidades</label>
+            <div class="row">
+              <label><input type="checkbox" name="morbidade_hipertensao" /> Hipertensão</label>
+              <label><input type="checkbox" name="morbidade_diabetes" /> Diabetes</label>
+              <label><input type="checkbox" name="morbidade_renal" /> Doença renal crônica</label>
+            </div>
+            <div class="q">
+              <label for="morbidade_outra">Outras</label>
+              <input class="form-input" type="text" id="morbidade_outra" name="morbidade_outra" />
+            </div>
+          </div>
+
+          <div class="q">
+            <label>Patologias prévias</label>
+            <div class="column">
+              <label><input type="checkbox" name="patologia_ave" /> Acidente vascular encefálico</label>
+              <label><input type="checkbox" name="patologia_iam" /> Infarto agudo do miocárdio</label>
+            </div>
+            <div class="q">
+              <label for="patologia_outra">Outras</label>
+              <input class="form-input" type="text" id="patologia_outra" name="patologia_outra" />
+            </div>
+          </div>
+
+          <div class="q">
+            <label for="cirurgias_previas">Cirurgias prévias</label>
+            <textarea class="form-input" id="cirurgias_previas" name="cirurgias_previas" rows="2"></textarea>
+          </div>
+
+          <div class="q">
+            <label for="antecedentes_familiares">Antecedentes familiares</label>
+            <textarea class="form-input" id="antecedentes_familiares" name="antecedentes_familiares" rows="2"></textarea>
+          </div>
+
+          <div class="q">
+            <label>Hábitos de Vida</label>
+            <div class="row">
+              <label><input type="checkbox" name="habito_tabagismo" /> Tabagismo</label>
+              <label><input type="checkbox" name="habito_etilismo" /> Etilismo</label>
+              <label><input type="checkbox" name="habito_sedentarismo" /> Sedentarismo</label>
+            </div>
+            <div class="q">
+              <label for="habitos_observacao">Observação</label>
+              <textarea class="form-input" id="habitos_observacao" name="habitos_observacao" rows="2"></textarea>
+            </div>
+          </div>
+
+          <h4>Inventário alimentar</h4>
+          <div class="q">
+            <label for="consumo_leite">Consumo de leite e derivados diário</label>
+            <input class="form-input" type="text" id="consumo_leite" name="consumo_leite" />
+          </div>
+          <div class="q">
+            <label for="consumo_frutas">Consumo de frutas e verduras diário</label>
+            <input class="form-input" type="text" id="consumo_frutas" name="consumo_frutas" />
+          </div>
+          <div class="q">
+            <label for="consumo_proteinas">Consumo de proteínas diário</label>
+            <input class="form-input" type="text" id="consumo_proteinas" name="consumo_proteinas" />
+          </div>
+          <div class="q">
+            <label for="ingesta_hidrica">Ingesta hídrica diária</label>
+            <input class="form-input" type="text" id="ingesta_hidrica" name="ingesta_hidrica" />
+          </div>
+
+          <h4>Interrogatório sintomatológico</h4>
+          <div class="q">
+            <label for="perda_ponderal">Perda ponderal</label>
+            <input class="form-input" type="text" id="perda_ponderal" name="perda_ponderal" />
+          </div>
+          <div class="q">
+            <label for="sintomas_gerais">Outros sintomas gerais</label>
+            <input class="form-input" type="text" id="sintomas_gerais" name="sintomas_gerais" />
+          </div>
+          <div class="q">
+            <label for="aparelho_respiratorio">Aparelho respiratório</label>
+            <input class="form-input" type="text" id="aparelho_respiratorio" name="aparelho_respiratorio" />
+          </div>
+          <div class="q">
+            <label for="aparelho_cardiovascular">Aparelho cardiovascular</label>
+            <input class="form-input" type="text" id="aparelho_cardiovascular" name="aparelho_cardiovascular" />
+          </div>
+          <div class="q">
+            <label for="sistema_digestorio">Sistema digestório</label>
+            <input class="form-input" type="text" id="sistema_digestorio" name="sistema_digestorio" />
+          </div>
+          <div class="q">
+            <label>Sistema digestório - alterações</label>
+            <div class="column">
+              <label><input type="checkbox" name="protese_dentaria" /> Uso de prótese dentária inadequada</label>
+              <label><input type="checkbox" name="lesoes_orais" /> Presença lesões orais</label>
+              <label><input type="checkbox" name="disfagia" /> Presença de disfagia</label>
+              <label><input type="checkbox" name="incontinencia_fecal" /> Presença de incontinência fecal</label>
+            </div>
+          </div>
+          <div class="q">
+            <label for="sistema_genitourinario">Sistema genitourinário</label>
+            <input class="form-input" type="text" id="sistema_genitourinario" name="sistema_genitourinario" />
+          </div>
+          <div class="q">
+            <label>Sistema genitourinário - alterações</label>
+            <div class="column">
+              <label><input type="checkbox" name="incontinencia_urinaria" /> Presença de incontinência urinária</label>
+            </div>
+          </div>
+          <div class="q">
+            <label for="sistema_osteoarticular">Sistema osteoarticular</label>
+            <input class="form-input" type="text" id="sistema_osteoarticular" name="sistema_osteoarticular" />
+          </div>
+          <div class="q">
+            <label for="quedas_ultimo_ano">Quedas no último ano</label>
+            <input class="form-input" type="text" id="quedas_ultimo_ano" name="quedas_ultimo_ano" />
+          </div>
+          <div class="q">
+            <label for="dispositivo_marcha">Uso de dispositivo auxiliar de marcha</label>
+            <input class="form-input" type="text" id="dispositivo_marcha" name="dispositivo_marcha" />
+          </div>
+          <div class="q">
+            <label for="sono">Sono</label>
+            <input class="form-input" type="text" id="sono" name="sono" />
+          </div>
+          <div class="q">
+            <label for="humor">Humor</label>
+            <input class="form-input" type="text" id="humor" name="humor" />
+          </div>
+          <div class="q">
+            <label for="neurologico">Neurológico</label>
+            <input class="form-input" type="text" id="neurologico" name="neurologico" />
+          </div>
+          <div class="q">
+            <label for="cognicao">Cognição</label>
+            <input class="form-input" type="text" id="cognicao" name="cognicao" />
+          </div>
+          <div class="q">
+            <label>Déficits sensoriais</label>
+            <div class="column">
+              <label><input type="checkbox" name="deficit_visual" /> Presença de déficit visual</label>
+              <label><input type="checkbox" name="deficit_auditivo" /> Presença de déficit auditivo</label>
+            </div>
+          </div>
+
+          <h4>Exame Físico</h4>
+          <div class="grid-container-5">
+            <div class="q">
+              <label for="peso">Peso</label>
+              <input class="form-input" type="text" id="peso" name="peso" />
+            </div>
+            <div class="q">
+              <label for="altura">Altura</label>
+              <input class="form-input" type="text" id="altura" name="altura" />
+            </div>
+            <div class="q">
+              <label for="imc">IMC</label>
+              <input class="form-input" type="text" id="imc" name="imc" />
+            </div>
+            <div class="q">
+              <label for="forca_preensao">Força de preensão palmar</label>
+              <input class="form-input" type="text" id="forca_preensao" name="forca_preensao" />
+            </div>
+            <div class="q">
+              <label for="circunferencia_panturrilha">Circunferência da Panturrilha</label>
+              <input class="form-input" type="text" id="circunferencia_panturrilha" name="circunferencia_panturrilha" />
+            </div>
+          </div>
+          <div class="grid-container-6">
+            <div class="q">
+              <label for="pa">PA</label>
+              <input class="form-input" type="text" id="pa" name="pa" />
+            </div>
+            <div class="q">
+              <label for="fc">FC</label>
+              <input class="form-input" type="text" id="fc" name="fc" />
+            </div>
+            <div class="q">
+              <label for="fr">FR</label>
+              <input class="form-input" type="text" id="fr" name="fr" />
+            </div>
+            <div class="q">
+              <label for="sat">Sat</label>
+              <input class="form-input" type="text" id="sat" name="sat" />
+            </div>
+            <div class="q">
+              <label for="tec">TEC</label>
+              <input class="form-input" type="text" id="tec" name="tec" />
+            </div>
+            <div class="q">
+              <label for="hgt">HGT</label>
+              <input class="form-input" type="text" id="hgt" name="hgt" />
+            </div>
+          </div>
+          <div class="q">
+            <label for="exame_geral">Geral</label>
+            <textarea class="form-input" id="exame_geral" name="exame_geral" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="exame_neuro">Neuro</label>
+            <textarea class="form-input" id="exame_neuro" name="exame_neuro" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="exame_respiratorio">Aparelho respiratório</label>
+            <textarea class="form-input" id="exame_respiratorio" name="exame_respiratorio" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="exame_cardiovascular">Aparelho cardiovascular</label>
+            <textarea class="form-input" id="exame_cardiovascular" name="exame_cardiovascular" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="exame_abdome">Abdome</label>
+            <textarea class="form-input" id="exame_abdome" name="exame_abdome" rows="2"></textarea>
+          </div>
+          <div class="q">
+            <label for="exame_membros">Membros</label>
+            <textarea class="form-input" id="exame_membros" name="exame_membros" rows="2"></textarea>
+          </div>
+        </div>
+
+        <h3>MOBILIDADE</h3>
+        <div class="group">
+          <div class="q">
+            <label>Teste de velocidade de marcha (&gt;0,8m/s)</label>
+            <div class="row">
+              <label><input type="radio" name="teste_marcha" value="sim" /> Sim</label>
+              <label><input type="radio" name="teste_marcha" value="nao" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>Teste do sentar e levantar 5 vezes (&gt;15 segundos)</label>
+            <div class="row">
+              <label><input type="radio" name="teste_sentar_levantar" value="sim" /> Sim</label>
+              <label><input type="radio" name="teste_sentar_levantar" value="nao" /> Não</label>
+            </div>
+          </div>
+        </div>
+
+        <h3>MENTE</h3>
+        <div class="group">
+          <div class="q">
+            <label>Rastreio positivo para delirium (CAM ou CAM-ICU positivo)</label>
+            <div class="row">
+              <label><input type="radio" name="rastreio_delirium" value="sim" /> Sim</label>
+              <label><input type="radio" name="rastreio_delirium" value="nao" /> Não</label>
+            </div>
+          </div>
+          <div class="q">
+            <label>Rastreio cognitivo (10-CS)</label>
+            <div class="column">
+              <label><input type="radio" name="rastreio_cognitivo" value="nao_possivel" /> Não possível no momento</label>
+            </div>
+            <div class="q">
+              <label for="rastreio_cognitivo_valor">Avaliado no valor de</label>
+              <input class="form-input" type="text" id="rastreio_cognitivo_valor" name="rastreio_cognitivo_valor" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="grid-container">
       <div class="q">
         <label for="nome">NOME</label>
         <input class="form-input" type="text" id="nome" name="nome" />
@@ -24,8 +471,10 @@
         <label for="data_avaliacao" class="label--center">DATA DA AVALIAÇÃO</label>
         <input class="form-input form-input--date" type="text" id="data_avaliacao" name="data_avaliacao" placeholder="DD-MM-YYYY" inputmode="numeric" />
       </div>
-    </div>
+    </div> -->
+    <section class="collapsible">
     <h1>Rastreio</h1>
+    <div class="section-body">
       <form id="form-ivcf">
         <section class="collapsible">
           <h2>SRH — Pergunta Única Global</h2>
@@ -223,7 +672,11 @@
           </div>
         </section>
       </form>
+    </div>
+    </section>
+    <section class="collapsible">
     <h1>Dimensão Física</h1>
+    <div class="section-body">
       <form id="form-fisica">
         <section class="collapsible">
           <h2>Escala clínica de fragilidade</h2>
@@ -346,10 +799,14 @@
         </div>
         </section>
       </form>
+    </div>
+    </section>
 
+    <section class="collapsible">
     <h1>Dimensão Funcional</h1>
-      <h2>Atividades básicas da vida diária</h2>
+      <div class="section-body">
         <form id="form-funcional">
+        <h2>Atividades básicas da vida diária</h2>
           <section class="collapsible">
             <h2>Índice de Barthel</h2>
             <div class="section-body">
@@ -450,7 +907,6 @@
           </div>
             </div>
           </section>
-
           <section class="collapsible">
             <h2>Escala de Katz Modificada</h2>
             <div class="section-body">
@@ -511,203 +967,209 @@
           
           </section>
 
-      <h2>Atividades instrumentais da vida diária</h2>
-        <section class="collapsible">
-          <h2>Lawton</h2>
-          <div class="section-body">
-          <div class="group">
-            <div class="help">Cada atividade de 1 a 3 pontos. Soma típica: 9 a 27 pontos. Quanto maior, mais independente.</div>
-            <div class="q">
-              <label>Capacidade para usar o telefone</label>
-              <div class="column">
-                <label><input type="radio" name="lw1" value="3" required /> É capaz de utilizar o telefone por iniciativa própria. (3)</label>
-                <label><input type="radio" name="lw1" value="2" /> É capaz de responder às ligações, porém necessita de ajuda ou aparelho especial para discar. (2)</label>
-                <label><input type="radio" name="lw1" value="1" /> Completamente incapaz para o uso do telefone. (1)</label>
+        <h2>Atividades instrumentais da vida diária</h2>
+          <section class="collapsible">
+            <h2>Lawton</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="help">Cada atividade de 1 a 3 pontos. Soma típica: 9 a 27 pontos. Quanto maior, mais independente.</div>
+              <div class="q">
+                <label>Capacidade para usar o telefone</label>
+                <div class="column">
+                  <label><input type="radio" name="lw1" value="3" required /> É capaz de utilizar o telefone por iniciativa própria. (3)</label>
+                  <label><input type="radio" name="lw1" value="2" /> É capaz de responder às ligações, porém necessita de ajuda ou aparelho especial para discar. (2)</label>
+                  <label><input type="radio" name="lw1" value="1" /> Completamente incapaz para o uso do telefone. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Compras</label>
+                <div class="column">
+                  <label><input type="radio" name="lw2" value="3" required /> É capaz de realizar todas as compras sem ajuda ou supervisão. (3)</label>
+                  <label><input type="radio" name="lw2" value="2" /> Necessita de supervisão para fazer compras. (2)</label>
+                  <label><input type="radio" name="lw2" value="1" /> É incapaz de preparar compras. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Preparar refeições</label>
+                <div class="column">
+                  <label><input type="radio" name="lw3" value="3" required /> É capaz de preparar refeições sem ajuda ou supervisão. (3)</label>
+                  <label><input type="radio" name="lw3" value="2" /> É capaz de preparar refeições com supervisão ou ajuda parcial. (2)</label>
+                  <label><input type="radio" name="lw3" value="1" /> É incapaz de preparar refeições. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Tarefas domésticas</label>
+                <div class="column">
+                  <label><input type="radio" name="lw4" value="3" required /> É capaz de realizar todo o trabalho sem ajuda ou supervisão. (3)</label>
+                  <label><input type="radio" name="lw4" value="2" /> É capaz de realizar apenas o trabalho doméstico leve ou necessita de ajuda ou supervisão. (2)</label>
+                  <label><input type="radio" name="lw4" value="1" /> Incapaz de realizar qualquer trabalho doméstico. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Trabalhos manuais e pequenos reparos na casa</label>
+                <div class="column">
+                  <label><input type="radio" name="lw5" value="3" required /> É capaz sem ajuda ou supervisão. (3)</label>
+                  <label><input type="radio" name="lw5" value="2" /> Realiza pequenos trabalhos com ajuda ou supervisão. (2)</label>
+                  <label><input type="radio" name="lw5" value="1" /> Incapaz de realizar trabalhos manuais e pequenos reparos na casa. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Lavar roupas</label>
+                <div class="column">
+                  <label><input type="radio" name="lw6" value="3" required /> É capaz de lavar toda sua roupa sem ajuda ou supervisão. (3)</label>
+                  <label><input type="radio" name="lw6" value="2" /> É capaz de lavar apenas peças pequenas ou necessita de ajuda ou supervisão. (2)</label>
+                  <label><input type="radio" name="lw6" value="1" /> Incapaz de de lavar qualquer peça de roupa. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Meio de transporte</label>
+                <div class="column">
+                  <label><input type="radio" name="lw7" value="3" required /> É capaz de dirigir carros ou viajar sozinho de ônibus, trem, metrô e táxi. (3)</label>
+                  <label><input type="radio" name="lw7" value="2" /> Necessita de ajuda e/ou supervisão quando viaja de ônibus, trem, metrô e táxi. (2)</label>
+                  <label><input type="radio" name="lw7" value="1" /> Incapaz de utilizar qualquer meio de transporte. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Manuseio de medicação</label>
+                <div class="column">
+                  <label><input type="radio" name="lw8" value="3" required /> É capaz de tomar toda e qualquer medicação na hora e doses corretas sem supervisão. (3)</label>
+                  <label><input type="radio" name="lw8" value="2" /> Necessita de lembretes de supervisão para tomar a medicação nos horários e doses corretas. (2)</label>
+                  <label><input type="radio" name="lw8" value="1" /> É incapaz de tomar a medicação. (1)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Manuseio de dinheiro</label>
+                <div class="column">
+                  <label><input type="radio" name="lw9" value="3" required /> É capaz de administrar seus assuntos econômicos, pagar contas, manusear dinheiro, preencher cheques. (3)</label>
+                  <label><input type="radio" name="lw9" value="2" /> É capaz de administrar sus assuntos econômicos, porém necessita de ajuda com cheques e pagamentos de contas. (2)</label>
+                  <label><input type="radio" name="lw9" value="1" /> Incapaz de lidar com dinheiro. (1)</label>
+                </div>
               </div>
             </div>
-            <div class="q">
-              <label>Compras</label>
-              <div class="column">
-                <label><input type="radio" name="lw2" value="3" required /> É capaz de realizar todas as compras sem ajuda ou supervisão. (3)</label>
-                <label><input type="radio" name="lw2" value="2" /> Necessita de supervisão para fazer compras. (2)</label>
-                <label><input type="radio" name="lw2" value="1" /> É incapaz de preparar compras. (1)</label>
+            <div id="resultado-lawton" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-lawton">Limpar</button>
+            </div>
+            </div>
+          </section>
+          <section class="collapsible">
+            <h2>Pfeffer</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="help">Cada item: <br />0 - normal / nunca o fez mas poderia fazê-lo; <br />1 - faz, com dificuldade / nunca o fez e agora teria dificuldade;<br /> 2 - necessita de ajuda;<br /> 3 - não é capaz.</div>
+              <div class="q">
+                <label>1) Ele(a) é capaz de cuidar do seu próprio dinheiro?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf1" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf1" value="1" /> 1</label>
+                  <label><input type="radio" name="pf1" value="2" /> 2</label>
+                  <label><input type="radio" name="pf1" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>2) Ele(a) é capaz de fazer compras sozinho (a)?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf2" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf2" value="1" /> 1</label>
+                  <label><input type="radio" name="pf2" value="2" /> 2</label>
+                  <label><input type="radio" name="pf2" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>3) Ele(a) é capaz de esquentar água para o café ou chá e apagar o fogo?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf3" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf3" value="1" /> 1</label>
+                  <label><input type="radio" name="pf3" value="2" /> 2</label>
+                  <label><input type="radio" name="pf3" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>4) Ele(a) é capaz de preparar comida?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf4" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf4" value="1" /> 1</label>
+                  <label><input type="radio" name="pf4" value="2" /> 2</label>
+                  <label><input type="radio" name="pf4" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>5) Ele(a) é capaz de manter-se em dia com as atualidades, com os acontecimentos da comunidade ou da vizinhança?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf5" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf5" value="1" /> 1</label>
+                  <label><input type="radio" name="pf5" value="2" /> 2</label>
+                  <label><input type="radio" name="pf5" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>6) Ele(a) é capaz de prestar atenção, entender e discutir um programa de rádio ou televisão, um jornal ou uma revista?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf6" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf6" value="1" /> 1</label>
+                  <label><input type="radio" name="pf6" value="2" /> 2</label>
+                  <label><input type="radio" name="pf6" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>7) Ele(a) é capaz de lembrar-se de compromissos, acontecimentos, familiares, feriados?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf7" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf7" value="1" /> 1</label>
+                  <label><input type="radio" name="pf7" value="2" /> 2</label>
+                  <label><input type="radio" name="pf7" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>8) Ele(a) é capaz de cuidar de seus próprios medicamentos?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf8" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf8" value="1" /> 1</label>
+                  <label><input type="radio" name="pf8" value="2" /> 2</label>
+                  <label><input type="radio" name="pf8" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>9) Ele(a) é capaz de passear pela vizinhança e encontrar o caminho de volta para casa?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf9" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf9" value="1" /> 1</label>
+                  <label><input type="radio" name="pf9" value="2" /> 2</label>
+                  <label><input type="radio" name="pf9" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>10) Ele(a) é capaz de cumprimentar seus amigos adequadamente?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf10" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf10" value="1" /> 1</label>
+                  <label><input type="radio" name="pf10" value="2" /> 2</label>
+                  <label><input type="radio" name="pf10" value="3" /> 3</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>11) Ele(a) pode ser deixado(a) em casa sozinho(a) de forma segura?</label>
+                <div class="row">
+                  <label><input type="radio" name="pf11" value="0" required /> 0</label>
+                  <label><input type="radio" name="pf11" value="1" /> 1</label>
+                  <label><input type="radio" name="pf11" value="2" /> 2</label>
+                  <label><input type="radio" name="pf11" value="3" /> 3</label>
+                </div>
               </div>
             </div>
-            <div class="q">
-              <label>Preparar refeições</label>
-              <div class="column">
-                <label><input type="radio" name="lw3" value="3" required /> É capaz de preparar refeições sem ajuda ou supervisão. (3)</label>
-                <label><input type="radio" name="lw3" value="2" /> É capaz de preparar refeições com supervisão ou ajuda parcial. (2)</label>
-                <label><input type="radio" name="lw3" value="1" /> É incapaz de preparar refeições. (1)</label>
-              </div>
+            <div id="resultado-pfeffer" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-pfeffer">Limpar</button>
             </div>
-            <div class="q">
-              <label>Tarefas domésticas</label>
-              <div class="column">
-                <label><input type="radio" name="lw4" value="3" required /> É capaz de realizar todo o trabalho sem ajuda ou supervisão. (3)</label>
-                <label><input type="radio" name="lw4" value="2" /> É capaz de realizar apenas o trabalho doméstico leve ou necessita de ajuda ou supervisão. (2)</label>
-                <label><input type="radio" name="lw4" value="1" /> Incapaz de realizar qualquer trabalho doméstico. (1)</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>Trabalhos manuais e pequenos reparos na casa</label>
-              <div class="column">
-                <label><input type="radio" name="lw5" value="3" required /> É capaz sem ajuda ou supervisão. (3)</label>
-                <label><input type="radio" name="lw5" value="2" /> Realiza pequenos trabalhos com ajuda ou supervisão. (2)</label>
-                <label><input type="radio" name="lw5" value="1" /> Incapaz de realizar trabalhos manuais e pequenos reparos na casa. (1)</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>Lavar roupas</label>
-              <div class="column">
-                <label><input type="radio" name="lw6" value="3" required /> É capaz de lavar toda sua roupa sem ajuda ou supervisão. (3)</label>
-                <label><input type="radio" name="lw6" value="2" /> É capaz de lavar apenas peças pequenas ou necessita de ajuda ou supervisão. (2)</label>
-                <label><input type="radio" name="lw6" value="1" /> Incapaz de de lavar qualquer peça de roupa. (1)</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>Meio de transporte</label>
-              <div class="column">
-                <label><input type="radio" name="lw7" value="3" required /> É capaz de dirigir carros ou viajar sozinho de ônibus, trem, metrô e táxi. (3)</label>
-                <label><input type="radio" name="lw7" value="2" /> Necessita de ajuda e/ou supervisão quando viaja de ônibus, trem, metrô e táxi. (2)</label>
-                <label><input type="radio" name="lw7" value="1" /> Incapaz de utilizar qualquer meio de transporte. (1)</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>Manuseio de medicação</label>
-              <div class="column">
-                <label><input type="radio" name="lw8" value="3" required /> É capaz de tomar toda e qualquer medicação na hora e doses corretas sem supervisão. (3)</label>
-                <label><input type="radio" name="lw8" value="2" /> Necessita de lembretes de supervisão para tomar a medicação nos horários e doses corretas. (2)</label>
-                <label><input type="radio" name="lw8" value="1" /> É incapaz de tomar a medicação. (1)</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>Manuseio de dinheiro</label>
-              <div class="column">
-                <label><input type="radio" name="lw9" value="3" required /> É capaz de administrar seus assuntos econômicos, pagar contas, manusear dinheiro, preencher cheques. (3)</label>
-                <label><input type="radio" name="lw9" value="2" /> É capaz de administrar sus assuntos econômicos, porém necessita de ajuda com cheques e pagamentos de contas. (2)</label>
-                <label><input type="radio" name="lw9" value="1" /> Incapaz de lidar com dinheiro. (1)</label>
-              </div>
-            </div>
-          </div>
-          <div id="resultado-lawton" class="resultado"></div>
-          <div class="actions">
-            <button type="button" class="secondary" data-action="limpar-lawton">Limpar</button>
-          </div>
-          </div>
-        </section>
-        <section class="collapsible">
-          <h2>Pfeffer</h2>
-          <div class="section-body">
-          <div class="group">
-            <div class="help">Cada item: <br />0 - normal / nunca o fez mas poderia fazê-lo; <br />1 - faz, com dificuldade / nunca o fez e agora teria dificuldade;<br /> 2 - necessita de ajuda;<br /> 3 - não é capaz.</div>
-            <div class="q">
-              <label>1) Ele(a) é capaz de cuidar do seu próprio dinheiro?</label>
-              <div class="row">
-                <label><input type="radio" name="pf1" value="0" required /> 0</label>
-                <label><input type="radio" name="pf1" value="1" /> 1</label>
-                <label><input type="radio" name="pf1" value="2" /> 2</label>
-                <label><input type="radio" name="pf1" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>2) Ele(a) é capaz de fazer compras sozinho (a)?</label>
-              <div class="row">
-                <label><input type="radio" name="pf2" value="0" required /> 0</label>
-                <label><input type="radio" name="pf2" value="1" /> 1</label>
-                <label><input type="radio" name="pf2" value="2" /> 2</label>
-                <label><input type="radio" name="pf2" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>3) Ele(a) é capaz de esquentar água para o café ou chá e apagar o fogo?</label>
-              <div class="row">
-                <label><input type="radio" name="pf3" value="0" required /> 0</label>
-                <label><input type="radio" name="pf3" value="1" /> 1</label>
-                <label><input type="radio" name="pf3" value="2" /> 2</label>
-                <label><input type="radio" name="pf3" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>4) Ele(a) é capaz de preparar comida?</label>
-              <div class="row">
-                <label><input type="radio" name="pf4" value="0" required /> 0</label>
-                <label><input type="radio" name="pf4" value="1" /> 1</label>
-                <label><input type="radio" name="pf4" value="2" /> 2</label>
-                <label><input type="radio" name="pf4" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>5) Ele(a) é capaz de manter-se em dia com as atualidades, com os acontecimentos da comunidade ou da vizinhança?</label>
-              <div class="row">
-                <label><input type="radio" name="pf5" value="0" required /> 0</label>
-                <label><input type="radio" name="pf5" value="1" /> 1</label>
-                <label><input type="radio" name="pf5" value="2" /> 2</label>
-                <label><input type="radio" name="pf5" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>6) Ele(a) é capaz de prestar atenção, entender e discutir um programa de rádio ou televisão, um jornal ou uma revista?</label>
-              <div class="row">
-                <label><input type="radio" name="pf6" value="0" required /> 0</label>
-                <label><input type="radio" name="pf6" value="1" /> 1</label>
-                <label><input type="radio" name="pf6" value="2" /> 2</label>
-                <label><input type="radio" name="pf6" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>7) Ele(a) é capaz de lembrar-se de compromissos, acontecimentos, familiares, feriados?</label>
-              <div class="row">
-                <label><input type="radio" name="pf7" value="0" required /> 0</label>
-                <label><input type="radio" name="pf7" value="1" /> 1</label>
-                <label><input type="radio" name="pf7" value="2" /> 2</label>
-                <label><input type="radio" name="pf7" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>8) Ele(a) é capaz de cuidar de seus próprios medicamentos?</label>
-              <div class="row">
-                <label><input type="radio" name="pf8" value="0" required /> 0</label>
-                <label><input type="radio" name="pf8" value="1" /> 1</label>
-                <label><input type="radio" name="pf8" value="2" /> 2</label>
-                <label><input type="radio" name="pf8" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>9) Ele(a) é capaz de passear pela vizinhança e encontrar o caminho de volta para casa?</label>
-              <div class="row">
-                <label><input type="radio" name="pf9" value="0" required /> 0</label>
-                <label><input type="radio" name="pf9" value="1" /> 1</label>
-                <label><input type="radio" name="pf9" value="2" /> 2</label>
-                <label><input type="radio" name="pf9" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>10) Ele(a) é capaz de cumprimentar seus amigos adequadamente?</label>
-              <div class="row">
-                <label><input type="radio" name="pf10" value="0" required /> 0</label>
-                <label><input type="radio" name="pf10" value="1" /> 1</label>
-                <label><input type="radio" name="pf10" value="2" /> 2</label>
-                <label><input type="radio" name="pf10" value="3" /> 3</label>
-              </div>
-            </div>
-            <div class="q">
-              <label>11) Ele(a) pode ser deixado(a) em casa sozinho(a) de forma segura?</label>
-              <div class="row">
-                <label><input type="radio" name="pf11" value="0" required /> 0</label>
-                <label><input type="radio" name="pf11" value="1" /> 1</label>
-                <label><input type="radio" name="pf11" value="2" /> 2</label>
-                <label><input type="radio" name="pf11" value="3" /> 3</label>
-              </div>
-            </div>
-          </div>
-          <div id="resultado-pfeffer" class="resultado"></div>
-          <div class="actions">
-            <button type="button" class="secondary" data-action="limpar-pfeffer">Limpar</button>
-          </div>
-        </section>
-      </form>
+          </section>
+        </form>
+      </div>
+    </section>
+
+    <section class="collapsible">
       <h1>Dimensão Nutricional</h1>
+      <div class="section-body">
+        <form id="form-nutricional">
         <section class="collapsible">
           <h2>MAN — Mini Avaliação Nutricional (triagem curta)</h2>
           <div class="section-body">
@@ -769,351 +1231,370 @@
           </div>
           </div>
         </section>
+      </form>
+    </div>
+    </section>
 
+    <section class="collapsible">
       <h1>Dimensão Cognitiva</h1>
+      <div class="section-body">
+        <form id="form-cognitiva">
+          <section class="collapsible">
+            <h2>Cognição — 10-CS</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="q">
+                <label>Orientação temporal (1 ponto por acerto)</label>
+                <div class="column">
+                  <div class="column">
+                    <span class="help"><strong>Em que ano nós estamos?</strong></span>
+                    <label><input type="radio" name="cs_orient_ano" value="1" required /> Acertou (1)</label>
+                    <label><input type="radio" name="cs_orient_ano" value="0" /> Errou (0)</label>
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>Qual mês é este?</strong></span>
+                    <label><input type="radio" name="cs_orient_mes" value="1" required /> Acertou (1)</label>
+                    <label><input type="radio" name="cs_orient_mes" value="0" /> Errou (0)</label>
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>Qual a data de hoje?</strong></span>
+                    <label><input type="radio" name="cs_orient_data" value="1" required /> Acertou (1)</label>
+                    <label><input type="radio" name="cs_orient_data" value="0" /> Errou (0)</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="help">Vou falar três objetos, preste atenção, você terá que repetir os três quando eu pedir: Vaso, carro, tijolo
+    (pode repetir 3 vezes). Guarde os 3 objetos, logo irei pedir para você falar novamente.</div>
+
+              <div class="q">
+                <label>Fluência verbal (animais em 60 segundos)</label>
+                <div class="column">
+                  <label><input type="radio" name="cs_fluencia" value="0" required /> 0–5 animais — 0 pontos</label>
+                  <label><input type="radio" name="cs_fluencia" value="1" /> 6–8 animais — 1 ponto</label>
+                  <label><input type="radio" name="cs_fluencia" value="2" /> 9–11 animais — 2 pontos</label>
+                  <label><input type="radio" name="cs_fluencia" value="3" /> 12–14 animais — 3 pontos</label>
+                  <label><input type="radio" name="cs_fluencia" value="4" /> 15 ou mais animais — 4 pontos</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Memória (1 ponto por objeto recordado)</label>
+                <div class="column">
+                  <div class="column">
+                    <span class="help"><strong>Vaso</strong></span>
+                    <label><input type="radio" name="cs_mem_vaso" value="1" required /> Recordou (1)</label>
+                    <label><input type="radio" name="cs_mem_vaso" value="0" /> Não recordou (0)</label>
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>Carro</strong></span>
+                    <label><input type="radio" name="cs_mem_carro" value="1" required /> Recordou (1)</label>
+                    <label><input type="radio" name="cs_mem_carro" value="0" /> Não recordou (0)</label>
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>Tijolo</strong></span>
+                    <label><input type="radio" name="cs_mem_tijolo" value="1" required /> Recordou (1)</label>
+                    <label><input type="radio" name="cs_mem_tijolo" value="0" /> Não recordou (0)</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Ajuste por escolaridade</label>
+                <div class="column">
+                  <label><input type="radio" name="cs_escolaridade" value="2" required /> Sem educação formal (+2 pontos)</label>
+                  <label><input type="radio" name="cs_escolaridade" value="1" /> 1 a 3 anos de escolaridade (+1 ponto)</label>
+                  <label><input type="radio" name="cs_escolaridade" value="0" /> 4 anos ou mais (0 ponto)</label>
+                </div>
+                <div class="help">Adicionar os pontos correspondentes ao total obtido nas etapas anteriores.</div>
+              </div>
+            </div>
+            <div id="resultado-10cs" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-10cs">Limpar</button>
+            </div>
+            </div>
+          </section>
+
+          <section class="collapsible">
+            <h2>Zucchelli — Risco de Delirium</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="help">Rastreio de pacientes com alto risco de delirium. Some os fatores de risco abaixo.</div>
+              <div class="q">
+                <label>Idade maior ou igual a 75 anos</label>
+                <div class="row">
+                  <label><input type="radio" name="zuc_idade" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="zuc_idade" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Diagnóstico de demência</label>
+                <div class="row">
+                  <label><input type="radio" name="zuc_demencia" value="3" required /> Sim (3)</label>
+                  <label><input type="radio" name="zuc_demencia" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Déficit auditivo</label>
+                <div class="row">
+                  <label><input type="radio" name="zuc_auditivo" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="zuc_auditivo" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>Uso de medicações psicotrópicas</label>
+                <div class="help">Uso crônico de pelo menos uma das classes: antidepressivos, antipsicóticos, benzodiazepínicos, opioides, anticonvulsivantes, anticolinesterásicos, memantina, antiparkinsonianos.</div>
+                <div class="row">
+                  <label><input type="radio" name="zuc_psicotropicos" value="1" required /> Sim (1)</label>
+                  <label><input type="radio" name="zuc_psicotropicos" value="0" /> Não (0)</label>
+                </div>
+              </div>
+            </div>
+            <div id="resultado-zucchelli" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-zucchelli">Limpar</button>
+            </div>
+            </div>
+          </section>
+
+          <section class="collapsible">
+            <h2>CAM — Confusion Assessment Method</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="help">Diagnóstico de delirium: requer 1) Início agudo/curso flutuante E 2) Desatenção E (3) Pensamento desorganizado OU (4) Alteração do nível de consciência.</div>
+
+              <div class="q">
+                <label>1) Início agudo e curso flutuante</label>
+                <div class="help">Pergunte a familiar/enfermagem: houve mudança aguda do estado mental em relação ao basal? O comportamento flutuou ao longo do dia?</div>
+                <div class="row">
+                  <label><input type="radio" name="cam1" value="1" required /> Presente (1)</label>
+                  <label><input type="radio" name="cam1" value="0" /> Ausente (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>2) Desatenção</label>
+                <div class="help">Teve dificuldade em concentrar a atenção? Distraía-se facilmente ou tinha dificuldade em acompanhar o que era dito?</div>
+                <div class="row">
+                  <label><input type="radio" name="cam2" value="1" required /> Presente (1)</label>
+                  <label><input type="radio" name="cam2" value="0" /> Ausente (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>3) Pensamento desorganizado</label>
+                <div class="help">Conversas confusas/irrelevantes, fluxo de ideias pouco claro/ilógico, mudanças imprevisíveis de assunto?</div>
+                <div class="row">
+                  <label><input type="radio" name="cam3" value="1" required /> Presente (1)</label>
+                  <label><input type="radio" name="cam3" value="0" /> Ausente (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>4) Alteração do nível de consciência</label>
+                <div class="help">Classifique: Alerta (normal); Vigilante (hiperalerta); Letárgico (sonolento, desperta fácil); Estupor (difícil de despertar); Coma (indespertável).</div>
+                <div class="row">
+                  <label><input type="radio" name="cam4" value="0" required /> Alerta (0)</label>
+                  <label><input type="radio" name="cam4" value="1" /> Vigilante/letárgico/estupor/coma (1)</label>
+                </div>
+              </div>
+            </div>
+            <div id="resultado-cam" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-cam">Limpar</button>
+            </div>
+            </div>
+          </section>
+        </form>
+      </div>
+    </section>
+
+    <section class="collapsible">
+      <h1>Dimensão Psicológica</h1>
+      <div class="section-body">
+        <form id="form-psicologica">
         <section class="collapsible">
-          <h2>Cognição — 10-CS</h2>
+          <h2>GDS-15 — Escala de Depressão Geriátrica</h2>
           <div class="section-body">
           <div class="group">
+            <div class="help">Responda "Sim" ou "Não" para cada uma das perguntas abaixo. A cada resposta compatível com depressão, some 1 ponto.</div>
             <div class="q">
-              <label>Orientação temporal (1 ponto por acerto)</label>
-              <div class="column">
-                <div class="column">
-                  <span class="help"><strong>Em que ano nós estamos?</strong></span>
-                  <label><input type="radio" name="cs_orient_ano" value="1" required /> Acertou (1)</label>
-                  <label><input type="radio" name="cs_orient_ano" value="0" /> Errou (0)</label>
-                </div>
-                <div class="column">
-                  <span class="help"><strong>Qual mês é este?</strong></span>
-                  <label><input type="radio" name="cs_orient_mes" value="1" required /> Acertou (1)</label>
-                  <label><input type="radio" name="cs_orient_mes" value="0" /> Errou (0)</label>
-                </div>
-                <div class="column">
-                  <span class="help"><strong>Qual a data de hoje?</strong></span>
-                  <label><input type="radio" name="cs_orient_data" value="1" required /> Acertou (1)</label>
-                  <label><input type="radio" name="cs_orient_data" value="0" /> Errou (0)</label>
-                </div>
+              <label>1. O Sr. (a) está satisfeito com a vida?</label>
+              <div class="row">
+                <label><input type="radio" name="gds1" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds1" value="1" /> Não</label>
               </div>
             </div>
-
-            <div class="help">Vou falar três objetos, preste atenção, você terá que repetir os três quando eu pedir: Vaso, carro, tijolo
-  (pode repetir 3 vezes). Guarde os 3 objetos, logo irei pedir para você falar novamente.</div>
-
             <div class="q">
-              <label>Fluência verbal (animais em 60 segundos)</label>
-              <div class="column">
-                <label><input type="radio" name="cs_fluencia" value="0" required /> 0–5 animais — 0 pontos</label>
-                <label><input type="radio" name="cs_fluencia" value="1" /> 6–8 animais — 1 ponto</label>
-                <label><input type="radio" name="cs_fluencia" value="2" /> 9–11 animais — 2 pontos</label>
-                <label><input type="radio" name="cs_fluencia" value="3" /> 12–14 animais — 3 pontos</label>
-                <label><input type="radio" name="cs_fluencia" value="4" /> 15 ou mais animais — 4 pontos</label>
+              <label>2. O Sr. (a) se afastou das atividades e das “coisas” que lhe interessavam?</label>
+              <div class="row">
+                <label><input type="radio" name="gds2" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds2" value="0" /> Não</label>
               </div>
             </div>
-
             <div class="q">
-              <label>Memória (1 ponto por objeto recordado)</label>
-              <div class="column">
-                <div class="column">
-                  <span class="help"><strong>Vaso</strong></span>
-                  <label><input type="radio" name="cs_mem_vaso" value="1" required /> Recordou (1)</label>
-                  <label><input type="radio" name="cs_mem_vaso" value="0" /> Não recordou (0)</label>
-                </div>
-                <div class="column">
-                  <span class="help"><strong>Carro</strong></span>
-                  <label><input type="radio" name="cs_mem_carro" value="1" required /> Recordou (1)</label>
-                  <label><input type="radio" name="cs_mem_carro" value="0" /> Não recordou (0)</label>
-                </div>
-                <div class="column">
-                  <span class="help"><strong>Tijolo</strong></span>
-                  <label><input type="radio" name="cs_mem_tijolo" value="1" required /> Recordou (1)</label>
-                  <label><input type="radio" name="cs_mem_tijolo" value="0" /> Não recordou (0)</label>
-                </div>
+              <label>3. O Sr.(a) sente que sua vida é vazia?</label>
+              <div class="row">
+                <label><input type="radio" name="gds3" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds3" value="0" /> Não</label>
               </div>
             </div>
-
             <div class="q">
-              <label>Ajuste por escolaridade</label>
-              <div class="column">
-                <label><input type="radio" name="cs_escolaridade" value="2" required /> Sem educação formal (+2 pontos)</label>
-                <label><input type="radio" name="cs_escolaridade" value="1" /> 1 a 3 anos de escolaridade (+1 ponto)</label>
-                <label><input type="radio" name="cs_escolaridade" value="0" /> 4 anos ou mais (0 ponto)</label>
+              <label>4. O Sr.(a) se sente frequentemente aborrecido?</label>
+              <div class="row">
+                <label><input type="radio" name="gds4" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds4" value="0" /> Não</label>
               </div>
-              <div class="help">Adicionar os pontos correspondentes ao total obtido nas etapas anteriores.</div>
+            </div>
+            <div class="q">
+              <label>5. O Sr. (a) está de bom humor na maior parte do tempo?</label>
+              <div class="row">
+                <label><input type="radio" name="gds5" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds5" value="1" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>6. O Sr. (a) tem medo que algo de mal vá lhe acontecer?</label>
+              <div class="row">
+                <label><input type="radio" name="gds6" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds6" value="0" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>7. O Sr. (a) se sente feliz na maior parte do tempo?</label>
+              <div class="row">
+                <label><input type="radio" name="gds7" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds7" value="1" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>8. O Sr. (a) se sente abandonado, a maior parte do tempo?</label>
+              <div class="row">
+                <label><input type="radio" name="gds8" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds8" value="0" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>9. O Sr. (a) prefere ficar em casa do que sair e fazer coisas diferentes?</label>
+              <div class="row">
+                <label><input type="radio" name="gds9" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds9" value="0" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>10. O Sr. (a) acha que tem mais dificuldade com a memória, do que a maioria das pessoas?</label>
+              <div class="row">
+                <label><input type="radio" name="gds10" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds10" value="0" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>11. O Sr. (a) acha que no momento viver é algo maravilhoso?</label>
+              <div class="row">
+                <label><input type="radio" name="gds11" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds11" value="1" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>12. O Sr. (a) julga-se inútil?</label>
+              <div class="row">
+                <label><input type="radio" name="gds12" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds12" value="0" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>13. O Sr. (a) se sente cheio de energia?</label>
+              <div class="row">
+                <label><input type="radio" name="gds13" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds13" value="1" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>14. O Sr. (a) se sente esperançoso em relação à sua situação atual?</label>
+              <div class="row">
+                <label><input type="radio" name="gds14" value="0" required /> Sim</label>
+                <label><input type="radio" name="gds14" value="1" /> Não</label>
+              </div>
+            </div>
+            <div class="q">
+              <label>15. O Sr. (a) crê que a maioria das pessoas estão em situação melhor que a sua?</label>
+              <div class="row">
+                <label><input type="radio" name="gds15" value="1" required /> Sim</label>
+                <label><input type="radio" name="gds15" value="0" /> Não</label>
+              </div>
             </div>
           </div>
-          <div id="resultado-10cs" class="resultado"></div>
+          <div id="resultado-gds" class="resultado"></div>
           <div class="actions">
-            <button type="button" class="secondary" data-action="limpar-10cs">Limpar</button>
-          </div>
-          </div>
-        </section>
-
-        <section class="collapsible">
-          <h2>Zucchelli — Risco de Delirium</h2>
-          <div class="section-body">
-          <div class="group">
-            <div class="help">Rastreio de pacientes com alto risco de delirium. Some os fatores de risco abaixo.</div>
-            <div class="q">
-              <label>Idade maior ou igual a 75 anos</label>
-              <div class="row">
-                <label><input type="radio" name="zuc_idade" value="2" required /> Sim (2)</label>
-                <label><input type="radio" name="zuc_idade" value="0" /> Não (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>Diagnóstico de demência</label>
-              <div class="row">
-                <label><input type="radio" name="zuc_demencia" value="3" required /> Sim (3)</label>
-                <label><input type="radio" name="zuc_demencia" value="0" /> Não (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>Déficit auditivo</label>
-              <div class="row">
-                <label><input type="radio" name="zuc_auditivo" value="2" required /> Sim (2)</label>
-                <label><input type="radio" name="zuc_auditivo" value="0" /> Não (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>Uso de medicações psicotrópicas</label>
-              <div class="help">Uso crônico de pelo menos uma das classes: antidepressivos, antipsicóticos, benzodiazepínicos, opioides, anticonvulsivantes, anticolinesterásicos, memantina, antiparkinsonianos.</div>
-              <div class="row">
-                <label><input type="radio" name="zuc_psicotropicos" value="1" required /> Sim (1)</label>
-                <label><input type="radio" name="zuc_psicotropicos" value="0" /> Não (0)</label>
-              </div>
-            </div>
-          </div>
-          <div id="resultado-zucchelli" class="resultado"></div>
-          <div class="actions">
-            <button type="button" class="secondary" data-action="limpar-zucchelli">Limpar</button>
-          </div>
-          </div>
-        </section>
-
-        <section class="collapsible">
-          <h2>CAM — Confusion Assessment Method</h2>
-          <div class="section-body">
-          <div class="group">
-            <div class="help">Diagnóstico de delirium: requer 1) Início agudo/curso flutuante E 2) Desatenção E (3) Pensamento desorganizado OU (4) Alteração do nível de consciência.</div>
-
-            <div class="q">
-              <label>1) Início agudo e curso flutuante</label>
-              <div class="help">Pergunte a familiar/enfermagem: houve mudança aguda do estado mental em relação ao basal? O comportamento flutuou ao longo do dia?</div>
-              <div class="row">
-                <label><input type="radio" name="cam1" value="1" required /> Presente (1)</label>
-                <label><input type="radio" name="cam1" value="0" /> Ausente (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>2) Desatenção</label>
-              <div class="help">Teve dificuldade em concentrar a atenção? Distraía-se facilmente ou tinha dificuldade em acompanhar o que era dito?</div>
-              <div class="row">
-                <label><input type="radio" name="cam2" value="1" required /> Presente (1)</label>
-                <label><input type="radio" name="cam2" value="0" /> Ausente (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>3) Pensamento desorganizado</label>
-              <div class="help">Conversas confusas/irrelevantes, fluxo de ideias pouco claro/ilógico, mudanças imprevisíveis de assunto?</div>
-              <div class="row">
-                <label><input type="radio" name="cam3" value="1" required /> Presente (1)</label>
-                <label><input type="radio" name="cam3" value="0" /> Ausente (0)</label>
-              </div>
-            </div>
-
-            <div class="q">
-              <label>4) Alteração do nível de consciência</label>
-              <div class="help">Classifique: Alerta (normal); Vigilante (hiperalerta); Letárgico (sonolento, desperta fácil); Estupor (difícil de despertar); Coma (indespertável).</div>
-              <div class="row">
-                <label><input type="radio" name="cam4" value="0" required /> Alerta (0)</label>
-                <label><input type="radio" name="cam4" value="1" /> Vigilante/letárgico/estupor/coma (1)</label>
-              </div>
-            </div>
-          </div>
-          <div id="resultado-cam" class="resultado"></div>
-          <div class="actions">
-            <button type="button" class="secondary" data-action="limpar-cam">Limpar</button>
-          </div>
+            <button type="button" class="secondary" data-action="limpar-gds">Limpar</button>
           </div>
         </section>
       </form>
+      </div>
+    </section>
 
-
-      <h1>Dimensão Psicológica</h1>
-      <section class="collapsible">
-        <h2>GDS-15 — Escala de Depressão Geriátrica</h2>
-        <div class="section-body">
-        <div class="group">
-          <div class="help">Responda "Sim" ou "Não" para cada uma das perguntas abaixo. A cada resposta compatível com depressão, some 1 ponto.</div>
-          <div class="q">
-            <label>1. O Sr. (a) está satisfeito com a vida?</label>
-            <div class="row">
-              <label><input type="radio" name="gds1" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds1" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>2. O Sr. (a) se afastou das atividades e das “coisas” que lhe interessavam?</label>
-            <div class="row">
-              <label><input type="radio" name="gds2" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds2" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>3. O Sr.(a) sente que sua vida é vazia?</label>
-            <div class="row">
-              <label><input type="radio" name="gds3" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds3" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>4. O Sr.(a) se sente frequentemente aborrecido?</label>
-            <div class="row">
-              <label><input type="radio" name="gds4" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds4" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>5. O Sr. (a) está de bom humor na maior parte do tempo?</label>
-            <div class="row">
-              <label><input type="radio" name="gds5" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds5" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>6. O Sr. (a) tem medo que algo de mal vá lhe acontecer?</label>
-            <div class="row">
-              <label><input type="radio" name="gds6" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds6" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>7. O Sr. (a) se sente feliz na maior parte do tempo?</label>
-            <div class="row">
-              <label><input type="radio" name="gds7" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds7" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>8. O Sr. (a) se sente abandonado, a maior parte do tempo?</label>
-            <div class="row">
-              <label><input type="radio" name="gds8" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds8" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>9. O Sr. (a) prefere ficar em casa do que sair e fazer coisas diferentes?</label>
-            <div class="row">
-              <label><input type="radio" name="gds9" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds9" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>10. O Sr. (a) acha que tem mais dificuldade com a memória, do que a maioria das pessoas?</label>
-            <div class="row">
-              <label><input type="radio" name="gds10" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds10" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>11. O Sr. (a) acha que no momento viver é algo maravilhoso?</label>
-            <div class="row">
-              <label><input type="radio" name="gds11" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds11" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>12. O Sr. (a) julga-se inútil?</label>
-            <div class="row">
-              <label><input type="radio" name="gds12" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds12" value="0" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>13. O Sr. (a) se sente cheio de energia?</label>
-            <div class="row">
-              <label><input type="radio" name="gds13" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds13" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>14. O Sr. (a) se sente esperançoso em relação à sua situação atual?</label>
-            <div class="row">
-              <label><input type="radio" name="gds14" value="0" required /> Sim</label>
-              <label><input type="radio" name="gds14" value="1" /> Não</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>15. O Sr. (a) crê que a maioria das pessoas estão em situação melhor que a sua?</label>
-            <div class="row">
-              <label><input type="radio" name="gds15" value="1" required /> Sim</label>
-              <label><input type="radio" name="gds15" value="0" /> Não</label>
-            </div>
-          </div>
-        </div>
-        <div id="resultado-gds" class="resultado"></div>
-        <div class="actions">
-          <button type="button" class="secondary" data-action="limpar-gds">Limpar</button>
-        </div>
-      </section>
+    <section class="collapsible">
       <h1>Dimensão Social</h1>
-      <section class="collapsible">
-        <h2>APGAR da Família</h2>
-        <div class="section-body">
-        <div class="group">
-          <div class="help">Interpretação: (0-3) Disfuncional; (4-6) Moderadamente disfuncional; (7-10) Funcional.</div>
-          <div class="q">
-            <label>A (Adaptabilidade) - Você sente que sua família o ajuda quando precisa?</label>
-            <div class="row">
-              <label><input type="radio" name="apgar_a" value="0" required /> Raramente (0)</label>
-              <label><input type="radio" name="apgar_a" value="1" /> Algumas vezes (1)</label>
-              <label><input type="radio" name="apgar_a" value="2" /> Quase sempre (2)</label>
+      <div class="section-body">
+            <form id="form-social">
+          <section class="collapsible">
+            <h2>APGAR da Família</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="help">Interpretação: (0-3) Disfuncional; (4-6) Moderadamente disfuncional; (7-10) Funcional.</div>
+              <div class="q">
+                <label>A (Adaptabilidade) - Você sente que sua família o ajuda quando precisa?</label>
+                <div class="row">
+                  <label><input type="radio" name="apgar_a" value="0" required /> Raramente (0)</label>
+                  <label><input type="radio" name="apgar_a" value="1" /> Algumas vezes (1)</label>
+                  <label><input type="radio" name="apgar_a" value="2" /> Quase sempre (2)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>P (Participação) - Você pode contar com sua família para decisões importantes?</label>
+                <div class="row">
+                  <label><input type="radio" name="apgar_p" value="0" required /> Raramente (0)</label>
+                  <label><input type="radio" name="apgar_p" value="1" /> Algumas vezes (1)</label>
+                  <label><input type="radio" name="apgar_p" value="2" /> Quase sempre (2)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>G (Gradiente de recursos) - Sua família mostra interesse em seus problemas ou preocupações?</label>
+                <div class="row">
+                  <label><input type="radio" name="apgar_g" value="0" required /> Raramente (0)</label>
+                  <label><input type="radio" name="apgar_g" value="1" /> Algumas vezes (1)</label>
+                  <label><input type="radio" name="apgar_g" value="2" /> Quase sempre (2)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>A (Afeição) - Você se sente amado por sua família?</label>
+                <div class="row">
+                  <label><input type="radio" name="apgar_af" value="0" required /> Raramente (0)</label>
+                  <label><input type="radio" name="apgar_af" value="1" /> Algumas vezes (1)</label>
+                  <label><input type="radio" name="apgar_af" value="2" /> Quase sempre (2)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>R (Resolução) - Quando há dificuldades, sua família tenta resolvê-las junto com você?</label>
+                <div class="row">
+                  <label><input type="radio" name="apgar_r" value="0" required /> Raramente (0)</label>
+                  <label><input type="radio" name="apgar_r" value="1" /> Algumas vezes (1)</label>
+                  <label><input type="radio" name="apgar_r" value="2" /> Quase sempre (2)</label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="q">
-            <label>P (Participação) - Você pode contar com sua família para decisões importantes?</label>
-            <div class="row">
-              <label><input type="radio" name="apgar_p" value="0" required /> Raramente (0)</label>
-              <label><input type="radio" name="apgar_p" value="1" /> Algumas vezes (1)</label>
-              <label><input type="radio" name="apgar_p" value="2" /> Quase sempre (2)</label>
+            <div id="resultado-apgar" class="resultado"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-apgar">Limpar</button>
             </div>
-          </div>
-          <div class="q">
-            <label>G (Gradiente de recursos) - Sua família mostra interesse em seus problemas ou preocupações?</label>
-            <div class="row">
-              <label><input type="radio" name="apgar_g" value="0" required /> Raramente (0)</label>
-              <label><input type="radio" name="apgar_g" value="1" /> Algumas vezes (1)</label>
-              <label><input type="radio" name="apgar_g" value="2" /> Quase sempre (2)</label>
             </div>
-          </div>
-          <div class="q">
-            <label>A (Afeição) - Você se sente amado por sua família?</label>
-            <div class="row">
-              <label><input type="radio" name="apgar_af" value="0" required /> Raramente (0)</label>
-              <label><input type="radio" name="apgar_af" value="1" /> Algumas vezes (1)</label>
-              <label><input type="radio" name="apgar_af" value="2" /> Quase sempre (2)</label>
-            </div>
-          </div>
-          <div class="q">
-            <label>R (Resolução) - Quando há dificuldades, sua família tenta resolvê-las junto com você?</label>
-            <div class="row">
-              <label><input type="radio" name="apgar_r" value="0" required /> Raramente (0)</label>
-              <label><input type="radio" name="apgar_r" value="1" /> Algumas vezes (1)</label>
-              <label><input type="radio" name="apgar_r" value="2" /> Quase sempre (2)</label>
-            </div>
-          </div>
-        </div>
-        <div id="resultado-apgar" class="resultado"></div>
-        <div class="actions">
-          <button type="button" class="secondary" data-action="limpar-apgar">Limpar</button>
-        </div>
-        </div>
-      </section>
+          </section>
+      </form>
+      </div>
+    </section>
 
     <section class="collapsible open">
       <h2>Resumo dos Testes Aplicados</h2>
@@ -1128,6 +1609,33 @@
         </div>
       </div>
     </section>
+    <div id="medicamento-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Adicionar Medicamento</h2>
+        <form id="form-medicamento-modal">
+          <div class="q">
+            <label for="modal_med_nome">Nome</label>
+            <input class="form-input" type="text" id="modal_med_nome" name="modal_med_nome" />
+          </div>
+          <div class="q">
+            <label for="modal_med_justificativa">Justificativa de uso</label>
+            <input class="form-input" type="text" id="modal_med_justificativa" name="modal_med_justificativa" />
+          </div>
+          <div class="q">
+            <label for="modal_med_dose">Dose e posologia</label>
+            <input class="form-input" type="text" id="modal_med_dose" name="modal_med_dose" />
+          </div>
+          <div class="q">
+            <label for="modal_med_tempo">Tempo de uso</label>
+            <input class="form-input" type="text" id="modal_med_tempo" name="modal_med_tempo" />
+          </div>
+          <div class="actions">
+            <button type="submit" id="btn-salvar-medicamento">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1993,24 +2501,25 @@
       background: #fff;
       border: 1px solid #e6e6ef;
       border-radius: 10px;
-      margin-bottom: 16px;
-      overflow: hidden;
+      /* margin-bottom: 16px; */
+      overflow: visible;
     }
 
+    section > h1,
     section > h2 {
       margin: 0;
-      padding: 14px 16px;
+      padding: 6px 16px;
       background: #f1f3ff;
       border-bottom: 1px solid #e6e6ef;
       font-size: 18px;
-    }
-
-    .group {
-      padding: 16px;
+      position: -webkit-sticky;
+      position: sticky;
+      top: -1px;
+      z-index: 10;
     }
 
     .q {
-      margin: 12px 0;
+      margin: 8px;
     }
 
     .q > label:first-child {
