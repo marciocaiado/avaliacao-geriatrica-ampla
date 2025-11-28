@@ -2054,13 +2054,13 @@
       const completo = respondidas === totalPerguntas;
       const pontos = somarCampos(fd, camposSarcF);
       // Avoid non-ASCII comparison symbol which can break some parsers
-      const risco = completo ? (pontos >= 4 ? \u0027Risco de sarcopenia (>= 4)\u0027 : \u0027Sem risco (< 4)\u0027) : null;
+      const risco = completo ? (pontos >= 4 ? 'Risco de sarcopenia (>= 4)' : 'Sem risco (< 4)') : null;
       return { pontos, risco, respondidas, totalPerguntas, completo };
     }
 
     function mostrarSarcF() {
       exibirResultado(
-        \u0027resultado-sarcf\u0027,
+        'resultado-sarcf',
         calcularSarcF,
         ({ pontos, risco, respondidas, totalPerguntas, completo }) => {
           const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;

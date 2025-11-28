@@ -334,3 +334,139 @@ section > h2 {
 .delete-medicamento:hover {
   color: darkred;
 }
+
+/* Estilos para a página de resultado - layout em grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: #f9f9fc;
+  border-radius: 6px;
+  border: 1px solid #e6e6ef;
+}
+
+.info-label {
+  font-weight: 600;
+  font-size: 12px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #222;
+}
+
+.texto-item {
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: #f9f9fc;
+  border-left: 3px solid #3f51b5;
+  border-radius: 4px;
+}
+
+.texto-item strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #3f51b5;
+  font-size: 14px;
+}
+
+.resultado-body h3 {
+  margin: 20px 16px 12px;
+  font-size: 16px;
+  color: #3f51b5;
+  border-bottom: 2px solid #e6e6ef;
+  padding-bottom: 6px;
+}
+
+.resultado-body section {
+  margin-bottom: 16px;
+}
+
+.resultado-body .section-body {
+  display: block !important;
+  padding-bottom: 12px;
+}
+
+/* Ajuste responsivo para telas menores */
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilos para impressão e PDF */
+@media print {
+  .info-grid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .info-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .texto-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .actions {
+    display: none;
+  }
+}
+
+/* Garantir que os grids sejam renderizados corretamente no PDF */
+.resultado-body .info-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+}
+
+.resultado-body .info-item {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Card para medicamentos */
+.medicamento-card {
+  background: #ffffff;
+  border: 1px solid #e6e6ef;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.medicamento-card h4 {
+  margin: 0 0 12px 0;
+  color: #3f51b5;
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e6e6ef;
+}
+
+.medicamento-card .info-grid {
+  margin-top: 12px;
+}

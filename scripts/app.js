@@ -153,6 +153,16 @@ function mostrarIVCF() {
   });
 }
 
+function calcularSRH() {
+  const fd = getFormData();
+  const valor = fd.get('srh');
+  if (valor === null) {
+    return null;
+  }
+  const descricao = parseInt(valor, 10) === 0 ? 'Boa/Muito boa/Excelente' : 'Regular/Ruim';
+  return { descricao };
+}
+
 function mostrarSRH() {
   exibirResultado('resultado-srh', calcularSRH, ({ descricao }) => `
     <div><strong>SRH:</strong> ${descricao}</div>
@@ -591,8 +601,88 @@ function resetRadiosByNames(names) {
 }
 
 function visualizarResultado() {
-  const nome = document.getElementById('nome').value || 'paciente';
-  const data = document.getElementById('data_avaliacao').value || new Date().toLocaleDateString('pt-BR');
+  const nomeEl = document.getElementById('nome');
+  const dataEl = document.getElementById('data_avaliacao');
+  const nome = nomeEl ? nomeEl.value : 'paciente';
+  const data = dataEl ? dataEl.value : new Date().toLocaleDateString('pt-BR');
+
+  // Coletar TODOS os dados da seção de Anamnese automaticamente
+  const anamneseSection = document.querySelector('main > section.collapsible');
+  const anamnese = {};
+  let hasAnamneseData = false;
+
+  if (anamneseSection) {
+    // Coletar todos os inputs, textareas e selects dentro da seção de Anamnese
+    const elementos = anamneseSection.querySelectorAll('input, textarea, select');
+
+    elementos.forEach(element => {
+      const name = element.name || element.id;
+      if (!name) return;
+
+      if (element.type === 'radio') {
+        // Para radio buttons, só adicionar se estiver checked
+        if (element.checked) {
+          // Pegar o texto do label associado
+          const label = element.closest('label');
+          const labelText = label ? label.textContent.trim() : element.value;
+          anamnese[name] = { value: element.value, label: labelText };
+          hasAnamneseData = true;
+        }
+      } else if (element.type === 'checkbox') {
+        // Para checkboxes, só adicionar se estiver checked
+        if (element.checked) {
+          const label = element.closest('label');
+          const labelText = label ? label.textContent.trim() : name;
+
+          // Se já existe o campo (múltiplos checkboxes com mesmo name), adicionar ao array
+          if (anamnese[name]) {
+            if (Array.isArray(anamnese[name])) {
+              anamnese[name].push(labelText);
+            } else {
+              anamnese[name] = [anamnese[name], labelText];
+            }
+          } else {
+            anamnese[name] = labelText;
+          }
+          hasAnamneseData = true;
+        }
+      } else {
+        // Para text, textarea, etc
+        const value = element.value.trim();
+        if (value) {
+          anamnese[name] = { value: value, label: null };
+          hasAnamneseData = true;
+        }
+      }
+    });
+
+    // Coletar medicamentos adicionados dinamicamente
+    const medicamentos = [];
+    const medicamentoItems = anamneseSection.querySelectorAll('.medicamento-item');
+
+    medicamentoItems.forEach((item, index) => {
+      const id = item.getAttribute('data-medicamento-id') || (index + 1);
+      const nome = item.querySelector(`[name="med${id}_nome"]`)?.value || '';
+      const justificativa = item.querySelector(`[name="med${id}_justificativa"]`)?.value || '';
+      const dose = item.querySelector(`[name="med${id}_dose"]`)?.value || '';
+      const tempo = item.querySelector(`[name="med${id}_tempo"]`)?.value || '';
+
+      if (nome || justificativa || dose || tempo) {
+        medicamentos.push({
+          id,
+          nome,
+          justificativa,
+          dose,
+          tempo
+        });
+        hasAnamneseData = true;
+      }
+    });
+
+    if (medicamentos.length > 0) {
+      anamnese.medicamentos = medicamentos;
+    }
+  }
 
   const secoes = [];
   const sections = document.querySelectorAll('main > form > section, main > h1, main > h2, main > section');
@@ -631,6 +721,7 @@ function visualizarResultado() {
   const dadosAvaliacao = {
     nome,
     data,
+    anamnese: hasAnamneseData ? anamnese : null,
     secoes,
   };
 
