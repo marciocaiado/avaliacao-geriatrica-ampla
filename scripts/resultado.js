@@ -152,33 +152,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         html += `<h3>${categoria}</h3>`;
 
-        // Campos de texto curto em grid
-        const camposCurtos = camposPreenchidos.filter(c => {
-          const valor = getValor(c);
-          return valor && valor.length < 100;
-        });
-
-        if (camposCurtos.length > 0) {
-          html += `<div class="info-grid">`;
-          camposCurtos.forEach(campo => {
+        // Se for a categoria Valores, renderizar tudo como texto corrido (linhas)
+        if (categoria === 'Valores') {
+          camposPreenchidos.forEach(campo => {
             const label = labelMap[campo] || campo;
             const valor = getValor(campo);
-            html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${valor}</span></div>`;
+            html += `<div class="texto-item"><strong>${label}:</strong> ${valor}</div>`;
           });
-          html += `</div>`;
+        } else {
+          // Para outras categorias, manter a lógica de grid para textos curtos
+          const camposCurtos = camposPreenchidos.filter(c => {
+            const valor = getValor(c);
+            return valor && valor.length < 100;
+          });
+
+          if (camposCurtos.length > 0) {
+            html += `<div class="info-grid">`;
+            camposCurtos.forEach(campo => {
+              const label = labelMap[campo] || campo;
+              const valor = getValor(campo);
+              html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${valor}</span></div>`;
+            });
+            html += `</div>`;
+          }
+
+          // Campos de texto longo
+          const camposLongos = camposPreenchidos.filter(c => {
+            const valor = getValor(c);
+            return valor && valor.length >= 100;
+          });
+
+          camposLongos.forEach(campo => {
+            const label = labelMap[campo] || campo;
+            const valor = getValor(campo);
+            html += `<div class="texto-item"><strong>${label}:</strong> ${valor}</div>`;
+          });
         }
-
-        // Campos de texto longo
-        const camposLongos = camposPreenchidos.filter(c => {
-          const valor = getValor(c);
-          return valor && valor.length >= 100;
-        });
-
-        camposLongos.forEach(campo => {
-          const label = labelMap[campo] || campo;
-          const valor = getValor(campo);
-          html += `<div class="texto-item"><strong>${label}:</strong> ${valor}</div>`;
-        });
 
         // Renderizar medicamentos logo após "Medicamentos - Informações Gerais"
         if (categoria === 'Medicamentos - Informações Gerais' && dados.anamnese.medicamentos && dados.anamnese.medicamentos.length > 0) {
@@ -211,6 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     for (const secao of dados.secoes) {
+      // Adicionar condição para pular seções que duplicam informações da anamnese
+      const tituloNormalizado = secao.titulo.toLowerCase();
+      if (tituloNormalizado.includes('identificação') || tituloNormalizado.includes('dados pessoais') || tituloNormalizado.includes('anamnese')) {
+        continue; // Pula esta seção se for considerada redundante
+      }
+
       if (secao.questoes.length > 0) {
         html += `<section><h2>${secao.titulo}</h2><div class="section-body">`;
 

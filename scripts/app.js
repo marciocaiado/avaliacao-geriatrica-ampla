@@ -688,6 +688,9 @@ function visualizarResultado() {
   const sections = document.querySelectorAll('main > form > section, main > h1, main > h2, main > section');
 
   for (const section of sections) {
+    // Skip Anamnese section to avoid duplication
+    if (anamneseSection && section === anamneseSection) continue;
+
     const hasAnswer = section.querySelector('input:checked');
     if (!hasAnswer) {
       continue;
@@ -746,11 +749,35 @@ function bindActions() {
     });
   }
 
+  const calcularImc = () => {
+    const pesoEl = document.getElementById('peso');
+    const alturaEl = document.getElementById('altura');
+    const imcEl = document.getElementById('imc');
+
+    if (!pesoEl || !alturaEl || !imcEl) return;
+
+    const peso = parseFloat(pesoEl.value);
+    const altura = parseFloat(alturaEl.value) / 100; // Converter cm para metros
+
+    if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+      imcEl.value = '';
+      return;
+    }
+
+    const imc = peso / (altura * altura);
+    imcEl.value = imc.toFixed(2); // Formatar para 2 casas decimais
+  };
+
   const visualizarResultadoButton = document.getElementById('visualizar-resultado');
   if (visualizarResultadoButton) {
     visualizarResultadoButton.addEventListener('click', visualizarResultado);
   }
 
+  const pesoInput = document.getElementById('peso');
+  const alturaInput = document.getElementById('altura');
+
+  if (pesoInput) pesoInput.addEventListener('input', calcularImc);
+  if (alturaInput) alturaInput.addEventListener('input', calcularImc);
 
   // Ref ref: atualizar SRH imediatamente ao clique
   const srhInputs = document.querySelectorAll('input[name="srh"]');
