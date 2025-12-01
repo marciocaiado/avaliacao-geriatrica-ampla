@@ -1,36 +1,181 @@
-# Avaliação Geriátrica Ampla (HGG)
+# Avaliação Geriátrica Ampla
 
-Projeto web para coleta e geração de resultados da Avaliação Geriátrica Ampla, com foco em uso móvel e exportação para PDF em formato A4 com margens padronizadas.
+Sistema web para avaliação geriátrica completa com múltiplas escalas validadas.
 
-## Visão geral
-- Interface responsiva (mobile e desktop)
-- Formulário com seções colapsáveis
-- Resultado com destaque para Nome e Data
-- Exportação para PDF em A4 com margem de 15 mm e paginação automática
+## 🚀 Como Executar
 
-## Estrutura
-- `index.html` — página principal com formulário
-- `resultado.html` — página de exibição do resultado e botão para salvar PDF
-- `styles.css` — estilos globais, responsividade e impressão
-- `scripts/`:
-  - `app.js` — lógica do formulário (preenchimento e fluxo)
-  - `data.js` — dados/constantes de apoio
-  - `resultado.js` — montagem do resultado e geração de PDF
+### ⚠️ IMPORTANTE: Módulos ES6 e CORS
 
-## Principais melhorias recentes
-- Responsividade mobile (títulos, grid, espaçamentos, botões full-width)
-- Centralização do campo de data
-- Cabeçalho do resultado em duas linhas: “Avaliação de:” e “Nome - Data”
-- Redução tipográfica do conteúdo após “Nome - Data” via `.resultado-body`
-- Cor azul para radios/checkboxes via `accent-color`
-- PDF em A4 independente do tamanho da tela, com margem fixa de 15 mm, sem incluir a barra de ações e mantendo proporções (sem esticar)
+Esta aplicação usa **módulos ES6 nativos** do JavaScript. Por questões de segurança, navegadores **não permitem** carregar módulos usando o protocolo `file://` (abrir o arquivo HTML diretamente).
 
-## Como usar localmente
-1. Abra `index.html` em um navegador moderno (Chrome/Edge/Safari/Firefox).
-2. Preencha o formulário e avance para o resultado.
-3. Na página `resultado.html`, use o botão “Salvar como PDF”.
+**Você DEVE usar um servidor HTTP local.**
 
-Observação: O fluxo de PDF usa `html2canvas` e `jsPDF` via CDN (em `resultado.html`).
+### Opção 1: Python (Recomendado - mais simples)
+
+Se você tem Python 3 instalado:
+
+```bash
+# Na pasta do projeto, execute:
+python serve.py
+
+# Ou especifique uma porta:
+python serve.py 3000
+```
+
+Depois acesse: `http://localhost:8000`
+
+### Opção 2: Node.js
+
+Se você tem Node.js instalado:
+
+```bash
+# Na pasta do projeto, execute:
+node serve.js
+
+# Ou especifique uma porta:
+node serve.js 3000
+```
+
+Depois acesse: `http://localhost:8000`
+
+### Opção 3: PHP
+
+Se você tem PHP instalado:
+
+```bash
+php -S localhost:8000
+```
+
+Depois acesse: `http://localhost:8000`
+
+### Opção 4: Extensão VS Code
+
+Se você usa VS Code, instale a extensão **Live Server**:
+
+1. Instale a extensão "Live Server" (Ritwick Dey)
+2. Clique com botão direito no `index.html`
+3. Selecione "Open with Live Server"
+
+### Opção 5: http-server (npm)
+
+```bash
+npx http-server -p 8000
+```
+
+## 📋 Escalas Implementadas
+
+A aplicação inclui as seguintes escalas geriátricas:
+
+### Rastreio e Vulnerabilidade
+- **SRH** - Pergunta Única Global de Saúde
+- **IVCF-20** - Índice de Vulnerabilidade Clínico-Funcional
+- **CFS** - Escala Clínica de Fragilidade
+
+### Funcionalidade
+- **Barthel** - Índice de Barthel
+- **Katz** - Escala de Katz
+- **Lawton** - Escala de Lawton
+- **Pfeffer** - Questionário de Pfeffer
+
+### Condições Específicas
+- **FRAIL** - Escala FRAIL de Fragilidade
+- **SARC-F** - Rastreio de Sarcopenia
+- **MAN** - Mini Avaliação Nutricional
+- **GDS-15** - Escala de Depressão Geriátrica
+- **10-CS** - Rastreio Cognitivo 10 pontos
+- **Zucchelli** - Predição de Delirium
+- **CAM** - Confusion Assessment Method
+
+### Social
+- **APGAR Familiar** - Avaliação Funcional Familiar
+
+## 📁 Estrutura do Projeto
+
+```
+.
+├── index.html              # Página principal
+├── resultado.html          # Página de resultados
+├── styles.css             # Estilos
+├── scripts/
+│   ├── app.js             # Aplicação principal (coordenador)
+│   ├── constants.js       # Constantes e configurações
+│   ├── utils.js           # Funções utilitárias
+│   ├── calculations.js    # Lógica de cálculo das escalas
+│   ├── dom.js            # Manipulação do DOM
+│   └── resultado.js       # Lógica da página de resultados
+├── serve.js              # Servidor HTTP (Node.js)
+├── serve.py              # Servidor HTTP (Python)
+└── README.md             # Este arquivo
+```
+
+## 🔧 Arquitetura
+
+A aplicação foi completamente refatorada para usar **módulos ES6**:
+
+- **Modular**: Código dividido em módulos especializados
+- **Manutenível**: Fácil de entender e modificar
+- **Testável**: Funções isoladas e puras
+- **Sem duplicação**: Uma única fonte de verdade
+
+Veja [REFACTORING.md](REFACTORING.md) para detalhes da refatoração.
+
+## 🌐 Compatibilidade
+
+### Navegadores Suportados
+- ✅ Chrome/Edge 61+
+- ✅ Firefox 60+
+- ✅ Safari 11+
+- ❌ Internet Explorer (não suportado)
+
+### Requisitos
+- Navegador moderno com suporte a módulos ES6
+- Servidor HTTP local (veja opções acima)
+
+## 💾 Funcionalidades
+
+- ✅ Preenchimento de anamnese completa
+- ✅ Múltiplas escalas geriátricas
+- ✅ Cálculo automático de resultados
+- ✅ Geração de relatório em PDF
+- ✅ Armazenamento local (LocalStorage)
+- ✅ Interface responsiva
+- ✅ Suporte a medicamentos
+- ✅ Valores e preferências do paciente
+
+## 🐛 Solução de Problemas
+
+### Erro "CORS policy" ou "ERR_FAILED"
+
+**Causa**: Você está tentando abrir o arquivo HTML diretamente (`file://` protocol).
+
+**Solução**: Use um dos servidores HTTP listados acima. **Não** abra o arquivo diretamente no navegador.
+
+### Módulos não carregam
+
+1. Verifique se está usando um servidor HTTP
+2. Abra o console do navegador (F12) e veja os erros
+3. Confirme que seu navegador suporta módulos ES6
+4. Limpe o cache do navegador (Ctrl+Shift+Delete)
+
+### Erros de JavaScript
+
+1. Abra o console do navegador (F12)
+2. Verifique a mensagem de erro
+3. Confirme que todos os arquivos `.js` estão na pasta `scripts/`
+
+## 📝 Como Usar
+
+1. **Inicie o servidor** (veja seção "Como Executar")
+2. **Acesse** `http://localhost:8000` no navegador
+3. **Preencha** a anamnese e escalas
+4. **Visualize** os resultados automaticamente
+5. **Gere** o relatório em PDF
+
+## 🔐 Privacidade
+
+- Todos os dados são armazenados **localmente** no navegador
+- **Nenhum dado** é enviado para servidores externos
+- Use o botão "Limpar" para remover dados
 
 ## Publicação no GitHub
 1. Crie um repositório no GitHub (público ou privado).

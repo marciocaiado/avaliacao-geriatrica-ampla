@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dados = JSON.parse(localStorage.getItem('dadosAvaliacao'));
 
   if (dados && resultadoContainer) {
-    let html = `<h1>Avaliação de:</h1><h2>${dados.nome} - ${dados.data}</h2><div class="resultado-body">`;
+    let html = `<div class="resultado-body">`;
 
     // Exibir dados da anamnese se existirem
     if (dados.anamnese) {
