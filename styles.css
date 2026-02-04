@@ -71,6 +71,7 @@ section > h2 {
 .group { padding: 0 16px 16px; }
 .section-body h3 { color: red; margin: 16px 0; padding: 0 16px; }
 #form-funcional > h2 { margin: 16px; }
+#form-funcional > h4 { padding: 6px 16px; }
 .q { margin: 12px 0; }
 .q > label:first-child { font-weight: 600; display: block; margin-bottom: 8px; }
 .label--center { text-align: center; display: block; }
