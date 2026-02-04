@@ -4,14 +4,15 @@
 
 body {
   margin: 0;
+  padding: 0 6px;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  background: #f7f7fb;
-  color: #222;
+  background: #f7f7fb url('assets/background-pagina.png') no-repeat center center / cover fixed;
+  color: #333333;
   line-height: 1.4;
 }
 
 header {
-  background: #3f51b5;
+  /* background: #3f51b5; */
   color: #fff;
   padding: 16px 20px;
 }
@@ -20,10 +21,9 @@ header {
 .logo {
   text-align: center;
 }
-.logo h1 {
-  /* Remove huge horizontal margins that break on mobile */
-  margin: 0;
-  font-size: clamp(18px, 4.5vw, 28px);
+.header-logo {
+  max-height: 160px;
+  width: auto;
 }
 
 main {
@@ -38,14 +38,14 @@ section {
   border-radius: 10px;
   margin-top: 8px;
   /* margin-bottom: 8px; */
-  overflow: visible;
+  overflow: clip;
 }
 
 section > h1,
 section > h2 {
   margin: 0;
   padding: 6px 16px;
-  background: #f1f3ff;
+  background: #ffffff;
   border-bottom: 1px solid #e6e6ef;
   cursor: pointer;
   user-select: none;
@@ -72,6 +72,7 @@ section > h2 {
 .section-body h3 { color: red; margin: 16px 0; padding: 0 16px; }
 #form-funcional > h2 { margin: 16px; }
 #form-funcional > h4 { padding: 6px 16px; }
+#form-funcional > h4.atividades { margin: 2px; padding: 0 3px; }
 .q { margin: 12px 0; }
 .q > label:first-child { font-weight: 600; display: block; margin-bottom: 8px; }
 .label--center { text-align: center; display: block; }
@@ -138,7 +139,7 @@ button:focus-visible { outline: 3px solid rgba(63,81,181,.35); outline-offset: 2
 
 /* Colapsável */
 .section-body { display: none !important; }
-section.open > .section-body { display: block !important; }
+section.open > .section-body { display: block !important; padding: 0 6px; }
 section.collapsible > h1::after,
 section.collapsible > h2::after,
 section.collapsible > h3::after,
@@ -182,6 +183,10 @@ section.collapsible.medicamento-item > h4 {
 
 section.collapsible.medicamento-item.open > .section-body {
   padding: 12px;
+}
+
+.medicamento-item .section-body {
+  padding: 6px 12px 12px;
 }
 
 .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: flex-end; }
