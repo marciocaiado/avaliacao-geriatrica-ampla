@@ -62,7 +62,7 @@
             </div>
             <div class="q">
               <label for="anamnese_renda">Renda</label>
-              <input class="form-input" type="text" id="anamnese_renda" name="anamnese_renda" inputmode="numeric"/>
+              <input class="form-input" type="text" id="anamnese_renda" name="anamnese_renda"/>
             </div>
           </div>     
           <div class="grid-container">
@@ -150,6 +150,7 @@
           <div class="q">
             <label>Presença de Prescrição Potencialmente Inapropriada</label>
             <div class="column">
+              <label><input type="checkbox" name="nao" /> Não</label>
               <label><input type="checkbox" name="ppi_benzodiazepinicos" /> Benzodiazepínicos</label>
               <label><input type="checkbox" name="ppi_opioides" /> Opioides</label>
               <label><input type="checkbox" name="ppi_anticolinergicos" /> Medicamentos altamente anticolinérgicos (por exemplo, difenidramina)</label>
@@ -169,42 +170,6 @@
 
         <h3>MULTICOMPLEXIDADE</h3>
         <div class="group">
-          <div class="q">
-            <label>Internações não programadas no último ano</label>
-            <div class="row">
-              <label><input type="radio" name="internacoes" value="1" /> 1</label>
-              <label><input type="radio" name="internacoes" value="2" /> 2</label>
-              <label><input type="radio" name="internacoes" value="3+" /> 3 ou mais</label>
-            </div>
-          </div>
-
-          <div class="q">
-            <label>Morbidades</label>
-            <div class="row">
-              <label><input type="checkbox" name="morbidade_hipertensao" /> Hipertensão</label>
-              <label><input type="checkbox" name="morbidade_diabetes" /> Diabetes</label>
-              <label><input type="checkbox" name="morbidade_renal" /> Doença renal crônica</label>
-            </div>
-            <div class="q">
-              <label for="morbidade_outra">Outras</label>
-              <input class="form-input" type="text" id="morbidade_outra" name="morbidade_outra" />
-            </div>
-          </div>
-
-          <div class="q">
-            <label>Patologias prévias</label>
-            <div class="column">
-              <label><input type="checkbox" name="patologia_ave" /> Acidente vascular encefálico</label>
-              <label><input type="checkbox" name="patologia_iam" /> Infarto agudo do miocárdio</label>
-            </div>
-            <div class="q">
-              <label for="patologia_outra">Outras</label>
-              <input class="form-input" type="text" id="patologia_outra" name="patologia_outra" />
-            </div>
-          </div>
-        </div>
-        <h3>MOBILIDADE</h3>
-        <div class="group">
           <div class="grid-container-3">
             <div class="q">
               <label for="peso">Peso</label>
@@ -219,19 +184,61 @@
               <input class="form-input" type="text" id="imc" name="imc" inputmode="numeric" />
             </div>
           </div>
+
+          <div class="q">
+            <label for="perda_peso">Perda de peso no último ano?</label>
+            <div class="row">
+              <label><input type="radio" name="perda_peso" value="sim" /> Sim</label>
+              <label><input type="radio" name="perda_peso" value="nao" /> Não</label>
+            </div>
+            <label for="perda_peso_quantidade">Quantidade</label>
+            <input class="form-input" type="text" id="perda_peso_quantidade" name="perda_peso_quantidade" />
+          </div>
+
+          <div class="q">
+            <label>Internações não programadas no último ano</label>
+            <div class="row">
+              <label><input type="radio" name="internacoes" value="0" /> 0</label>
+              <label><input type="radio" name="internacoes" value="1" /> 1</label>
+              <label><input type="radio" name="internacoes" value="2" /> 2</label>
+              <label><input type="radio" name="internacoes" value="3+" /> 3 ou mais</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <label>Morbidades</label>
+            <div class="row">
+              <label><input type="checkbox" name="morbidade_nao" /> Nenhuma</label>
+              <label><input type="checkbox" name="morbidade_hipertensao" /> Hipertensão</label>
+              <label><input type="checkbox" name="morbidade_diabetes" /> Diabetes</label>
+              <label><input type="checkbox" name="morbidade_renal" /> Doença renal crônica</label>
+              <label><input type="checkbox" name="morbidade_ave" /> Acidente vascular encefálico</label>
+              <label><input type="checkbox" name="morbidade_iam" /> Infarto agudo do miocárdio</label>
+            </div>
+            <div class="q">
+              <label for="morbidade_outra">Outras</label>
+              <input class="form-input" type="text" id="morbidade_outra" name="morbidade_outra" />
+            </div>
+          </div>
+        </div>
+        <h3>MOBILIDADE</h3>
+        <div class="group">
           <div class="q">
             <label>Teste de velocidade de marcha (&lt;0,8m/s)</label>
-            <div class="row">
-              <label><input type="radio" name="teste_marcha" value="sim" /> Sim</label>
-              <label><input type="radio" name="teste_marcha" value="nao" /> Não</label>
+            <button type="button" id="btn-iniciar-marcha" class="btn-small" style="margin-bottom: 10px;">Iniciar teste ⏱️</button>
+            <div id="resultado-marcha" style="font-size: 1.1rem; margin-top: 8px; font-weight: 500;">
+              
             </div>
+            <input type="hidden" name="teste_marcha_velocidade" id="teste_marcha_velocidade" />
+            <input type="hidden" name="teste_marcha" id="teste_marcha" />
           </div>
           <div class="q">
             <label>Teste do sentar e levantar 5 vezes (&gt;15 segundos)</label>
-            <div class="row">
-              <label><input type="radio" name="teste_sentar_levantar" value="sim" /> Sim</label>
-              <label><input type="radio" name="teste_sentar_levantar" value="nao" /> Não</label>
+            <button type="button" id="btn-iniciar-sentar-levantar" class="btn-small" style="margin-bottom: 10px;">Iniciar teste ⏱️</button>
+            <div id="resultado-sentar-levantar" style="font-size: 1.1rem; margin-top: 8px; font-weight: 500;">
             </div>
+            <input type="hidden" name="teste_sentar_levantar_tempo" id="teste_sentar_levantar_tempo" />
+            <input type="hidden" name="teste_sentar_levantar" id="teste_sentar_levantar" />
           </div>
         </div>
 
@@ -1425,17 +1432,57 @@
         <span class="close-button-fluencia" style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
         <h2>Fluência Verbal (Animais)</h2>
         <p>Peça para o paciente falar o maior número de animais que se lembrar.</p>
-        
+
         <div id="timer-display" style="font-size: 4rem; font-weight: bold; margin: 20px 0; color: #3f51b5;">00</div>
         <div id="counter-display" style="font-size: 2rem; margin-bottom: 20px;">0 animais</div>
-        
+
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
           <button id="btn-contar-animal" style="padding: 20px 30px; font-size: 1.2rem; background-color: #4caf50;">+1 Animal</button>
           <button id="btn-reiniciar-fluencia" class="secondary">Reiniciar</button>
         </div>
-        
+
         <div style="margin-top: 20px;">
           <button id="btn-concluir-fluencia" style="width: 100%;">Concluir e Salvar</button>
+        </div>
+      </div>
+    </div>
+    <div id="marcha-modal" class="modal">
+      <div class="modal-content" style="text-align: center;">
+        <span class="close-button-marcha" style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
+        <h2>Teste de Velocidade de Marcha</h2>
+        <p>O paciente deve caminhar 4 metros. Clique em "Iniciar" quando ele começar a caminhar e em "Parar" quando ele terminar.</p>
+
+        <div id="marcha-timer-display" style="font-size: 4rem; font-weight: bold; margin: 20px 0; color: #3f51b5;">0.0s</div>
+        <div id="marcha-resultado-display" style="font-size: 1.5rem; margin-bottom: 20px; color: #666;">-</div>
+
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button id="btn-iniciar-cronometro-marcha" style="padding: 20px 30px; font-size: 1.2rem; background-color: #4caf50;">Iniciar</button>
+          <button id="btn-parar-cronometro-marcha" style="padding: 20px 30px; font-size: 1.2rem; background-color: #f44336;" disabled>Parar</button>
+          <button id="btn-reiniciar-marcha" class="secondary">Reiniciar</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <button id="btn-concluir-marcha" style="width: 100%;">Concluir e Salvar</button>
+        </div>
+      </div>
+    </div>
+    <div id="sentar-levantar-modal" class="modal">
+      <div class="modal-content" style="text-align: center;">
+        <span class="close-button-sentar-levantar" style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
+        <h2>Teste de Sentar e Levantar</h2>
+        <p>O paciente deve sentar e levantar 5 vezes. Clique em "Iniciar" quando ele começar e em "Parar" quando completar as 5 repetições.</p>
+
+        <div id="sentar-levantar-timer-display" style="font-size: 4rem; font-weight: bold; margin: 20px 0; color: #3f51b5;">0.0s</div>
+        <div id="sentar-levantar-contador-display" style="font-size: 1.5rem; margin-bottom: 20px; color: #666;">0 / 5 repetições</div>
+
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button id="btn-iniciar-cronometro-sentar" style="padding: 20px 30px; font-size: 1.2rem; background-color: #4caf50;">Iniciar</button>
+          <button id="btn-contar-repeticao" style="padding: 20px 30px; font-size: 1.2rem; background-color: #2196f3;" disabled>+1 Repetição</button>
+          <button id="btn-reiniciar-sentar" class="secondary">Reiniciar</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <button id="btn-concluir-sentar" style="width: 100%;">Concluir e Salvar</button>
         </div>
       </div>
     </div>

@@ -471,6 +471,12 @@ function bindActions() {
   // Modal de fluência verbal
   setupFluenciaModal();
 
+  // Modal de teste de marcha
+  setupMarchaModal();
+
+  // Modal de teste de sentar e levantar
+  setupSentarLevantar();
+
   // Modal de medicamentos
   setupMedicamentosModal();
 }
@@ -638,6 +644,250 @@ function setupFluenciaModal() {
     if (event.target === modalFluencia) {
       if (modalFluencia) modalFluencia.style.display = 'none';
       clearInterval(fluenciaInterval);
+    }
+  });
+}
+
+// Modal de Teste de Marcha
+function setupMarchaModal() {
+  const btnIniciarMarcha = document.getElementById('btn-iniciar-marcha');
+  const modalMarcha = document.getElementById('marcha-modal');
+  const closeMarcha = document.querySelector('.close-button-marcha');
+  const btnIniciarCronometro = document.getElementById('btn-iniciar-cronometro-marcha');
+  const btnPararCronometro = document.getElementById('btn-parar-cronometro-marcha');
+  const btnReiniciar = document.getElementById('btn-reiniciar-marcha');
+  const btnConcluir = document.getElementById('btn-concluir-marcha');
+  const timerDisplay = document.getElementById('marcha-timer-display');
+  const resultadoDisplay = document.getElementById('marcha-resultado-display');
+
+  if (!btnIniciarMarcha || !modalMarcha) return;
+
+  let marchaInterval;
+  let marchaMilliseconds = 0;
+  let marchaVelocidade = 0;
+
+  const updateMarchaUI = () => {
+    const seconds = (marchaMilliseconds / 1000).toFixed(1);
+    if (timerDisplay) timerDisplay.textContent = `${seconds}s`;
+    if (resultadoDisplay) {
+      if (marchaVelocidade > 0) {
+        resultadoDisplay.textContent = `Velocidade: ${marchaVelocidade.toFixed(2)} m/s`;
+        resultadoDisplay.style.color = marchaVelocidade < 0.8 ? '#f44336' : '#4caf50';
+      } else {
+        resultadoDisplay.textContent = '-';
+        resultadoDisplay.style.color = '#666';
+      }
+    }
+  };
+
+  const stopMarcha = () => {
+    clearInterval(marchaInterval);
+    marchaInterval = null;
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = true;
+    if (btnPararCronometro) btnPararCronometro.disabled = true;
+
+    // Calcular velocidade: 4 metros / tempo em segundos
+    const tempoEmSegundos = marchaMilliseconds / 1000;
+    if (tempoEmSegundos > 0) {
+      marchaVelocidade = 4 / tempoEmSegundos;
+    }
+    updateMarchaUI();
+  };
+
+  const startMarcha = () => {
+    clearInterval(marchaInterval);
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = true;
+    if (btnPararCronometro) btnPararCronometro.disabled = false;
+    if (timerDisplay) timerDisplay.style.color = '#3f51b5';
+
+    marchaInterval = setInterval(() => {
+      marchaMilliseconds += 100;
+      updateMarchaUI();
+    }, 100);
+  };
+
+  const resetMarcha = () => {
+    clearInterval(marchaInterval);
+    marchaMilliseconds = 0;
+    marchaVelocidade = 0;
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = false;
+    if (btnPararCronometro) btnPararCronometro.disabled = true;
+    if (timerDisplay) timerDisplay.style.color = '#3f51b5';
+    updateMarchaUI();
+  };
+
+  const openModal = () => {
+    resetMarcha();
+    if (modalMarcha) modalMarcha.style.display = 'block';
+  };
+
+  const closeModal = () => {
+    if (modalMarcha) modalMarcha.style.display = 'none';
+    clearInterval(marchaInterval);
+  };
+
+  btnIniciarMarcha.addEventListener('click', openModal);
+  if (closeMarcha) closeMarcha.addEventListener('click', closeModal);
+  if (btnIniciarCronometro) btnIniciarCronometro.addEventListener('click', startMarcha);
+  if (btnPararCronometro) btnPararCronometro.addEventListener('click', stopMarcha);
+  if (btnReiniciar) btnReiniciar.addEventListener('click', resetMarcha);
+
+  if (btnConcluir) {
+    btnConcluir.addEventListener('click', () => {
+      clearInterval(marchaInterval);
+      closeModal();
+
+      // Atualiza o resultado na página
+      const resultadoDiv = document.getElementById('resultado-marcha');
+      const velocidadeInput = document.getElementById('teste_marcha_velocidade');
+      const testeMarchaInput = document.getElementById('teste_marcha');
+
+      if (resultadoDiv && marchaVelocidade > 0) {
+        const velocidadeFormatada = marchaVelocidade.toFixed(2);
+        const cor = marchaVelocidade < 0.8 ? '#f44336' : '#4caf50';
+        const status = marchaVelocidade < 0.8 ? '(Alterado)' : '(Normal)';
+
+        resultadoDiv.innerHTML = `<strong>Resultado:</strong> <span style="color: ${cor};">${velocidadeFormatada} m/s ${status}</span>`;
+
+        // Preenche os campos hidden
+        if (velocidadeInput) velocidadeInput.value = velocidadeFormatada;
+        if (testeMarchaInput) testeMarchaInput.value = marchaVelocidade < 0.8 ? 'sim' : 'nao';
+      }
+    });
+  }
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modalMarcha) {
+      closeModal();
+    }
+  });
+}
+
+// Modal de Sentar e Levantar
+function setupSentarLevantar() {
+  const btnIniciarSentar = document.getElementById('btn-iniciar-sentar-levantar');
+  const modalSentar = document.getElementById('sentar-levantar-modal');
+  const closeSentar = document.querySelector('.close-button-sentar-levantar');
+  const btnIniciarCronometro = document.getElementById('btn-iniciar-cronometro-sentar');
+  const btnPararCronometro = document.getElementById('btn-parar-cronometro-sentar');
+  const btnContarRepeticao = document.getElementById('btn-contar-repeticao');
+  const btnReiniciar = document.getElementById('btn-reiniciar-sentar');
+  const btnConcluir = document.getElementById('btn-concluir-sentar');
+  const timerDisplay = document.getElementById('sentar-levantar-timer-display');
+  const contadorDisplay = document.getElementById('sentar-levantar-contador-display');
+
+  if (!btnIniciarSentar || !modalSentar) return;
+
+  let sentarInterval;
+  let sentarMilliseconds = 0;
+  let repeticoes = 0;
+  const MAX_REPETICOES = 5;
+
+  const updateSentarUI = () => {
+    const seconds = (sentarMilliseconds / 1000).toFixed(1);
+    if (timerDisplay) timerDisplay.textContent = `${seconds}s`;
+    if (contadorDisplay) {
+      contadorDisplay.textContent = `${repeticoes} / ${MAX_REPETICOES} repetições`;
+      if (repeticoes >= MAX_REPETICOES) {
+        contadorDisplay.style.color = '#4caf50';
+      }
+    }
+  };
+
+  const stopSentar = () => {
+    clearInterval(sentarInterval);
+    sentarInterval = null;
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = true;
+    if (btnPararCronometro) btnPararCronometro.disabled = true;
+    if (btnContarRepeticao) btnContarRepeticao.disabled = true;
+  };
+
+  const startSentar = () => {
+    clearInterval(sentarInterval);
+    repeticoes = 0;
+    sentarMilliseconds = 0;
+    updateSentarUI();
+
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = true;
+    if (btnPararCronometro) btnPararCronometro.disabled = false;
+    if (btnContarRepeticao) btnContarRepeticao.disabled = false;
+    if (timerDisplay) timerDisplay.style.color = '#3f51b5';
+
+    sentarInterval = setInterval(() => {
+      sentarMilliseconds += 100;
+      updateSentarUI();
+    }, 100);
+  };
+
+  const resetSentar = () => {
+    clearInterval(sentarInterval);
+    sentarMilliseconds = 0;
+    repeticoes = 0;
+    if (btnIniciarCronometro) btnIniciarCronometro.disabled = false;
+    if (btnPararCronometro) btnPararCronometro.disabled = true;
+    if (btnContarRepeticao) btnContarRepeticao.disabled = true;
+    if (timerDisplay) timerDisplay.style.color = '#3f51b5';
+    if (contadorDisplay) contadorDisplay.style.color = '#666';
+    updateSentarUI();
+  };
+
+  const openModal = () => {
+    resetSentar();
+    if (modalSentar) modalSentar.style.display = 'block';
+  };
+
+  const closeModal = () => {
+    if (modalSentar) modalSentar.style.display = 'none';
+    clearInterval(sentarInterval);
+  };
+
+  btnIniciarSentar.addEventListener('click', openModal);
+  if (closeSentar) closeSentar.addEventListener('click', closeModal);
+  if (btnIniciarCronometro) btnIniciarCronometro.addEventListener('click', startSentar);
+  if (btnPararCronometro) btnPararCronometro.addEventListener('click', stopSentar);
+  if (btnReiniciar) btnReiniciar.addEventListener('click', resetSentar);
+
+  if (btnContarRepeticao) {
+    btnContarRepeticao.addEventListener('click', () => {
+      if (repeticoes < MAX_REPETICOES) {
+        repeticoes++;
+        updateSentarUI();
+
+        // Para automaticamente quando atinge 5 repetições
+        if (repeticoes >= MAX_REPETICOES) {
+          stopSentar();
+        }
+      }
+    });
+  }
+
+  if (btnConcluir) {
+    btnConcluir.addEventListener('click', () => {
+      clearInterval(sentarInterval);
+      closeModal();
+
+      // Atualiza o resultado na página
+      const resultadoDiv = document.getElementById('resultado-sentar-levantar');
+      const tempoInput = document.getElementById('teste_sentar_levantar_tempo');
+      const testeSentarInput = document.getElementById('teste_sentar_levantar');
+
+      if (resultadoDiv && sentarMilliseconds > 0) {
+        const tempoSegundos = (sentarMilliseconds / 1000).toFixed(1);
+        const cor = sentarMilliseconds > 15000 ? '#f44336' : '#4caf50';
+        const status = sentarMilliseconds > 15000 ? '(Alterado)' : '(Normal)';
+
+        resultadoDiv.innerHTML = `<strong>Resultado:</strong> <span style="color: ${cor};">${tempoSegundos}s ${status}</span>`;
+
+        // Preenche os campos hidden
+        if (tempoInput) tempoInput.value = tempoSegundos;
+        if (testeSentarInput) testeSentarInput.value = sentarMilliseconds > 15000 ? 'sim' : 'nao';
+      }
+    });
+  }
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modalSentar) {
+      closeModal();
     }
   });
 }
