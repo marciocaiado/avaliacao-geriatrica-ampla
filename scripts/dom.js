@@ -3,7 +3,7 @@
  * Funções para exibir resultados e interagir com a interface
  */
 
-import { resultadoIds } from './constants.js';
+import { resultadoIds } from './constants.js?v=2';
 
 /**
  * Elemento do resumo de testes
@@ -72,7 +72,6 @@ export function atualizarResumo() {
   coleta.forEach(([titulo, id]) => {
     const src = document.getElementById(id);
     const rawHTML = src ? src.innerHTML.trim() : '';
-
     if (rawHTML) {
       blocos.push(`<div class="item">${src.innerHTML}</div>`);
       secoes.push({
@@ -86,12 +85,16 @@ export function atualizarResumo() {
 
   try {
     localStorage.setItem('resumoTestsHTML', el.innerHTML);
-    const nome = (document.getElementById('nome')?.value || '').trim();
-    const data = (document.getElementById('data_avaliacao')?.value || '').trim();
+    const nome = (document.getElementById('anamnese_nome')?.value || '').trim();
+    const data = new Date().toLocaleDateString('pt-BR');
+    const idade = (document.getElementById('anamnese_idade')?.value || '').trim();
+    const numAtendimento = (document.getElementById('anamnese_num_atendimento')?.value || '').trim();
 
     localStorage.setItem('dadosAvaliacao', JSON.stringify({
       nome,
       data,
+      idade,
+      numAtendimento,
       secoes,
     }));
   } catch (error) {

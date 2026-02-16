@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyStateElement = document.getElementById('resumo-vazio');
   const metaBox = document.getElementById('resumo-meta');
   const metaNome = document.getElementById('resumo-meta-nome');
+  const metaIdade = document.getElementById('resumo-meta-idade');
+  const metaAtendimento = document.getElementById('resumo-meta-atendimento');
   const metaData = document.getElementById('resumo-meta-data');
   const salvarPdfButton = document.getElementById('salvar-pdf-resultado');
   const fabPdfButton = document.getElementById('fab-pdf');
@@ -20,23 +22,28 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn('[Resumo] Não foi possível ler dadosAvaliacao do localStorage:', error);
   }
 
-  let resumoSnapshot = null;
+  // Ler dados do formulário do sessionStorage (persistence.js) como fonte principal
+  let formState = null;
   try {
-    const rawSnapshot = localStorage.getItem('resumoTestsData');
-    resumoSnapshot = rawSnapshot ? JSON.parse(rawSnapshot) : null;
+    const rawForm = sessionStorage.getItem('formState');
+    formState = rawForm ? JSON.parse(rawForm) : null;
   } catch (error) {
-    console.warn('[Resumo] Não foi possível ler resumoTestsData do localStorage:', error);
+    console.warn('[Resumo] Não foi possível ler formState do sessionStorage:', error);
   }
 
-  const pacienteNome = safeTrim(resumoSnapshot?.paciente?.nome) || safeTrim(dados?.nome);
-  const pacienteData = safeTrim(resumoSnapshot?.paciente?.data) || safeTrim(dados?.data);
+  const pacienteNome = safeTrim(formState?.anamnese_nome) || safeTrim(dados?.nome);
+  const pacienteIdade = safeTrim(formState?.anamnese_idade) || safeTrim(dados?.idade);
+  const pacienteAtendimento = safeTrim(formState?.anamnese_num_atendimento) || safeTrim(dados?.numAtendimento);
+  const pacienteData = safeTrim(dados?.data) || new Date().toLocaleDateString('pt-BR');
 
   const renderPacienteInfo = () => {
     if (!metaBox) return;
-    const hasInfo = Boolean(pacienteNome || pacienteData);
+    const hasInfo = Boolean(pacienteNome || pacienteIdade || pacienteAtendimento);
     metaBox.hidden = !hasInfo;
     if (!hasInfo) return;
     if (metaNome) metaNome.textContent = pacienteNome || '-';
+    if (metaIdade) metaIdade.textContent = pacienteIdade ? `${pacienteIdade} anos` : '-';
+    if (metaAtendimento) metaAtendimento.textContent = pacienteAtendimento || '-';
     if (metaData) metaData.textContent = pacienteData || '-';
   };
 
@@ -99,9 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const pageHeight = pdf.internal.pageSize.getHeight();
       const margin = 15;
       const contentWidthMM = pageWidth - margin * 2;
+      const contentHeightMM = pageHeight - margin * 2;
 
       const PX_PER_MM = 3.78;
       const contentWidthPX = Math.round(contentWidthMM * PX_PER_MM);
+      const pageHeightCSS = Math.floor(contentHeightMM * PX_PER_MM);
 
       const wrapper = document.createElement('div');
       wrapper.style.position = 'fixed';
@@ -128,32 +137,79 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
 
+      // Ajustar layout para evitar cortar conteúdo entre páginas do PDF
+      (() => {
+        const SEL = 'h2, h3, .item, .resultado.meta > div, p';
+        let passes = 30;
+        while (passes-- > 0) {
+          let changed = false;
+          const wTop = wrapper.getBoundingClientRect().top;
+          for (const el of wrapper.querySelectorAll(SEL)) {
+            const r = el.getBoundingClientRect();
+            const top = r.top - wTop;
+            const bottom = r.bottom - wTop;
+            const h = bottom - top;
+            if (h <= 0 || h >= pageHeightCSS * 0.9) continue;
+            const pTop = Math.floor(top / pageHeightCSS);
+            const pBot = Math.floor((bottom - 1) / pageHeightCSS);
+            if (pTop !== pBot) {
+              const spacer = document.createElement('div');
+              spacer.style.height = `${(pTop + 1) * pageHeightCSS - top + 2}px`;
+              el.parentNode.insertBefore(spacer, el);
+              changed = true;
+              break;
+            }
+          }
+          if (!changed) break;
+        }
+        // Evitar títulos órfãos (título em uma página, conteúdo na seguinte)
+        let hPasses = 10;
+        while (hPasses-- > 0) {
+          let changed = false;
+          const wTop = wrapper.getBoundingClientRect().top;
+          for (const heading of wrapper.querySelectorAll('h2, h3, h4')) {
+            const next = heading.nextElementSibling;
+            if (!next) continue;
+            const hTop = heading.getBoundingClientRect().top - wTop;
+            const nTop = next.getBoundingClientRect().top - wTop;
+            const hPage = Math.floor(hTop / pageHeightCSS);
+            const nPage = Math.floor(nTop / pageHeightCSS);
+            if (nPage > hPage) {
+              const spacer = document.createElement('div');
+              spacer.style.height = `${(hPage + 1) * pageHeightCSS - hTop + 2}px`;
+              heading.parentNode.insertBefore(spacer, heading);
+              changed = true;
+              break;
+            }
+          }
+          if (!changed) break;
+        }
+      })();
+
       html2canvas(wrapper, { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: contentWidthPX }).then((canvas) => {
         document.body.removeChild(wrapper);
 
         const imgPxWidth = canvas.width;
         const imgPxHeight = canvas.height;
-
-        const contentHeightMM = pageHeight - margin * 2;
         const contentHeightPX = Math.floor(contentHeightMM * PX_PER_MM * 2);
 
         let offset = 0;
         let first = true;
         while (offset < imgPxHeight) {
-          const sliceHeightPx = Math.min(contentHeightPX, imgPxHeight - offset);
+          const cutHeight = Math.min(contentHeightPX, imgPxHeight - offset);
 
           const pageCanvas = document.createElement('canvas');
           pageCanvas.width = imgPxWidth;
-          pageCanvas.height = sliceHeightPx;
+          pageCanvas.height = cutHeight;
           const ctx = pageCanvas.getContext('2d');
           ctx.fillStyle = '#ffffff';
           ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-          ctx.drawImage(canvas, 0, offset, imgPxWidth, sliceHeightPx, 0, 0, imgPxWidth, sliceHeightPx);
+          ctx.drawImage(canvas, 0, offset, imgPxWidth, cutHeight, 0, 0, imgPxWidth, cutHeight);
 
           const pageImg = pageCanvas.toDataURL('image/png');
           if (!first) pdf.addPage();
 
-          const sliceRatio = imgPxWidth / sliceHeightPx;
+          const sliceRatio = imgPxWidth / cutHeight;
           let renderW = contentWidthMM;
           let renderH = renderW / sliceRatio;
           if (renderH > contentHeightMM) {
@@ -164,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pdf.addImage(pageImg, 'PNG', margin, margin, renderW, renderH);
 
           first = false;
-          offset += sliceHeightPx;
+          offset += cutHeight;
         }
 
         pdf.save(`resumo-avaliacao-${nome.replace(/\s+/g, '-')}-${data}.pdf`);

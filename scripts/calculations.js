@@ -3,8 +3,8 @@
  * Contém todas as funções de cálculo das escalas geriátricas
  */
 
-import { getFormData, somarCampos, contarRespostas } from './utils.js';
-import * as constants from './constants.js';
+import { getFormData, somarCampos, contarRespostas } from './utils.js?v=2';
+import * as constants from './constants.js?v=2';
 
 /**
  * Calcula o IVCF-20

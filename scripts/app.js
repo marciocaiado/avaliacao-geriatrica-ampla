@@ -4,10 +4,11 @@
  */
 
 // Importações dos módulos
-import * as constants from './constants.js';
-import * as utils from './utils.js';
-import * as calculations from './calculations.js';
-import * as dom from './dom.js';
+import * as constants from './constants.js?v=2';
+import * as utils from './utils.js?v=2';
+import * as calculations from './calculations.js?v=2';
+import * as dom from './dom.js?v=2';
+import { salvarFormulario, restaurarFormulario, limparFormularioSalvo } from './persistence.js?v=2';
 
 // Funções de formatação dos resultados
 
@@ -272,6 +273,25 @@ function mostrarApgar() {
   dom.exibirResultado('resultado-apgar', calculations.calcularApgar, formatarApgar);
 }
 
+// Recalcula todos os testes (usado após restaurar formulário)
+function recalcularTodosResultados() {
+  mostrarIVCF();
+  mostrarSRH();
+  mostrarMAN();
+  mostrarPfeffer();
+  mostrar10CS();
+  mostrarCFS();
+  mostrarLawton();
+  mostrarZucchelli();
+  mostrarCAM();
+  mostrarFrail();
+  mostrarSarcF();
+  mostrarBarthel();
+  mostrarKatz();
+  mostrarGDS();
+  mostrarApgar();
+}
+
 // Handler de mudanças nos inputs
 function aoAlterarResposta(event) {
   const { name } = event.target;
@@ -422,7 +442,10 @@ function bindActions() {
 
   const mainElement = document.querySelector('main');
   if (mainElement) {
-    mainElement.addEventListener('change', aoAlterarResposta);
+    mainElement.addEventListener('change', (e) => {
+      aoAlterarResposta(e);
+      salvarFormulario();
+    });
 
     // Toggle de colapsáveis
     mainElement.addEventListener('click', (e) => {
@@ -456,13 +479,22 @@ function bindActions() {
 
   const pesoInput = document.getElementById('peso');
   const alturaInput = document.getElementById('altura');
-  if (pesoInput) pesoInput.addEventListener('input', calcularImc);
-  if (alturaInput) alturaInput.addEventListener('input', calcularImc);
+  if (pesoInput) pesoInput.addEventListener('input', () => { calcularImc(); salvarFormulario(); });
+  if (alturaInput) alturaInput.addEventListener('input', () => { calcularImc(); salvarFormulario(); });
 
   // Botão visualizar resultado
   const visualizarResultadoButton = document.getElementById('visualizar-resultado');
   if (visualizarResultadoButton) {
     visualizarResultadoButton.addEventListener('click', visualizarResultado);
+  }
+
+  // Botão Resumo
+  const btnResumo = document.getElementById('btn-resumo');
+  if (btnResumo) {
+    btnResumo.addEventListener('click', () => {
+      dom.atualizarResumo();
+      window.location.href = 'resumo-resultados.html';
+    });
   }
 
   // Botões de limpar
@@ -489,6 +521,7 @@ function setupLimparButtons() {
     limparButton.addEventListener('click', () => {
       formElement.reset();
       dom.limparResultados();
+      limparFormularioSalvo();
     });
   }
 
@@ -985,7 +1018,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (idadeInput) {
       dataNascimentoInput.addEventListener('input', () => {
         idadeInput.value = utils.calculateAge(dataNascimentoInput.value);
+        salvarFormulario();
       });
     }
   }
+
+  // Restaurar formulário salvo na sessão
+  restaurarFormulario();
+  recalcularTodosResultados();
 });

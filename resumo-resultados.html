@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Resultado da Avaliação</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <div class="page">
     <header>
       <div class="logo">
-        <h1>Resultado da Avaliação</h1>
+        <img src="assets/logo-removebg-preview.png" alt="Ampla Geriatria" class="header-logo" />
       </div>
     </header>
     <main id="resultado-container">
@@ -18,6 +18,8 @@
         <h2>Resumo dos Testes Aplicados</h2>
         <div class="resultado meta" id="resumo-meta" hidden>
           <div><strong>Paciente:</strong> <span id="resumo-meta-nome">-</span></div>
+          <div><strong>Idade:</strong> <span id="resumo-meta-idade">-</span></div>
+          <div><strong>Nº Atendimento:</strong> <span id="resumo-meta-atendimento">-</span></div>
           <div><strong>Data:</strong> <span id="resumo-meta-data">-</span></div>
         </div>
         <div id="resumo-tests" class="resultado" aria-live="polite"></div>
@@ -37,6 +39,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="scripts/resumo-resultado.js"></script>
+  <script src="scripts/resumo-resultado.js?v=2"></script>
 </body>
 </html>

@@ -253,6 +253,14 @@ document.addEventListener('DOMContentLoaded', () => {
         html += `</div></section>`;
       }
     }
+    // Resumo dos testes aplicados
+    const resumoHTML = localStorage.getItem('resumoTestsHTML');
+    if (resumoHTML && resumoHTML.trim()) {
+      html += `<section><h2>Resumo dos Testes Aplicados</h2><div class="section-body">`;
+      html += `<div class="resultado">${resumoHTML}</div>`;
+      html += `</div></section>`;
+    }
+
     html += `</div>`;
     resultadoContainer.innerHTML = html;
   }
@@ -263,18 +271,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const nome = (dados && dados.nome) || 'paciente';
       const data = (dados && dados.data) || new Date().toLocaleDateString('pt-BR');
 
-      // Parâmetros A4 fixos
       const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-      const pageWidth = pdf.internal.pageSize.getWidth(); // 210
-      const pageHeight = pdf.internal.pageSize.getHeight(); // 297
-      const margin = 15; // mm confirmada
-      const contentWidthMM = pageWidth - margin * 2; // área útil
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 15;
+      const contentWidthMM = pageWidth - margin * 2;
+      const contentHeightMM = pageHeight - margin * 2;
 
-      // Definir uma densidade de pixels estável para o canvas offscreen
-      const PX_PER_MM = 3.78; // ~96 DPI
+      const PX_PER_MM = 3.78;
       const contentWidthPX = Math.round(contentWidthMM * PX_PER_MM);
+      const pageHeightCSS = Math.floor(contentHeightMM * PX_PER_MM);
 
-      // Criar um container offscreen para renderização estável em A4
       const wrapper = document.createElement('div');
       wrapper.style.position = 'fixed';
       wrapper.style.left = '-10000px';
@@ -283,18 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.style.padding = '20px';
       wrapper.style.background = '#ffffff';
 
-      // Clonar o conteúdo da página para o wrapper mantendo estilos
       const clone = sourcePage.cloneNode(true);
       clone.style.width = '100%';
       clone.style.boxShadow = 'none';
       clone.style.margin = '0';
       clone.style.padding = '0';
 
-      // Aplicar estilos inline para garantir renderização correta
       const applyInlineStyles = (element) => {
         const computedStyle = window.getComputedStyle(element);
-
-        // Aplicar estilos importantes inline
         element.style.display = computedStyle.display;
         element.style.gridTemplateColumns = computedStyle.gridTemplateColumns;
         element.style.gap = computedStyle.gap;
@@ -306,32 +309,73 @@ document.addEventListener('DOMContentLoaded', () => {
         element.style.fontSize = computedStyle.fontSize;
         element.style.fontWeight = computedStyle.fontWeight;
         element.style.color = computedStyle.color;
-        element.style.pageBreakInside = 'avoid';
-        element.style.breakInside = 'avoid';
-
-        // Recursivamente aplicar aos filhos
         Array.from(element.children).forEach(child => applyInlineStyles(child));
       };
 
-      // Aplicar estilos inline aos elementos importantes
       clone.querySelectorAll('.info-grid, .info-item, .texto-item, section, h2, h3').forEach(el => {
         applyInlineStyles(el);
       });
 
-      // Remover apenas a última barra de ações dentro do clone
       try {
         const actionsList = clone.querySelectorAll('.actions');
         if (actionsList.length) {
           const lastActions = actionsList[actionsList.length - 1];
           lastActions.parentNode && lastActions.parentNode.removeChild(lastActions);
         }
-      } catch (_) { /* ignora se não existir */ }
+      } catch (_) { }
 
-      // Conteúdo interno: queremos apenas a área útil dentro de .page
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
 
-      // Renderizar o wrapper em alta escala para mais nitidez
+      // Ajustar layout para evitar cortar conteúdo entre páginas do PDF
+      (() => {
+        const SEL = 'h2, h3, h4, .item, .info-item, .info-grid, .texto-item, .medicamento-card, p, .resultado > div';
+        let passes = 50;
+        while (passes-- > 0) {
+          let changed = false;
+          const wTop = wrapper.getBoundingClientRect().top;
+          for (const el of wrapper.querySelectorAll(SEL)) {
+            const r = el.getBoundingClientRect();
+            const top = r.top - wTop;
+            const bottom = r.bottom - wTop;
+            const h = bottom - top;
+            if (h <= 0 || h >= pageHeightCSS * 0.9) continue;
+            const pTop = Math.floor(top / pageHeightCSS);
+            const pBot = Math.floor((bottom - 1) / pageHeightCSS);
+            if (pTop !== pBot) {
+              const spacer = document.createElement('div');
+              spacer.style.height = `${(pTop + 1) * pageHeightCSS - top + 2}px`;
+              el.parentNode.insertBefore(spacer, el);
+              changed = true;
+              break;
+            }
+          }
+          if (!changed) break;
+        }
+        // Evitar títulos órfãos (título em uma página, conteúdo na seguinte)
+        let hPasses = 10;
+        while (hPasses-- > 0) {
+          let changed = false;
+          const wTop = wrapper.getBoundingClientRect().top;
+          for (const heading of wrapper.querySelectorAll('h2, h3, h4')) {
+            const next = heading.nextElementSibling;
+            if (!next) continue;
+            const hTop = heading.getBoundingClientRect().top - wTop;
+            const nTop = next.getBoundingClientRect().top - wTop;
+            const hPage = Math.floor(hTop / pageHeightCSS);
+            const nPage = Math.floor(nTop / pageHeightCSS);
+            if (nPage > hPage) {
+              const spacer = document.createElement('div');
+              spacer.style.height = `${(hPage + 1) * pageHeightCSS - hTop + 2}px`;
+              heading.parentNode.insertBefore(spacer, heading);
+              changed = true;
+              break;
+            }
+          }
+          if (!changed) break;
+        }
+      })();
+
       html2canvas(wrapper, {
         scale: 2,
         useCORS: true,
@@ -341,35 +385,29 @@ document.addEventListener('DOMContentLoaded', () => {
         imageTimeout: 0,
         removeContainer: false
       }).then((canvas) => {
-        // Remover o wrapper após a captura
         document.body.removeChild(wrapper);
 
-        // Paginação para A4: dividir o canvas em fatias de altura da área útil
         const imgPxWidth = canvas.width;
         const imgPxHeight = canvas.height;
-
-        // Altura útil em px mantendo a mesma escala PX_PER_MM
-        const contentHeightMM = pageHeight - margin * 2;
-        const contentHeightPX = Math.floor(contentHeightMM * PX_PER_MM * 2); // multiplicado pela escala (2)
+        const contentHeightPX = Math.floor(contentHeightMM * PX_PER_MM * 2);
 
         let offset = 0;
         let first = true;
         while (offset < imgPxHeight) {
-          const sliceHeightPx = Math.min(contentHeightPX, imgPxHeight - offset);
+          const cutHeight = Math.min(contentHeightPX, imgPxHeight - offset);
 
           const pageCanvas = document.createElement('canvas');
-          pageCanvas.width = imgPxWidth; // mesma largura do canvas principal
-          pageCanvas.height = sliceHeightPx;
+          pageCanvas.width = imgPxWidth;
+          pageCanvas.height = cutHeight;
           const ctx = pageCanvas.getContext('2d');
           ctx.fillStyle = '#ffffff';
           ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-          ctx.drawImage(canvas, 0, offset, imgPxWidth, sliceHeightPx, 0, 0, imgPxWidth, sliceHeightPx);
+          ctx.drawImage(canvas, 0, offset, imgPxWidth, cutHeight, 0, 0, imgPxWidth, cutHeight);
 
           const pageImg = pageCanvas.toDataURL('image/png');
           if (!first) pdf.addPage();
 
-          // Preserva proporção do slice ao converter para mm
-          const sliceRatio = imgPxWidth / sliceHeightPx; // largura/altura em px
+          const sliceRatio = imgPxWidth / cutHeight;
           let renderW = contentWidthMM;
           let renderH = renderW / sliceRatio;
           if (renderH > contentHeightMM) {
@@ -380,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pdf.addImage(pageImg, 'PNG', margin, margin, renderW, renderH);
 
           first = false;
-          offset += sliceHeightPx;
+          offset += cutHeight;
         }
 
         pdf.save(`avaliacao-${nome.replace(/\s+/g, '-')}-${data}.pdf`);
