@@ -249,13 +249,25 @@ export function calcularBarthel() {
  * Calcula a Escala de Katz
  */
 export function calcularKatz() {
-  const fd = getFormData(constants);
-  const respondidas = contarRespostas(fd, constants.camposKatz);
-  if (!respondidas) return null;
+  // Ler valores diretamente do DOM (não usar FormData que não lê campos hidden)
+  let respondidas = 0;
+  let pontos = 0;
+
+  constants.camposKatz.forEach(campo => {
+    const element = document.querySelector(`input[name="${campo}"]:checked`);
+    if (element) {
+      const valor = parseInt(element.value, 10);
+      pontos += valor;
+      respondidas++;
+    }
+  });
+
+  if (respondidas === 0) {
+    return null;
+  }
 
   const totalPerguntas = constants.camposKatz.length;
   const completo = respondidas === totalPerguntas;
-  const pontos = somarCampos(fd, constants.camposKatz);
 
   let classificacao = '';
   if (pontos === 6) classificacao = 'Independente';
@@ -303,4 +315,50 @@ export function calcularApgar() {
   else classificacao = 'Funcional (7-10 pontos)';
 
   return { pontos, classificacao, respondidas, totalPerguntas, completo };
+}
+
+/**
+ * Calcula a AGC-10 (Avaliação Geriátrica Compacta de 10 minutos)
+ */
+export function calcularAGC10() {
+  const fd = getFormData(constants);
+  const respondidas = contarRespostas(fd, constants.camposAGC10);
+  if (!respondidas) return null;
+
+  const totalPerguntas = constants.camposAGC10.length;
+  const completo = respondidas === totalPerguntas;
+
+  let total = 0;
+  const campos = [
+    'agc10_suporte_social', 'agc10_sistema_saude', 'agc10_quedas',
+    'agc10_medicacoes', 'agc10_funcionalidade', 'agc10_cognicao',
+    'agc10_autoavaliacao', 'agc10_depressao', 'agc10_nutricao', 'agc10_marcha'
+  ];
+
+  let itensAvaliados = 0;
+  campos.forEach(campo => {
+    const valor = fd.get(campo);
+    if (valor !== null && valor !== '') {
+      total += parseFloat(valor);
+      itensAvaliados++;
+    }
+  });
+
+  if (itensAvaliados === 0) return null;
+
+  const pontuacao = total / itensAvaliados;
+  let classificacao = null;
+
+  if (pontuacao <= 0.29) classificacao = 'Baixo risco (0-0,29)';
+  else if (pontuacao <= 0.39) classificacao = 'Médio risco (0,3-0,39)';
+  else classificacao = 'Alto risco (0,4-1)';
+
+  return {
+    pontuacao: pontuacao.toFixed(2),
+    classificacao,
+    respondidas,
+    totalPerguntas,
+    completo,
+    itensAvaliados
+  };
 }

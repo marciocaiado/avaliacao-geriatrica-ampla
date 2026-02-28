@@ -211,6 +211,24 @@ function formatarApgar({ pontos, classificacao, respondidas, totalPerguntas, com
   `;
 }
 
+function formatarAGC10({ pontuacao, classificacao, respondidas, totalPerguntas, completo, itensAvaliados }) {
+  const progresso = `<div class="score">Itens avaliados: ${itensAvaliados}/${totalPerguntas}</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>Interpretação (AGC-10):</strong><br />
+      0-0,29: Baixo risco<br />
+      0,3-0,39: Médio risco<br />
+      0,4-1: Alto risco
+    </div>
+  `;
+  return `
+    <div><strong>${completo ? 'AGC-10' : 'AGC-10 (parcial)'}:</strong> ${pontuacao}</div>
+    <div class="score"><strong>Risco:</strong> ${classificacao}</div>
+    ${legenda}
+    ${progresso}
+  `;
+}
+
 // Funções de exibição (wrapper das funções de cálculo e formatação)
 
 function mostrarIVCF() {
@@ -273,6 +291,10 @@ function mostrarApgar() {
   dom.exibirResultado('resultado-apgar', calculations.calcularApgar, formatarApgar);
 }
 
+function mostrarAGC10() {
+  dom.exibirResultado('resultado-agc10', calculations.calcularAGC10, formatarAGC10);
+}
+
 // Recalcula todos os testes (usado após restaurar formulário)
 function recalcularTodosResultados() {
   mostrarIVCF();
@@ -312,6 +334,7 @@ function aoAlterarResposta(event) {
   if (name === 'cfs') mostrarCFS();
   if (constants.camposGDS.includes(name)) mostrarGDS();
   if (constants.camposApgar.includes(name)) mostrarApgar();
+  if (constants.camposAGC10.includes(name)) mostrarAGC10();
 }
 
 // Função para visualizar resultado completo
@@ -511,6 +534,12 @@ function bindActions() {
 
   // Modal de medicamentos
   setupMedicamentosModal();
+
+  // Modal de Katz
+  setupKatzModal();
+
+  // Sincronização do Katz com AGC-10
+  setupAGC10KatzSync();
 }
 
 // Configuração dos botões de limpar
@@ -549,6 +578,7 @@ function setupLimparButtons() {
     { action: 'limpar-gds', campos: constants.camposGDS, resultados: ['resultado-gds'] },
     { action: 'limpar-apgar', campos: constants.camposApgar, resultados: ['resultado-apgar'] },
     { action: 'limpar-cam', campos: constants.camposCAM, resultados: ['resultado-cam'] },
+    { action: 'limpar-agc10', campos: constants.camposAGC10, resultados: ['resultado-agc10'] },
   ];
 
   limparConfig.forEach(({ action, campos, resultados }) => {
@@ -1003,6 +1033,146 @@ function setupMedicamentosModal() {
       if (medicamentoItem) medicamentoItem.remove();
     }
   });
+}
+
+// Modal de Teste de Katz
+function setupKatzModal() {
+  const modal = document.getElementById('katz-modal');
+  const closeBtn = document.querySelector('.close-button-katz');
+  const formModal = document.getElementById('form-katz-modal');
+  const btnConcluir = document.getElementById('btn-concluir-katz');
+
+  if (!modal) return;
+
+  // Fechar modal
+  const closeModal = () => {
+    modal.style.display = 'none';
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Salvar resultado do Katz
+  if (btnConcluir) {
+    btnConcluir.addEventListener('click', () => {
+      // Obter valores do modal
+      const modalValues = {
+        'modal_katz_banho': document.querySelector('input[name="modal_katz_banho"]:checked')?.value,
+        'modal_katz_vestir': document.querySelector('input[name="modal_katz_vestir"]:checked')?.value,
+        'modal_katz_banheiro': document.querySelector('input[name="modal_katz_banheiro"]:checked')?.value,
+        'modal_katz_mobilidade': document.querySelector('input[name="modal_katz_mobilidade"]:checked')?.value,
+        'modal_katz_continencia': document.querySelector('input[name="modal_katz_continencia"]:checked')?.value,
+        'modal_katz_alimentacao': document.querySelector('input[name="modal_katz_alimentacao"]:checked')?.value,
+      };
+
+      // Verificar se todas as respostas foram preenchidas
+      const allAnswered = Object.values(modalValues).every(v => v !== undefined);
+      if (!allAnswered) {
+        alert('Por favor, responda todas as perguntas do teste de Katz.');
+        return;
+      }
+
+      // Transferir valores para os campos reais do formulário
+      const katzFields = [
+        { modal: 'modal_katz_banho', real: 'katz_banho' },
+        { modal: 'modal_katz_vestir', real: 'katz_vestir' },
+        { modal: 'modal_katz_banheiro', real: 'katz_banheiro' },
+        { modal: 'modal_katz_mobilidade', real: 'katz_mobilidade' },
+        { modal: 'modal_katz_continencia', real: 'katz_continencia' },
+        { modal: 'modal_katz_alimentacao', real: 'katz_alimentacao' },
+      ];
+
+      katzFields.forEach(field => {
+        const value = modalValues[field.modal];
+        const selector = `input[name="${field.real}"][value="${value}"]`;
+        const element = document.querySelector(selector);
+
+        if (element) {
+          element.checked = true;
+          element.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+
+      // Fechar modal
+      closeModal();
+
+      // Salvar formulário
+      salvarFormulario();
+
+      // Exibir resultado do Katz
+      mostrarKatz();
+    });
+  }
+}
+
+// Sincronização do Katz com AGC-10
+function setupAGC10KatzSync() {
+  const btnIrKatz = document.getElementById('btn-ir-katz');
+  const katzResultContainer = document.getElementById('agc10_katz_resultado');
+  const katzScoreDisplay = document.getElementById('agc10_katz_score');
+  const katzVazioMsg = document.getElementById('agc10_katz_vazio');
+  const funcionalidadeValueInput = document.getElementById('agc10_funcionalidade_value');
+
+  // Botão para ir para Katz
+  if (btnIrKatz) {
+    btnIrKatz.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const katzModal = document.getElementById('katz-modal');
+      if (katzModal) {
+        katzModal.style.display = 'block';
+      }
+    });
+  }
+
+  // Monitorar mudanças no Katz
+  const katzFields = constants.camposKatz;
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainElement.addEventListener('change', (e) => {
+      if (katzFields.includes(e.target.name)) {
+        atualizarAGC10KatzResultado();
+      }
+    });
+  }
+
+  // Função para atualizar o resultado
+  function atualizarAGC10KatzResultado() {
+    const katzResult = calculations.calcularKatz();
+
+    if (katzResult && katzResult.completo) {
+      const { pontos, classificacao } = katzResult;
+
+      let agc10Value;
+      if (pontos === 0) {
+        agc10Value = '0.0';
+      } else if (pontos >= 1 && pontos <= 2) {
+        agc10Value = '0.5';
+      } else {
+        agc10Value = '1.0';
+      }
+
+      katzScoreDisplay.textContent = `${pontos} pontos - ${classificacao}`;
+      funcionalidadeValueInput.value = agc10Value;
+
+      if (katzResultContainer) {
+        katzResultContainer.style.display = 'block';
+      }
+      if (katzVazioMsg) {
+        katzVazioMsg.style.display = 'none';
+      }
+
+      // Disparar evento de mudança para atualizar o AGC-10
+      funcionalidadeValueInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  // Chamar ao inicializar se Katz já foi preenchido
+  setTimeout(() => {
+    atualizarAGC10KatzResultado();
+  }, 100);
 }
 
 // Inicialização
