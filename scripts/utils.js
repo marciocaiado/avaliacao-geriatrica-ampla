@@ -34,9 +34,11 @@ export function getFormData(constants = {}) {
   const fd = new FormData();
   const formElement = document.getElementById('form-ivcf');
   const formFuncional = document.getElementById('form-funcional');
+  const formAGC10 = document.getElementById('form-agc-10');
 
   if (formElement) new FormData(formElement).forEach((v, k) => fd.set(k, v));
   if (formFuncional) new FormData(formFuncional).forEach((v, k) => fd.set(k, v));
+  if (formAGC10) new FormData(formAGC10).forEach((v, k) => fd.set(k, v));
 
   // Coletar campos específicos se as constantes foram fornecidas
   if (constants.camposMAN && constants.camposFrail && constants.camposSarcF &&
@@ -57,6 +59,10 @@ export function getFormData(constants = {}) {
 
   if (constants.camposCAM) {
     collectFromNames(fd, constants.camposCAM);
+  }
+
+  if (constants.camposMEEM) {
+    collectFromNames(fd, constants.camposMEEM);
   }
 
   return fd;

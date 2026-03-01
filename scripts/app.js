@@ -229,6 +229,21 @@ function formatarAGC10({ pontuacao, classificacao, respondidas, totalPerguntas, 
   `;
 }
 
+function formatarMEEM({ pontos, interpretacao, respondidas, totalPerguntas, completo }) {
+  const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>Pontos de corte por escolaridade:</strong><br />
+      Analfabetos: ≤ 20 | 1-4 anos: ≤ 25 | 5-8 anos: ≤ 26 | 9-11 anos: ≤ 28 | >11 anos: ≤ 29
+    </div>
+  `;
+  return `
+    <div><strong>${completo ? 'MEEM' : 'MEEM (parcial)'}:</strong> ${pontos}/30 pontos — ${interpretacao}</div>
+    ${legenda}
+    ${progresso}
+  `;
+}
+
 // Funções de exibição (wrapper das funções de cálculo e formatação)
 
 function mostrarIVCF() {
@@ -293,6 +308,11 @@ function mostrarApgar() {
 
 function mostrarAGC10() {
   dom.exibirResultado('resultado-agc10', calculations.calcularAGC10, formatarAGC10);
+  dom.exibirResultado('resultado-agc10-inline', calculations.calcularAGC10, formatarAGC10);
+}
+
+function mostrarMEEM() {
+  dom.exibirResultado('resultado-meem', calculations.calcularMEEM, formatarMEEM);
 }
 
 // Recalcula todos os testes (usado após restaurar formulário)
@@ -312,6 +332,7 @@ function recalcularTodosResultados() {
   mostrarKatz();
   mostrarGDS();
   mostrarApgar();
+  mostrarMEEM();
 }
 
 // Handler de mudanças nos inputs
@@ -335,72 +356,72 @@ function aoAlterarResposta(event) {
   if (constants.camposGDS.includes(name)) mostrarGDS();
   if (constants.camposApgar.includes(name)) mostrarApgar();
   if (constants.camposAGC10.includes(name)) mostrarAGC10();
+  if (constants.camposMEEM.includes(name)) mostrarMEEM();
 }
 
 // Função para visualizar resultado completo
 function visualizarResultado() {
-  const nomeEl = document.getElementById('nome');
-  const dataEl = document.getElementById('data_avaliacao');
+  const nomeEl = document.getElementById('anamnese_nome');
   const nome = nomeEl ? nomeEl.value : 'paciente';
-  const data = dataEl ? dataEl.value : new Date().toLocaleDateString('pt-BR');
+  const data = new Date().toLocaleDateString('pt-BR');
 
-  // Coletar dados da seção de Anamnese
-  const anamneseSection = document.querySelector('main > section.collapsible');
+  // Coletar dados de anamnese de todos os campos que NÃO estão dentro de <form>
+  // (campos de testes estão dentro de forms; campos de anamnese estão fora)
   const anamnese = {};
   let hasAnamneseData = false;
 
-  if (anamneseSection) {
-    const elementos = anamneseSection.querySelectorAll('input, textarea, select');
+  document.querySelectorAll('main input, main textarea, main select').forEach(element => {
+    if (element.closest('form')) return;
+    const name = element.name || element.id;
+    if (!name) return;
 
-    elementos.forEach(element => {
-      const name = element.name || element.id;
-      if (!name) return;
-
-      if (element.type === 'radio') {
-        if (element.checked) {
-          const label = element.closest('label');
-          const labelText = label ? label.textContent.trim() : element.value;
-          anamnese[name] = { value: element.value, label: labelText };
-          hasAnamneseData = true;
-        }
-      } else if (element.type === 'checkbox') {
-        if (element.checked) {
-          const label = element.closest('label');
-          const labelText = label ? label.textContent.trim() : name;
-
-          if (anamnese[name]) {
-            if (Array.isArray(anamnese[name])) {
-              anamnese[name].push(labelText);
-            } else {
-              anamnese[name] = [anamnese[name], labelText];
-            }
-          } else {
-            anamnese[name] = labelText;
-          }
-          hasAnamneseData = true;
-        }
-      } else {
-        const value = element.value.trim();
-        if (value) {
-          anamnese[name] = { value: value, label: null };
-          hasAnamneseData = true;
-        }
+    if (element.type === 'radio') {
+      if (element.checked) {
+        const label = element.closest('label');
+        const labelText = label ? label.textContent.trim() : element.value;
+        anamnese[name] = { value: element.value, label: labelText };
+        hasAnamneseData = true;
       }
-    });
+    } else if (element.type === 'checkbox') {
+      if (element.checked) {
+        const label = element.closest('label');
+        const labelText = label ? label.textContent.trim() : name;
 
-    // Coletar medicamentos
+        if (anamnese[name]) {
+          if (Array.isArray(anamnese[name])) {
+            anamnese[name].push(labelText);
+          } else {
+            anamnese[name] = [anamnese[name], labelText];
+          }
+        } else {
+          anamnese[name] = labelText;
+        }
+        hasAnamneseData = true;
+      }
+    } else {
+      const value = element.value.trim();
+      if (value) {
+        anamnese[name] = { value: value, label: null };
+        hasAnamneseData = true;
+      }
+    }
+  });
+
+  // Coletar medicamentos
+  const anamneseSection = document.querySelector('main > section.collapsible');
+  if (anamneseSection) {
     const medicamentos = [];
     const medicamentoItems = anamneseSection.querySelectorAll('.medicamento-item');
 
     medicamentoItems.forEach((item, index) => {
       const id = item.getAttribute('data-medicamento-id') || (index + 1);
-      const nome = item.querySelector(`[name="med${id}_nome"]`)?.value || '';
+      const medNome = item.querySelector(`[name="med${id}_nome"]`)?.value || '';
       const justificativa = item.querySelector(`[name="med${id}_justificativa"]`)?.value || '';
       const dose = item.querySelector(`[name="med${id}_dose"]`)?.value || '';
       const tempo = item.querySelector(`[name="med${id}_tempo"]`)?.value || '';
 
-      if (nome || justificativa || dose || tempo) {
-        medicamentos.push({ id, nome, justificativa, dose, tempo });
+      if (medNome || justificativa || dose || tempo) {
+        medicamentos.push({ id, nome: medNome, justificativa, dose, tempo });
         hasAnamneseData = true;
       }
     });
@@ -410,40 +431,35 @@ function visualizarResultado() {
     }
   }
 
+  // Coletar resultados dos testes a partir dos divs de resultado
+  const coleta = [
+    ['Autoavaliação de Saúde', 'resultado-srh'],
+    ['IVCF-20', 'resultado-ivcf'],
+    ['CFS', 'resultado-cfs'],
+    ['FRAIL', 'resultado-frail'],
+    ['SARC-F', 'resultado-sarcf'],
+    ['Barthel', 'resultado-barthel'],
+    ['Katz', 'resultado-katz'],
+    ['Lawton', 'resultado-lawton'],
+    ['Pfeffer', 'resultado-pfeffer'],
+    ['MAN', 'resultado-man'],
+    ['10-CS', 'resultado-10cs'],
+    ['Zucchelli', 'resultado-zucchelli'],
+    ['CAM', 'resultado-cam'],
+    ['GDS-15', 'resultado-gds'],
+    ['APGAR Familiar', 'resultado-apgar'],
+    ['AGC-10', 'resultado-agc10'],
+    ['MEEM', 'resultado-meem'],
+  ];
+
   const secoes = [];
-  const sections = document.querySelectorAll('main > form > section, main > h1, main > h2, main > section');
-
-  for (const section of sections) {
-    if (anamneseSection && section === anamneseSection) continue;
-
-    const hasAnswer = section.querySelector('input:checked');
-    if (!hasAnswer) continue;
-
-    const h2 = section.querySelector('h2');
-    const titulo = h2 ? h2.innerText : '';
-    const questoes = [];
-
-    const questions = section.querySelectorAll('.q');
-    for (const question of questions) {
-      const label = question.querySelector('label:first-child');
-      const checked = question.querySelector('input:checked');
-
-      if (label && checked) {
-        const answerLabel = document.querySelector(`label[for="${checked.id}"]`) || checked.parentElement;
-        questoes.push({
-          pergunta: label.innerText,
-          resposta: answerLabel.innerText,
-        });
-      }
-    }
-
-    const resultado = section.querySelector('.resultado');
-    secoes.push({
-      titulo,
-      questoes,
-      resultado: resultado ? resultado.innerText : ''
-    });
-  }
+  coleta.forEach(([titulo, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const texto = el.textContent.trim();
+    if (!texto) return;
+    secoes.push({ titulo, resultado: texto });
+  });
 
   const dadosAvaliacao = {
     nome,
@@ -520,6 +536,29 @@ function bindActions() {
     });
   }
 
+  // Botão Novo
+  const btnNovo = document.getElementById('btn-novo');
+  if (btnNovo) {
+    btnNovo.addEventListener('click', () => {
+      if (confirm('Deseja limpar todos os dados do teste? Esta ação não pode ser desfeita.')) {
+        // Limpar sessionStorage
+        limparFormularioSalvo();
+
+        // Limpar todos os campos do formulário
+        const formElement = document.getElementById('form-ivcf');
+        if (formElement) {
+          formElement.reset();
+        }
+
+        // Limpar todos os resultados
+        dom.limparResultados();
+
+        // Recarregar a página
+        window.location.reload();
+      }
+    });
+  }
+
   // Botões de limpar
   setupLimparButtons();
 
@@ -540,6 +579,62 @@ function bindActions() {
 
   // Sincronização do Katz com AGC-10
   setupAGC10KatzSync();
+
+  // Sincronização do 10-CS com AGC-10
+  setupAGC10CognicaoSync();
+
+  // Tela cheia "FECHE OS OLHOS"
+  setupFecheOlhosFullscreen();
+}
+
+function setupFecheOlhosFullscreen() {
+  // Função auxiliar para abrir overlay com suporte ao botão voltar
+  function abrirOverlay(overlay) {
+    overlay.style.display = 'flex';
+    history.pushState({ overlay: overlay.id }, '');
+  }
+
+  function fecharOverlay(overlay) {
+    overlay.style.display = 'none';
+  }
+
+  // Listener global: ao pressionar "voltar", fecha o overlay ativo
+  window.addEventListener('popstate', () => {
+    const overlays = document.querySelectorAll('#feche-olhos-fullscreen, #meem-imagem-fullscreen');
+    overlays.forEach(ol => {
+      if (ol.style.display === 'flex') {
+        fecharOverlay(ol);
+      }
+    });
+  });
+
+  const trigger = document.getElementById('feche-olhos-trigger');
+  const fullscreen = document.getElementById('feche-olhos-fullscreen');
+
+  if (trigger && fullscreen) {
+    trigger.addEventListener('click', () => {
+      abrirOverlay(fullscreen);
+    });
+
+    fullscreen.addEventListener('click', () => {
+      fecharOverlay(fullscreen);
+      history.back();
+    });
+  }
+
+  const meemImgTrigger = document.getElementById('meem-imagem-trigger');
+  const meemImgFullscreen = document.getElementById('meem-imagem-fullscreen');
+
+  if (meemImgTrigger && meemImgFullscreen) {
+    meemImgTrigger.addEventListener('click', () => {
+      abrirOverlay(meemImgFullscreen);
+    });
+
+    meemImgFullscreen.addEventListener('click', () => {
+      fecharOverlay(meemImgFullscreen);
+      history.back();
+    });
+  }
 }
 
 // Configuração dos botões de limpar
@@ -578,7 +673,8 @@ function setupLimparButtons() {
     { action: 'limpar-gds', campos: constants.camposGDS, resultados: ['resultado-gds'] },
     { action: 'limpar-apgar', campos: constants.camposApgar, resultados: ['resultado-apgar'] },
     { action: 'limpar-cam', campos: constants.camposCAM, resultados: ['resultado-cam'] },
-    { action: 'limpar-agc10', campos: constants.camposAGC10, resultados: ['resultado-agc10'] },
+    { action: 'limpar-agc10', campos: constants.camposAGC10, resultados: ['resultado-agc10', 'resultado-agc10-inline'] },
+    { action: 'limpar-meem', campos: constants.camposMEEM, resultados: ['resultado-meem'] },
   ];
 
   limparConfig.forEach(({ action, campos, resultados }) => {
@@ -1175,9 +1271,146 @@ function setupAGC10KatzSync() {
   }, 100);
 }
 
+// Sincronização do 10-CS com AGC-10
+function setupAGC10CognicaoSync() {
+  const btnIr10CS = document.getElementById('btn-ir-10cs');
+
+  // Botão para ir para 10-CS
+  if (btnIr10CS) {
+    btnIr10CS.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      let target = null;
+      const headings = document.querySelectorAll('h2');
+      for (const h of headings) {
+        if (h.textContent.includes('Cognição') && h.textContent.includes('10-CS')) {
+          target = h;
+          break;
+        }
+      }
+
+      if (target) {
+        // Abrir seções colapsáveis pai
+        let parent = target.closest('section.collapsible');
+        while (parent) {
+          if (!parent.classList.contains('open')) {
+            parent.classList.add('open');
+          }
+          parent = parent.parentElement?.closest('section.collapsible');
+        }
+
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
+    });
+  }
+
+  // Botão para ir para AGC-10
+  const btnIrAGC10 = document.getElementById('btn-ir-agc10');
+
+  if (btnIrAGC10) {
+    btnIrAGC10.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const agc10CognicaoInput = document.querySelector('input[name="agc10_cognicao"]');
+
+      if (agc10CognicaoInput) {
+        let section = agc10CognicaoInput.closest('section.collapsible');
+        while (section) {
+          if (!section.classList.contains('open')) {
+            section.classList.add('open');
+          }
+          section = section.parentElement?.closest('section.collapsible');
+        }
+
+        setTimeout(() => {
+          agc10CognicaoInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => {
+            window.scrollBy({ top: -300, behavior: 'smooth' });
+          }, 600);
+        }, 50);
+      }
+    });
+  }
+
+  // Monitorar mudanças no 10-CS
+  const campos10CS = constants.campos10CS;
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainElement.addEventListener('change', (e) => {
+      if (campos10CS.includes(e.target.name)) {
+        atualizarAGC1010CSResultado();
+      }
+    });
+  }
+
+  // Função para atualizar o resultado e auto-selecionar o input
+  function atualizarAGC1010CSResultado() {
+    const csResult = calculations.calcular10CS();
+
+    if (csResult && csResult.completo) {
+      const { pontos } = csResult;
+
+      let agc10Value;
+      if (pontos >= 8) {
+        agc10Value = '0.0';
+      } else if (pontos >= 6) {
+        agc10Value = '0.5';
+      } else {
+        agc10Value = '1.0';
+      }
+
+      // Auto-selecionar o input correspondente
+      const radioInput = document.querySelector(`input[name="agc10_cognicao"][value="${agc10Value}"]`);
+      if (radioInput) {
+        radioInput.checked = true;
+        radioInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+  }
+
+  // Chamar ao inicializar se 10-CS já foi preenchido
+  setTimeout(() => {
+    atualizarAGC1010CSResultado();
+  }, 100);
+}
+
+// Função para tornar radio buttons desmarcáveis ao clicar novamente
+function setupToggleableRadios() {
+  const radioInputs = document.querySelectorAll('input[type="radio"]');
+
+  let isUnchecking = false;
+
+  radioInputs.forEach((radio) => {
+    const label = radio.closest('label');
+    if (label) {
+      label.addEventListener('mousedown', function () {
+        if (isUnchecking) return;
+        radio._wasChecked = radio.checked;
+      });
+    }
+
+    radio.addEventListener('click', function () {
+      if (isUnchecking) return;
+
+      if (this._wasChecked) {
+        isUnchecking = true;
+        this.checked = false;
+        this._wasChecked = false;
+        this.dispatchEvent(new Event('change', { bubbles: true }));
+        isUnchecking = false;
+      }
+    });
+  });
+}
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   bindActions();
+
+  // Tornar radio buttons desmarcáveis
+  setupToggleableRadios();
 
   // Data de nascimento e cálculo de idade
   const dataNascimentoInput = document.getElementById('anamnese_data_nascimento');
@@ -1195,5 +1428,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Restaurar formulário salvo na sessão
   restaurarFormulario();
+
+  // Limpar campos do Katz (devem sempre começar vazios)
+  constants.camposKatz.forEach(campo => {
+    const radios = document.querySelectorAll(`input[type="radio"][name="${campo}"]`);
+    radios.forEach(radio => {
+      radio.checked = false;
+    });
+  });
+
   recalcularTodosResultados();
 });

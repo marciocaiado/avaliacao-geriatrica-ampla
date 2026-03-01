@@ -98,12 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'cognicao': 'Cognição',
         'deficit_visual': 'Déficit Visual',
         'deficit_auditivo': 'Déficit Auditivo',
+        'panturrilha': 'Panturrilha',
         'peso': 'Peso',
         'altura': 'Altura',
         'imc': 'IMC',
         'forca_preensao': 'Força de Preensão',
         'circunferencia_panturrilha': 'Circunferência da Panturrilha',
-        'pa': 'PA',
+        'pas': 'PAS',
+        'pad': 'PAD',
         'fc': 'FC',
         'fr': 'FR',
         'sat': 'Saturação',
@@ -140,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Multicomplexidade': ['internacoes', 'vacina_influenza', 'vacina_pneumonia', 'vacina_covid', 'vacina_tetano', 'vacina_herpes', 'vacina_vsr', 'vacina_meningococica', 'vacina_hepatite', 'morbidade_hipertensao', 'morbidade_diabetes', 'morbidade_renal', 'morbidade_outra', 'patologia_ave', 'patologia_iam', 'patologia_outra', 'cirurgias_previas', 'antecedentes_familiares', 'habito_tabagismo', 'habito_etilismo', 'habito_sedentarismo', 'habitos_observacao'],
         'Inventário Alimentar': ['consumo_leite', 'consumo_frutas', 'consumo_proteinas', 'ingesta_hidrica'],
         'Interrogatório Sintomatológico': ['perda_ponderal', 'sintomas_gerais', 'aparelho_respiratorio', 'aparelho_cardiovascular', 'sistema_digestorio', 'protese_dentaria', 'lesoes_orais', 'disfagia', 'incontinencia_fecal', 'sistema_genitourinario', 'incontinencia_urinaria', 'sistema_osteoarticular', 'quedas_ultimo_ano', 'dispositivo_marcha', 'sono', 'humor', 'neurologico', 'cognicao', 'deficit_visual', 'deficit_auditivo'],
-        'Exame Físico': ['peso', 'altura', 'imc', 'forca_preensao', 'circunferencia_panturrilha', 'pa', 'fc', 'fr', 'sat', 'tec', 'hgt', 'exame_geral', 'exame_neuro', 'exame_respiratorio', 'exame_cardiovascular', 'exame_abdome', 'exame_membros'],
+        'Exame Físico': ['peso', 'altura', 'imc', 'forca_preensao', 'circunferencia_panturrilha', 'pas', 'pad', 'fc', 'fr', 'sat', 'tec', 'hgt', 'exame_geral', 'exame_neuro', 'exame_respiratorio', 'exame_cardiovascular', 'exame_abdome', 'exame_membros'],
         'Mobilidade': ['teste_marcha', 'teste_sentar_levantar'],
         'Mente': ['rastreio_delirium', 'rastreio_cognitivo', 'rastreio_cognitivo_valor']
       };
@@ -170,8 +172,27 @@ document.addEventListener('DOMContentLoaded', () => {
             html += `<div class="info-grid">`;
             camposCurtos.forEach(campo => {
               const label = labelMap[campo] || campo;
-              const valor = getValor(campo);
-              html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${valor}</span></div>`;
+              let valor = getValor(campo);
+
+              // Formatar campos especiais de testes de mobilidade
+              let displayValue = valor;
+              if (campo === 'teste_marcha' && (valor === 'sim' || valor === 'nao')) {
+                const velocidade = getValor('teste_marcha_velocidade');
+                if (velocidade) {
+                  const vel = parseFloat(velocidade);
+                  const status = vel < 0.8 ? 'Alterado' : 'Normal';
+                  displayValue = `${velocidade} m/s (${status})`;
+                }
+              } else if (campo === 'teste_sentar_levantar' && (valor === 'sim' || valor === 'nao')) {
+                const tempo = getValor('teste_sentar_levantar_tempo');
+                if (tempo) {
+                  const t = parseFloat(tempo);
+                  const status = t > 15 ? 'Alterado' : 'Normal';
+                  displayValue = `${tempo}s (${status})`;
+                }
+              }
+
+              html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${displayValue}</span></div>`;
             });
             html += `</div>`;
           }
@@ -220,46 +241,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     for (const secao of dados.secoes) {
-      // Adicionar condição para pular seções que duplicam informações da anamnese
+      // Pular seções que duplicam informações da anamnese
       const tituloNormalizado = secao.titulo.toLowerCase();
       if (tituloNormalizado.includes('identificação') || tituloNormalizado.includes('dados pessoais') || tituloNormalizado.includes('anamnese')) {
-        continue; // Pula esta seção se for considerada redundante
+        continue;
       }
 
-      if (secao.questoes.length > 0) {
+      const temQuestoes = secao.questoes && secao.questoes.length > 0;
+      const temResultado = secao.resultado;
+
+      if (temQuestoes || temResultado) {
         html += `<section><h2>${secao.titulo}</h2><div class="section-body">`;
 
-        // Agrupar questões em grid quando apropriado (respostas curtas)
-        const respostasCurtas = secao.questoes.filter(q => q.resposta.length < 50);
-        const respostasLongas = secao.questoes.filter(q => q.resposta.length >= 50);
+        if (temQuestoes) {
+          // Agrupar questões em grid quando apropriado (respostas curtas)
+          const respostasCurtas = secao.questoes.filter(q => q.resposta.length < 50);
+          const respostasLongas = secao.questoes.filter(q => q.resposta.length >= 50);
 
-        if (respostasCurtas.length > 0) {
-          html += `<div class="info-grid">`;
-          for (const questao of respostasCurtas) {
-            html += `<div class="info-item"><span class="info-label">${questao.pergunta}:</span> <span class="info-value">${questao.resposta}</span></div>`;
+          if (respostasCurtas.length > 0) {
+            html += `<div class="info-grid">`;
+            for (const questao of respostasCurtas) {
+              html += `<div class="info-item"><span class="info-label">${questao.pergunta}:</span> <span class="info-value">${questao.resposta}</span></div>`;
+            }
+            html += `</div>`;
           }
-          html += `</div>`;
+
+          if (respostasLongas.length > 0) {
+            for (const questao of respostasLongas) {
+              html += `<div class="texto-item"><strong>${questao.pergunta}:</strong> ${questao.resposta}</div>`;
+            }
+          }
         }
 
-        if (respostasLongas.length > 0) {
-          for (const questao of respostasLongas) {
-            html += `<div class="texto-item"><strong>${questao.pergunta}:</strong> ${questao.resposta}</div>`;
-          }
-        }
-
-        if (secao.resultado) {
-          html += `<div class="resultado"><strong>Resultado:</strong> ${secao.resultado}</div>`;
+        if (temResultado) {
+          html += `<div class="resultado">${secao.resultado}</div>`;
         }
         html += `</div></section>`;
       }
     }
-    // Resumo dos testes aplicados
-    const resumoHTML = localStorage.getItem('resumoTestsHTML');
-    if (resumoHTML && resumoHTML.trim()) {
-      html += `<section><h2>Resumo dos Testes Aplicados</h2><div class="section-body">`;
-      html += `<div class="resultado">${resumoHTML}</div>`;
-      html += `</div></section>`;
-    }
+    // Resumo dos testes é exibido nas seções individuais acima
 
     html += `</div>`;
     resultadoContainer.innerHTML = html;

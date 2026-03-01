@@ -67,6 +67,8 @@ export function atualizarResumo() {
     ['CAM', 'resultado-cam'],
     ['GDS-15', 'resultado-gds'],
     ['APGAR', 'resultado-apgar'],
+    ['AGC-10', 'resultado-agc10'],
+    ['MEEM', 'resultado-meem'],
   ];
 
   coleta.forEach(([titulo, id]) => {
@@ -76,7 +78,7 @@ export function atualizarResumo() {
       blocos.push(`<div class="item">${src.innerHTML}</div>`);
       secoes.push({
         titulo,
-        resultado: src.innerText.trim(),
+        resultado: src.textContent.trim(),
       });
     }
   });

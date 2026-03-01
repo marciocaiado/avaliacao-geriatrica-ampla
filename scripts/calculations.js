@@ -270,9 +270,9 @@ export function calcularKatz() {
   const completo = respondidas === totalPerguntas;
 
   let classificacao = '';
-  if (pontos === 6) classificacao = 'Independente';
-  else if (pontos >= 4) classificacao = 'Dependência moderada';
-  else classificacao = 'Dependência severa';
+  if (pontos >= 3) classificacao = 'Dependência grave';
+  else if (pontos >= 1 && pontos <= 2) classificacao = 'Dependência moderada';
+  else classificacao = 'Independente';
 
   return { pontos, classificacao, respondidas, totalPerguntas, completo };
 }
@@ -361,4 +361,34 @@ export function calcularAGC10() {
     completo,
     itensAvaliados
   };
+}
+
+/**
+ * Calcula o MEEM (Mini Exame do Estado Mental)
+ */
+export function calcularMEEM() {
+  const fd = getFormData(constants);
+  const respondidas = contarRespostas(fd, constants.camposMEEM);
+  if (!respondidas) return null;
+
+  const totalPerguntas = constants.camposMEEM.length;
+  const completo = respondidas === totalPerguntas;
+
+  const pontos = somarCampos(fd, constants.camposMEEMPontuacao);
+
+  const escolaridadeCorte = fd.get('meem_escolaridade');
+  let interpretacao = null;
+
+  if (escolaridadeCorte !== null && escolaridadeCorte !== '') {
+    const corte = parseInt(escolaridadeCorte, 10);
+    if (pontos <= corte) {
+      interpretacao = `Comprometimento cognitivo (pontuação ≤ ${corte})`;
+    } else {
+      interpretacao = `Sem comprometimento cognitivo (pontuação > ${corte})`;
+    }
+  } else {
+    interpretacao = 'Selecione a escolaridade para interpretação';
+  }
+
+  return { pontos, interpretacao, respondidas, totalPerguntas, completo, escolaridadeCorte };
 }

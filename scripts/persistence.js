@@ -15,9 +15,15 @@ export function salvarFormulario() {
   const state = {};
   const elementos = main.querySelectorAll('input, textarea, select');
 
+  // Campos que não devem ser persistidos
+  const excludedFields = ['katz_banho', 'katz_vestir', 'katz_banheiro', 'katz_mobilidade', 'katz_continencia', 'katz_alimentacao'];
+
   elementos.forEach(el => {
     const key = el.name || el.id;
     if (!key) return;
+
+    // Excluir campos do Katz da persistência
+    if (excludedFields.includes(key)) return;
 
     if (el.type === 'radio') {
       if (el.checked) {

@@ -25,13 +25,31 @@ export const campos10CSMemoria = ['cs_mem_vaso', 'cs_mem_carro', 'cs_mem_tijolo'
 export const campos10CS = [...campos10CSOrientacao, ...campos10CSMemoria, 'cs_fluencia', 'cs_escolaridade'];
 export const camposZucchelli = ['zuc_idade', 'zuc_demencia', 'zuc_auditivo', 'zuc_psicotropicos'];
 export const camposCAM = ['cam1', 'cam2', 'cam3', 'cam4'];
+export const camposAGC10 = [
+  'agc10_suporte_social', 'agc10_sistema_saude', 'agc10_quedas',
+  'agc10_medicacoes', 'agc10_funcionalidade', 'agc10_cognicao',
+  'agc10_autoavaliacao', 'agc10_depressao', 'agc10_nutricao', 'agc10_marcha'
+];
+export const camposMEEMPontuacao = [
+  'meem_ot_ano', 'meem_ot_mes', 'meem_ot_dia', 'meem_ot_dia_semana', 'meem_ot_hora',
+  'meem_oe_estado', 'meem_oe_cidade', 'meem_oe_bairro', 'meem_oe_local', 'meem_oe_especifico',
+  'meem_mi_vaso', 'meem_mi_carro', 'meem_mi_tijolo',
+  'meem_ac_93', 'meem_ac_86', 'meem_ac_79', 'meem_ac_72', 'meem_ac_65',
+  'meem_ev_vaso', 'meem_ev_carro', 'meem_ev_tijolo',
+  'meem_li_relogio', 'meem_li_caneta',
+  'meem_li_frase',
+  'meem_li_pegou', 'meem_li_dobrou', 'meem_li_colocou',
+  'meem_li_leitura', 'meem_li_escrita', 'meem_li_copia'
+];
+export const camposMEEM = [...camposMEEMPontuacao, 'meem_escolaridade'];
 
 // IDs dos elementos de resultado
 export const resultadoIds = [
   'resultado-srh', 'resultado-ivcf', 'resultado-cfs', 'resultado-frail',
   'resultado-sarcf', 'resultado-barthel', 'resultado-katz', 'resultado-lawton',
   'resultado-pfeffer', 'resultado-man', 'resultado-10cs', 'resultado-zucchelli',
-  'resultado-cam', 'resultado-gds', 'resultado-apgar'
+  'resultado-cam', 'resultado-gds', 'resultado-apgar', 'resultado-agc10',
+  'resultado-meem'
 ];
 
 // Constantes do modal de fluência

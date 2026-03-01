@@ -191,8 +191,10 @@ section.collapsible.medicamento-item.open > .section-body {
 
 .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: flex-end; }
 .grid-container-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; align-items: flex-end; }
+.grid-container-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: flex-end; }
 .grid-container-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; align-items: flex-end; }
 .grid-container-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; align-items: flex-end; }
+.grid-container-7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1rem; align-items: flex-end; }
 .form-input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font: inherit; background: #fff; }
 .form-input--date {
   /* max-width: fit-content; */

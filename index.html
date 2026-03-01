@@ -15,6 +15,9 @@
     </div>
   </header>
   <main>
+    <div style="padding: 20px 0; text-align: left;">
+      <button type="button" id="btn-novo" class="primary" style="margin: 0;">Novo</button>
+    </div>
     <section class="collapsible">
       <h1>Avaliação Hospital Amigo do Idoso</h1>
       <div class="section-body">
@@ -141,7 +144,7 @@
 
           <div class="q">
             <label>Presença de polifarmácia (uso de 5 ou mais medicações)</label>
-            <div class="column">
+            <div class="row">
               <label><input type="radio" name="polifarmacia" value="sim" /> Sim</label>
               <label><input type="radio" name="polifarmacia" value="nao" /> Não</label>
             </div>
@@ -170,7 +173,11 @@
 
         <h3>MULTICOMPLEXIDADE</h3>
         <div class="group">
-          <div class="grid-container-3">
+          <div class="grid-container-4">
+            <div class="q">
+              <label for="panturrilha">Panturrilha</label>
+              <input class="form-input" type="text" id="panturrilha" name="panturrilha" inputmode="numeric" />
+            </div>
             <div class="q">
               <label for="peso">Peso</label>
               <input class="form-input" type="text" id="peso" name="peso" inputmode="numeric" />
@@ -186,7 +193,7 @@
           </div>
 
           <div class="q">
-            <label for="perda_peso">Perda de peso no último ano?</label>
+            <label for="perda_peso">Perda de peso >= 4,5 Kg no último ano?</label>
             <div class="row">
               <label><input type="radio" name="perda_peso" value="sim" /> Sim</label>
               <label><input type="radio" name="perda_peso" value="nao" /> Não</label>
@@ -194,17 +201,7 @@
             <label for="perda_peso_quantidade">Quantidade</label>
             <input class="form-input" type="text" id="perda_peso_quantidade" name="perda_peso_quantidade" />
           </div>
-
-          <div class="q">
-            <label>Internações não programadas no último ano</label>
-            <div class="row">
-              <label><input type="radio" name="internacoes" value="0" /> 0</label>
-              <label><input type="radio" name="internacoes" value="1" /> 1</label>
-              <label><input type="radio" name="internacoes" value="2" /> 2</label>
-              <label><input type="radio" name="internacoes" value="3+" /> 3 ou mais</label>
-            </div>
-          </div>
-
+          
           <div class="q">
             <label>Morbidades</label>
             <div class="row">
@@ -344,7 +341,152 @@
             <h3>Necessidade de avaliação geriátrica ampla.</h3>
           </div>
           
+          <form id="form-agc-10">
+            <section class="collapsible">
+              <h2>AGC‑10 — Avaliação Geriátrica Compacta de 10 minutos</h2>
+              <div class="section-body">
+              <div class="group">
+                <div class="q">
+                  <label>1) Suporte Social<br />
+                    1a) Mora sozinho. Se ficasse de cama, com que frequência contaria com alguém para ajudá-lo?</label>
+                      <div class="column">
+                        <label><input type="radio" name="agc10_suporte_social" value="0.5" required /> Sempre ou quase sempre (0,5)</label>
+                        <label><input type="radio" name="agc10_suporte_social" value="1.0" required /> Às vezes, raramente ou nunca (1,0)</label>
+                      </div>
+
+                </div>
+                <div class="q">
+                  <label>1b) Mora com familiar ou cuidador:</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_suporte_social" value="0.0" required /> Sim, familiar ou cuidador (0,0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>1c) Mora institucionalizado:</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_suporte_social" value="0.5" required /> Sim, institucionalizado (0,5)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>2) Uso do Sistema de Saúde nos últimos 6 meses</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_sistema_saude" value="0.0" required /> Nenhum (0,0)</label>
+                    <label><input type="radio" name="agc10_sistema_saude" value="0.5" required /> Visita ao pronto-atendimento apenas (0,5)</label>
+                    <label><input type="radio" name="agc10_sistema_saude" value="1.0" required /> Internação hospitalar (1,0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>3) Quedas no Último Ano</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_quedas" value="0.0" required /> Sem quedas (0,0)</label>
+                    <label><input type="radio" name="agc10_quedas" value="0.5" required /> 1 queda (0,5)</label>
+                    <label><input type="radio" name="agc10_quedas" value="1.0" required /> 2 ou mais quedas (1,0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>4) Medicações de Uso Contínuo</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_medicacoes" value="0.0" required /> Menos que 5 medicações (0,0)</label>
+                    <label><input type="radio" name="agc10_medicacoes" value="0.5" required /> 5 a 9 medicações (0,5)</label>
+                    <label><input type="radio" name="agc10_medicacoes" value="1.0" required /> 10 ou mais medicações (1,0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>5) Funcionalidade (Índice de Katz) — Baseado nas 6 atividades</label>
+                  <div class="q">
+                    <div class="column">
+                      <label><input type="radio" name="agc10_katz_resultado" value="0.0" required /> katz 0 pontos (0,0)</label>
+                      <label><input type="radio" name="agc10_katz_resultado" value="0.5" required /> katz entre 1 e 2 pontos (0,5)</label>
+                      <label><input type="radio" name="agc10_katz_resultado" value="1.0" required /> katz entre 3 e 6 pontos (1,0)</label>
+                    </div>
+                  </div>
+                  <div id="agc10_katz_resultado" style="display: none; margin-bottom: 10px;">
+                    <div style="padding: 10px; background-color: #f0f8ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                      <strong>Resultado do Katz:</strong> <span id="agc10_katz_score">-</span>
+                      <input type="hidden" name="agc10_funcionalidade" id="agc10_funcionalidade_value" />
+                    </div>
+                  </div>
+                  <button type="button" id="btn-ir-katz" class="secondary" style="margin-bottom: 10px;">
+                    Ir para Teste de Katz
+                  </button>
+                  <div id="agc10_katz_vazio" style="color: #666; font-size: 0.9em;">
+                    Clique no botão acima para realizar o teste de Katz
+                  </div>
+                </div>
+                <div class="q">
+                  <label>6) Cognição (10-CS)</label>
+                  <button type="button" id="btn-ir-10cs" class="secondary" style="margin-bottom: 10px;">
+                    Ir para Teste 10-CS
+                  </button>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_cognicao" value="0.0" required /> 10-CS ≥ 8 pontos (0,0)</label>
+                    <label><input type="radio" name="agc10_cognicao" value="0.5" required /> 10-CS entre 6 e 7 pontos (0,5)</label>
+                    <label><input type="radio" name="agc10_cognicao" value="1.0" required /> 10-CS entre 0 e 5 pontos (1,0)</label>
+                  </div>
+                  <div class="help">Se incapaz (10-CS: 0), marcar que não será avaliado</div>
+                </div>
+                <div class="q">
+                  <label>7) Autoavaliação de Saúde Geral</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_autoavaliacao" value="0.0" required /> Boa ou muito boa (0,0)</label>
+                    <label><input type="radio" name="agc10_autoavaliacao" value="0.5" required /> Razoável (0,5)</label>
+                    <label><input type="radio" name="agc10_autoavaliacao" value="1.0" required /> Muito ruim (1,0)</label>
+                  </div>
+                  <div class="help">Se demência grave (10-CS: 0), não avaliar</div>
+                </div>
+                <div class="q">
+                  <label>8) Sintomas Depressivos (Escala de Depressão Geriátrica de 4 itens)</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_depressao" value="0.0" required /> 0 a 1 ponto (0,0)</label>
+                    <label><input type="radio" name="agc10_depressao" value="0.5" required /> 2 pontos (0,5)</label>
+                    <label><input type="radio" name="agc10_depressao" value="1.0" required /> 3 a 4 pontos (1,0)</label>
+                  </div>
+                  <div class="help">Se demência grave (10-CS: 0), não avaliar</div>
+                </div>
+                <div class="q">
+                  <label>9) Nutrição</label>
+                  <label class="help">IMC pode ser substituído por circunferência da panturrilha (alterado: < 31 cm)</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_nutricao" value="0.0" required /> Sem perda de peso ≥ 4,5 Kg E IMC ≥ 22 (0,0)</label>
+                    <label><input type="radio" name="agc10_nutricao" value="0.5" required /> Com perda de peso ≥ 4,5 Kg OU IMC < 22 (0,5)</label>
+                    <label><input type="radio" name="agc10_nutricao" value="1.0" required /> Com perda de peso ≥ 4,5 Kg E IMC < 22 (1,0)</label>
+                  </div>
+                </div>
+                <div class="q">
+                  <label>10) Velocidade de Marcha</label>
+                  <div class="column">
+                    <label><input type="radio" name="agc10_marcha" value="0.0" required /> Maior que 1,0 m/s (0,0)</label>
+                    <label><input type="radio" name="agc10_marcha" value="0.5" required /> Entre 0,6 e 1,0 m/s (0,5)</label>
+                    <label><input type="radio" name="agc10_marcha" value="1.0" required /> Menor que 0,6 m/s ou incapaz (1,0)</label>
+                  </div>
+                </div>
+                <div class="help"><strong>Interpretação:</strong> Baixo risco (0-0,29); Médio risco (0,3-0,39); Alto risco (0,4-1). Pontuação final = soma total ÷ número de itens avaliados.</div>
+                <div id="resultado-agc10-inline" class="resultado"></div>
+              </div>
+            <div id="resultado-agc10" class="resultado" style="display:none"></div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar-agc10">Limpar</button>
+            </div>
+              </div>
+            </section>
+
           <form id="form-ivcf">
+            <!-- Campos ocultos para armazenar resultado do Katz (preenchidos pelo modal) -->
+            <div id="katz-hidden-fields" style="visibility: hidden; height: 0; overflow: hidden;">
+              <input type="radio" name="katz_banho" value="0" />
+              <input type="radio" name="katz_banho" value="1" />
+              <input type="radio" name="katz_vestir" value="0" />
+              <input type="radio" name="katz_vestir" value="1" />
+              <input type="radio" name="katz_banheiro" value="0" />
+              <input type="radio" name="katz_banheiro" value="1" />
+              <input type="radio" name="katz_mobilidade" value="0" />
+              <input type="radio" name="katz_mobilidade" value="1" />
+              <input type="radio" name="katz_continencia" value="0" />
+              <input type="radio" name="katz_continencia" value="1" />
+              <input type="radio" name="katz_alimentacao" value="0" />
+              <input type="radio" name="katz_alimentacao" value="1" />
+            </div>
+
             <section class="collapsible">
               <h2>IVCF‑20 — Índice de Vulnerabilidade Clínico‑Funcional</h2>
               <div class="section-body">
@@ -690,10 +832,14 @@
                   <input class="form-input" type="text" id="circunferencia_panturrilha" name="circunferencia_panturrilha" inputmode="numeric" />
                 </div>
               </div>
-              <div class="grid-container-6">
+              <div class="grid-container-7">
                 <div class="q">
-                  <label for="pa">PA</label>
-                  <input class="form-input" type="text" id="pa" name="pa" inputmode="numeric" />
+                  <label for="pas">PAS</label>
+                  <input class="form-input" type="text" id="pas" name="pas" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="pad">PAD</label>
+                  <input class="form-input" type="text" id="pad" name="pad" inputmode="numeric" />
                 </div>
                 <div class="q">
                   <label for="fc">FC</label>
@@ -902,7 +1048,7 @@
                   <div class="q">
                     <label>Micção</label>
                     <div class="column">
-                      <label class="row"><input type="radio" name="barthel_miccao" value="10" required /> Continente (10)<div class="help"> Não apresenta incontinência; quando necessário é capaz de lidar sozinho com sonda vesical ou outro dispositivo </div></label>
+                      <label class="row"><input type="radio" name="barthel_miccao" value="10" required /> Continente (10)<div class="help"> Não apresenta incontinência; quando necessário é capaz de lidar sozinho com sonda vesical ou outro<br />dispositivo </div></label>
                       <label class="row"><input type="radio" name="barthel_miccao" value="5" /> Incontinente ocasional (5)<div class="help"> Apresenta episódios ocasionais de incontinência (acidentes) ou não consegue lidar, sem ajuda, com<br /> sonda vesical ou outro dispositivo.</div></label>
                       <label class="row"><input type="radio" name="barthel_miccao" value="0" /> Incontinente (0)<div class="help"> Apresenta incontinência urinária</div></label>
                     </div>
@@ -940,7 +1086,7 @@
                   <div class="q">
                     <label>Escadas</label>
                     <div class="column">
-                      <label class="row"><input type="radio" name="barthel_escadas" value="10" required /> Independente (10)<div class="help"> Capaz de subir ou descer escadas sem ajuda ou supervisão, mesmo com muletas, bengalas ou apoio no corrimão</div></label>
+                      <label class="row"><input type="radio" name="barthel_escadas" value="10" required /> Independente (10)<div class="help"> Capaz de subir ou descer escadas sem ajuda ou supervisão, mesmo com muletas, bengalas ou<br /> apoio no corrimão</div></label>
                       <label class="row"><input type="radio" name="barthel_escadas" value="5" /> Ajuda (5)<div class="help"> Necessita de ajuda física ou supervisão, ao descer e subir escadas</div></label>
                       <label class="row"><input type="radio" name="barthel_escadas" value="0" /> Dependente (0)<div class="help"> Incapaz de subir escadas</div></label>
                     </div>
@@ -972,7 +1118,7 @@
                     <div class="column">
                       <label><input type="radio" name="lw2" value="3" required /> É capaz de realizar todas as compras sem ajuda ou supervisão. (3)</label>
                       <label><input type="radio" name="lw2" value="2" /> Necessita de supervisão para fazer compras. (2)</label>
-                      <label><input type="radio" name="lw2" value="1" /> É incapaz de preparar compras. (1)</label>
+                      <label><input type="radio" name="lw2" value="1" /> É incapaz de fazer compras. (1)</label>
                     </div>
                   </div>
                   <div class="q">
@@ -1004,7 +1150,7 @@
                     <div class="column">
                       <label><input type="radio" name="lw6" value="3" required /> É capaz de lavar toda sua roupa sem ajuda ou supervisão. (3)</label>
                       <label><input type="radio" name="lw6" value="2" /> É capaz de lavar apenas peças pequenas ou necessita de ajuda ou supervisão. (2)</label>
-                      <label><input type="radio" name="lw6" value="1" /> Incapaz de de lavar qualquer peça de roupa. (1)</label>
+                      <label><input type="radio" name="lw6" value="1" /> Incapaz de lavar qualquer peça de roupa. (1)</label>
                     </div>
                   </div>
                   <div class="q">
@@ -1027,7 +1173,7 @@
                     <label>Manuseio de dinheiro</label>
                     <div class="column">
                       <label><input type="radio" name="lw9" value="3" required /> É capaz de administrar seus assuntos econômicos, pagar contas, manusear dinheiro, preencher cheques. (3)</label>
-                      <label><input type="radio" name="lw9" value="2" /> É capaz de administrar sus assuntos econômicos, porém necessita de ajuda com cheques e pagamentos de contas. (2)</label>
+                      <label><input type="radio" name="lw9" value="2" /> É capaz de administrar seus assuntos econômicos, porém necessita de ajuda com cheques e pagamentos de contas. (2)</label>
                       <label><input type="radio" name="lw9" value="1" /> Incapaz de lidar com dinheiro. (1)</label>
                     </div>
                   </div>
@@ -1187,13 +1333,267 @@
               </div>
               <div id="resultado-10cs" class="resultado"></div>
               <div class="actions">
+                <button type="button" id="btn-ir-agc10" class="secondary" style="margin-right: 10px;">Ir para AGC-10</button>
                 <button type="button" class="secondary" data-action="limpar-10cs">Limpar</button>
               </div>
               </div>
             </section>
             </form>
-          </div>
-        </section>
+
+            <form id="form-mini-mental">
+            <section class="collapsible">
+              <h2>Mini Exame do Estado Mental</h2>
+              <div class="section-body">
+              <div class="group">
+                <div class="help">
+                  <strong>Comprometimento cognitivo se pontuação (conforme escolaridade):</strong><br />
+                  Analfabetos: ≤ 20 pontos | 1-4 anos: ≤ 25 | 5-8 anos: ≤ 26 | 9-11 anos: ≤ 28 | >11 anos: ≤ 29
+                </div>
+
+                <div class="q">
+                  <label>Escolaridade do paciente</label>
+                  <div class="column">
+                    <label><input type="radio" name="meem_escolaridade" value="20" required /> Analfabeto</label>
+                    <label><input type="radio" name="meem_escolaridade" value="25" /> 1 a 4 anos</label>
+                    <label><input type="radio" name="meem_escolaridade" value="26" /> 5 a 8 anos</label>
+                    <label><input type="radio" name="meem_escolaridade" value="28" /> 9 a 11 anos</label>
+                    <label><input type="radio" name="meem_escolaridade" value="29" /> Mais de 11 anos</label>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Orientação Temporal (1 ponto por acerto)</label>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>1) Em que ano nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_ot_ano" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ot_ano" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>2) Em qual mês nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_ot_mes" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ot_mes" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>3) Qual dia do mês nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_ot_dia" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ot_dia" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>4) Qual dia da semana nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_ot_dia_semana" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ot_dia_semana" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>5) Que horas são aproximadamente?</strong></span>
+                      <label><input type="radio" name="meem_ot_hora" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ot_hora" value="0" /> Errou (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Orientação Espacial (1 ponto por acerto)</label>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>6) Em qual estado nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_oe_estado" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_oe_estado" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>7) Em qual cidade nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_oe_cidade" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_oe_cidade" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>8) Em qual setor, bairro nós estamos?</strong></span>
+                      <label><input type="radio" name="meem_oe_bairro" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_oe_bairro" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>9) Que lugar é esse em que nós estamos (residência, hospital, clínica)?</strong></span>
+                      <label><input type="radio" name="meem_oe_local" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_oe_local" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>10) Em qual lugar específico (aposento, setor, consultório)?</strong></span>
+                      <label><input type="radio" name="meem_oe_especifico" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_oe_especifico" value="0" /> Errou (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Memória Imediata (1 ponto por acerto)</label>
+                  <div class="help">Nomeie 3 objetos e peça para o paciente repetir: vaso, carro, tijolo</div>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>11) Vaso</strong></span>
+                      <label><input type="radio" name="meem_mi_vaso" value="1" required /> Repetiu (1)</label>
+                      <label><input type="radio" name="meem_mi_vaso" value="0" /> Não repetiu (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>12) Carro</strong></span>
+                      <label><input type="radio" name="meem_mi_carro" value="1" required /> Repetiu (1)</label>
+                      <label><input type="radio" name="meem_mi_carro" value="0" /> Não repetiu (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>13) Tijolo</strong></span>
+                      <label><input type="radio" name="meem_mi_tijolo" value="1" required /> Repetiu (1)</label>
+                      <label><input type="radio" name="meem_mi_tijolo" value="0" /> Não repetiu (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Atenção e Cálculo</label>
+                  <div class="help">Diminuir 7 de 100, cinco vezes sucessivas (1 ponto por acerto)</div>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>14) 100 - 7 = 93</strong></span>
+                      <label><input type="radio" name="meem_ac_93" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ac_93" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>15) 93 - 7 = 86</strong></span>
+                      <label><input type="radio" name="meem_ac_86" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ac_86" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>16) 86 - 7 = 79</strong></span>
+                      <label><input type="radio" name="meem_ac_79" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ac_79" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>17) 79 - 7 = 72</strong></span>
+                      <label><input type="radio" name="meem_ac_72" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ac_72" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>18) 72 - 7 = 65</strong></span>
+                      <label><input type="radio" name="meem_ac_65" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_ac_65" value="0" /> Errou (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Memória de Evocação (1 ponto por acerto)</label>
+                  <div class="help">Recordar os 3 objetos anteriores</div>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>19) Vaso</strong></span>
+                      <label><input type="radio" name="meem_ev_vaso" value="1" required /> Recordou (1)</label>
+                      <label><input type="radio" name="meem_ev_vaso" value="0" /> Não recordou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>20) Carro</strong></span>
+                      <label><input type="radio" name="meem_ev_carro" value="1" required /> Recordou (1)</label>
+                      <label><input type="radio" name="meem_ev_carro" value="0" /> Não recordou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>21) Tijolo</strong></span>
+                      <label><input type="radio" name="meem_ev_tijolo" value="1" required /> Recordou (1)</label>
+                      <label><input type="radio" name="meem_ev_tijolo" value="0" /> Não recordou (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Nomear 2 objetos (1 ponto por acerto)</label>
+                  <div class="help">Apontar para 2 objetos e pedir para o paciente nomeá-los</div>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>22) Relógio</strong></span>
+                      <label><input type="radio" name="meem_li_relogio" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_li_relogio" value="0" /> Errou (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>23) Caneta</strong></span>
+                      <label><input type="radio" name="meem_li_caneta" value="1" required /> Acertou (1)</label>
+                      <label><input type="radio" name="meem_li_caneta" value="0" /> Errou (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Repetir frase</label>
+                  <div class="column">
+                    <span class="help"><strong>24) "Nem aqui, nem ali, nem lá"</strong></span>
+                    <label><input type="radio" name="meem_li_frase" value="1" required /> Repetiu corretamente (1)</label>
+                    <label><input type="radio" name="meem_li_frase" value="0" /> Errou (0)</label>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Comando de 3 estágios (1 ponto por acerto)</label>
+                  <div class="help">"Pegue o papel com a mão direita, dobre-o e coloque-o no chão"</div>
+                  <div class="column">
+                    <div class="column">
+                      <span class="help"><strong>25) Pegou o papel com a mão direita</strong></span>
+                      <label><input type="radio" name="meem_li_pegou" value="1" required /> Sim (1)</label>
+                      <label><input type="radio" name="meem_li_pegou" value="0" /> Não (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>26) Dobrou o papel</strong></span>
+                      <label><input type="radio" name="meem_li_dobrou" value="1" required /> Sim (1)</label>
+                      <label><input type="radio" name="meem_li_dobrou" value="0" /> Não (0)</label>
+                    </div>
+                    <div class="column">
+                      <span class="help"><strong>27) Colocou o papel no chão</strong></span>
+                      <label><input type="radio" name="meem_li_colocou" value="1" required /> Sim (1)</label>
+                      <label><input type="radio" name="meem_li_colocou" value="0" /> Não (0)</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Ler e executar a ordem</label>
+                  <div id="feche-olhos-trigger" class="help" style="font-size: 1.5em; text-align: center; padding: 10px; border: 2px solid #333; cursor: pointer; user-select: none;"><strong>FECHE OS OLHOS</strong><br /><span style="font-size: 0.5em; color: #666;">Clique para exibir em tela cheia</span></div>
+                  <div id="feche-olhos-fullscreen" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#fff; z-index:9999; cursor:pointer; user-select:none; justify-content:center; align-items:center;">
+                    <strong style="font-size: 12vw;">FECHE OS OLHOS</strong>
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>28) Leu e executou a ordem</strong></span>
+                    <label><input type="radio" name="meem_li_leitura" value="1" required /> Sim (1)</label>
+                    <label><input type="radio" name="meem_li_leitura" value="0" /> Não (0)</label>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Escrever uma frase</label>
+                  <div class="column">
+                    <span class="help"><strong>29) Escreveu uma frase com sentido</strong></span>
+                    <label><input type="radio" name="meem_li_escrita" value="1" required /> Sim (1)</label>
+                    <label><input type="radio" name="meem_li_escrita" value="0" /> Não (0)</label>
+                  </div>
+                </div>
+
+                <div class="q">
+                  <label>Linguagem — Copiar o desenho</label>
+
+                  <img id="meem-imagem-trigger" src="assets/meem-imagem.png" alt="Pentágonos sobrepostos para copiar" style="max-width: 200px; display: block; margin: 8px 0; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;" title="Clique para ampliar" />
+                  <div id="meem-imagem-fullscreen" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:9999; cursor:pointer; justify-content:center; align-items:center;">
+                    <img src="assets/meem-imagem.png" alt="Pentágonos sobrepostos" style="max-width:90vw; max-height:90vh; object-fit:contain;" />
+                  </div>
+                  <div class="column">
+                    <span class="help"><strong>30) Copiou corretamente o desenho</strong></span>
+                    <label><input type="radio" name="meem_li_copia" value="1" required /> Sim (1)</label>
+                    <label><input type="radio" name="meem_li_copia" value="0" /> Não (0)</label>
+                  </div>
+                </div>
+
+              </div>
+              <div id="resultado-meem" class="resultado"></div>
+              <div class="actions">
+                <button type="button" class="secondary" data-action="limpar-meem">Limpar</button>
+              </div>
+              </div>
+            </section>
+            </form>
+            </div>
+          </section>
+
 
         <section class="collapsible">
           <h1>Dimensão Psicológica</h1>
@@ -1484,6 +1884,68 @@
         <div style="margin-top: 20px;">
           <button id="btn-concluir-sentar" style="width: 100%;">Concluir e Salvar</button>
         </div>
+      </div>
+    </div>
+
+    <div id="katz-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button-katz" style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
+        <h2>Índice de Katz</h2>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 20px;">Responda Sim ou Não para cada atividade. Sim = consegue fazer (0 pontos), Não = não consegue fazer (1 ponto).</p>
+
+        <form id="form-katz-modal">
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>1) Tomar banho</strong><br/><small>Realiza sem assistência ou recebe ajuda apenas para uma parte do corpo.</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_banho" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_banho" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>2) Vestir-se</strong><br/><small>Pega as roupas e se veste completamente sem ajuda, exceto para amarrar sapatos.</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_vestir" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_vestir" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>3) Vaso sanitário</strong><br/><small>Vai ao banheiro, limpa-se e ajeita as roupas sem ajuda (pode usar dispositivo de apoio e urinol à noite).</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_banheiro" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_banheiro" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>4) Transferência</strong><br/><small>Deita-se e sai da cama, senta-se e levanta-se da cadeira sem ajuda (pode usar dispositivos de apoio).</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_mobilidade" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_mobilidade" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>5) Continência</strong><br/><small>Controla inteiramente a micção e evacuação.</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_continencia" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_continencia" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 20px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>6) Alimentação</strong><br/><small>Alimenta-se sem ajuda ou recebe assistência apenas para cortar a carne e passar manteiga no pão.</small></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_katz_alimentacao" value="0" required /> Sim</label>
+              <label><input type="radio" name="modal_katz_alimentacao" value="1" /> Não</label>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <button type="button" id="btn-concluir-katz" style="width: 100%;">Concluir e Salvar</button>
+          </div>
+        </form>
       </div>
     </div>
   </main>
