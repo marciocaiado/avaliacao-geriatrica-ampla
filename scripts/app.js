@@ -175,6 +175,24 @@ function formatarKatz({ pontos, classificacao, respondidas, totalPerguntas, comp
   `;
 }
 
+function formatarEDG4({ pontos, classificacao, respondidas, totalPerguntas, completo }) {
+  const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>Interpretação (EDG-4):</strong><br>
+      0–1: Sem suspeita de depressão<br>
+      2: Suspeita de depressão leve<br>
+      3–4: Suspeita de depressão
+    </div>
+  `;
+  return `
+    <div><strong>${completo ? 'EDG-4' : 'EDG-4 (parcial)'}:</strong> ${pontos} pontos</div>
+    <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+    ${legenda}
+    ${progresso}
+  `;
+}
+
 function formatarGDS({ pontos, classificacao, respondidas, totalPerguntas, completo }) {
   const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
   const legenda = `
@@ -302,6 +320,10 @@ function mostrarGDS() {
   dom.exibirResultado('resultado-gds', calculations.calcularGDS, formatarGDS);
 }
 
+function mostrarEDG4() {
+  dom.exibirResultado('resultado-edg4', calculations.calcularEDG4, formatarEDG4);
+}
+
 function mostrarApgar() {
   dom.exibirResultado('resultado-apgar', calculations.calcularApgar, formatarApgar);
 }
@@ -331,6 +353,7 @@ function recalcularTodosResultados() {
   mostrarBarthel();
   mostrarKatz();
   mostrarGDS();
+  mostrarEDG4();
   mostrarApgar();
   mostrarMEEM();
 }
@@ -354,6 +377,7 @@ function aoAlterarResposta(event) {
   if (constants.camposSarcF.includes(name)) mostrarSarcF();
   if (name === 'cfs') mostrarCFS();
   if (constants.camposGDS.includes(name)) mostrarGDS();
+  if (constants.camposEDG4.includes(name)) mostrarEDG4();
   if (constants.camposApgar.includes(name)) mostrarApgar();
   if (constants.camposAGC10.includes(name)) mostrarAGC10();
   if (constants.camposMEEM.includes(name)) mostrarMEEM();
@@ -577,8 +601,14 @@ function bindActions() {
   // Modal de Katz
   setupKatzModal();
 
+  // Modal de EDG-4
+  setupEDG4Modal();
+
   // Sincronização do Katz com AGC-10
   setupAGC10KatzSync();
+
+  // Sincronização da EDG-4 com AGC-10
+  setupAGC10EDG4Sync();
 
   // Sincronização do 10-CS com AGC-10
   setupAGC10CognicaoSync();
@@ -1268,6 +1298,136 @@ function setupAGC10KatzSync() {
   // Chamar ao inicializar se Katz já foi preenchido
   setTimeout(() => {
     atualizarAGC10KatzResultado();
+  }, 100);
+}
+
+// Modal de Teste EDG-4
+function setupEDG4Modal() {
+  const modal = document.getElementById('edg4-modal');
+  const closeBtn = document.querySelector('.close-button-edg4');
+  const formModal = document.getElementById('form-edg4-modal');
+  const btnConcluir = document.getElementById('btn-concluir-edg4');
+
+  if (!modal) return;
+
+  // Fechar modal
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+  }
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  // Salvar resultado da EDG-4
+  if (btnConcluir) {
+    btnConcluir.addEventListener('click', () => {
+      const modalValues = {
+        'modal_edg4_satisfeito': document.querySelector('input[name="modal_edg4_satisfeito"]:checked')?.value,
+        'modal_edg4_abandonou': document.querySelector('input[name="modal_edg4_abandonou"]:checked')?.value,
+        'modal_edg4_feliz': document.querySelector('input[name="modal_edg4_feliz"]:checked')?.value,
+        'modal_edg4_prefere_casa': document.querySelector('input[name="modal_edg4_prefere_casa"]:checked')?.value,
+      };
+
+      const allAnswered = Object.values(modalValues).every(v => v !== undefined);
+      if (!allAnswered) {
+        alert('Por favor, responda todas as perguntas antes de concluir.');
+        return;
+      }
+
+      const edg4Fields = [
+        { modal: 'modal_edg4_satisfeito', real: 'edg4_satisfeito' },
+        { modal: 'modal_edg4_abandonou', real: 'edg4_abandonou' },
+        { modal: 'modal_edg4_feliz', real: 'edg4_feliz' },
+        { modal: 'modal_edg4_prefere_casa', real: 'edg4_prefere_casa' },
+      ];
+
+      edg4Fields.forEach(field => {
+        const value = modalValues[field.modal];
+        const selector = `input[name="${field.real}"][value="${value}"]`;
+        const realInput = document.querySelector(selector);
+        if (realInput) {
+          realInput.checked = true;
+          realInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+
+      modal.style.display = 'none';
+      salvarFormulario();
+      mostrarEDG4();
+    });
+  }
+}
+
+// Sincronização da EDG-4 com AGC-10
+function setupAGC10EDG4Sync() {
+  const btnIrEDG4 = document.getElementById('btn-ir-edg4');
+  const edg4ResultContainer = document.getElementById('agc10_edg4_resultado');
+  const edg4ScoreDisplay = document.getElementById('agc10_edg4_score');
+  const edg4VazioMsg = document.getElementById('agc10_edg4_vazio');
+  const depressaoValueInput = document.getElementById('agc10_depressao_value');
+
+  // Botão para ir para EDG-4
+  if (btnIrEDG4) {
+    btnIrEDG4.addEventListener('click', (e) => {
+      e.preventDefault();
+      const edg4Modal = document.getElementById('edg4-modal');
+      if (edg4Modal) {
+        edg4Modal.style.display = 'block';
+      }
+    });
+  }
+
+  // Monitorar mudanças na EDG-4
+  const edg4Fields = constants.camposEDG4;
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainElement.addEventListener('change', (e) => {
+      if (edg4Fields.includes(e.target.name)) {
+        atualizarAGC10EDG4Resultado();
+      }
+    });
+  }
+
+  function atualizarAGC10EDG4Resultado() {
+    const edg4Result = calculations.calcularEDG4();
+
+    if (edg4Result && edg4Result.completo) {
+      const { pontos, classificacao } = edg4Result;
+
+      let agc10Value;
+      if (pontos <= 1) {
+        agc10Value = '0.0';
+      } else if (pontos === 2) {
+        agc10Value = '0.5';
+      } else {
+        agc10Value = '1.0';
+      }
+
+      if (edg4ScoreDisplay) {
+        edg4ScoreDisplay.textContent = `${pontos} pontos - ${classificacao}`;
+      }
+      if (depressaoValueInput) {
+        depressaoValueInput.value = agc10Value;
+      }
+
+      if (edg4ResultContainer) {
+        edg4ResultContainer.style.display = 'block';
+      }
+      if (edg4VazioMsg) {
+        edg4VazioMsg.style.display = 'none';
+      }
+
+      // Selecionar automaticamente o radio correspondente no AGC-10
+      const agc10Radio = document.querySelector(`input[name="agc10_depressao"][value="${agc10Value}"]`);
+      if (agc10Radio) {
+        agc10Radio.checked = true;
+        agc10Radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+  }
+
+  setTimeout(() => {
+    atualizarAGC10EDG4Resultado();
   }, 100);
 }
 

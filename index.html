@@ -394,6 +394,11 @@
                 <div class="q">
                   <label>5) Funcionalidade (Índice de Katz) — Baseado nas 6 atividades</label>
                   <div class="q">
+                    <div id="agc10_katz_vazio" style="color: #666; font-size: 0.9em;">
+                      <button type="button" id="btn-ir-katz" class="secondary" style="margin-bottom: 10px;">
+                        Ir para Teste de Katz
+                      </button>
+                    </div>
                     <div class="column">
                       <label><input type="radio" name="agc10_katz_resultado" value="0.0" required /> katz 0 pontos (0,0)</label>
                       <label><input type="radio" name="agc10_katz_resultado" value="0.5" required /> katz entre 1 e 2 pontos (0,5)</label>
@@ -406,18 +411,14 @@
                       <input type="hidden" name="agc10_funcionalidade" id="agc10_funcionalidade_value" />
                     </div>
                   </div>
-                  <button type="button" id="btn-ir-katz" class="secondary" style="margin-bottom: 10px;">
-                    Ir para Teste de Katz
-                  </button>
-                  <div id="agc10_katz_vazio" style="color: #666; font-size: 0.9em;">
-                    Clique no botão acima para realizar o teste de Katz
-                  </div>
                 </div>
                 <div class="q">
                   <label>6) Cognição (10-CS)</label>
-                  <button type="button" id="btn-ir-10cs" class="secondary" style="margin-bottom: 10px;">
-                    Ir para Teste 10-CS
-                  </button>
+                  <div id="agc10_10cs_vazio" style="color: #666; font-size: 0.9em;">
+                    <button type="button" id="btn-ir-10cs" class="secondary" style="margin-bottom: 10px;">
+                      Ir para Teste 10-CS
+                    </button>
+                  </div>
                   <div class="column">
                     <label><input type="radio" name="agc10_cognicao" value="0.0" required /> 10-CS ≥ 8 pontos (0,0)</label>
                     <label><input type="radio" name="agc10_cognicao" value="0.5" required /> 10-CS entre 6 e 7 pontos (0,5)</label>
@@ -436,12 +437,24 @@
                 </div>
                 <div class="q">
                   <label>8) Sintomas Depressivos (Escala de Depressão Geriátrica de 4 itens)</label>
-                  <div class="column">
-                    <label><input type="radio" name="agc10_depressao" value="0.0" required /> 0 a 1 ponto (0,0)</label>
-                    <label><input type="radio" name="agc10_depressao" value="0.5" required /> 2 pontos (0,5)</label>
-                    <label><input type="radio" name="agc10_depressao" value="1.0" required /> 3 a 4 pontos (1,0)</label>
+                  <div class="q">
+                    <div id="agc10_edg4_vazio" style="color: #666; font-size: 0.9em;">
+                      <button type="button" id="btn-ir-edg4" class="secondary" style="margin-bottom: 10px;">
+                        Ir para Escala de Depressão Geriátrica (EDG-4)
+                      </button>
+                    </div>
+                    <div class="column">
+                      <label><input type="radio" name="agc10_depressao" value="0.0" required /> 0 a 1 ponto (0,0)</label>
+                      <label><input type="radio" name="agc10_depressao" value="0.5" required /> 2 pontos (0,5)</label>
+                      <label><input type="radio" name="agc10_depressao" value="1.0" required /> 3 a 4 pontos (1,0)</label>
+                    </div>
                   </div>
-                  <div class="help">Se demência grave (10-CS: 0), não avaliar</div>
+                  <div id="agc10_edg4_resultado" style="display: none; margin-bottom: 10px;">
+                    <div style="padding: 10px; background-color: #f0f8ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                      <strong>Resultado da EDG-4:</strong> <span id="agc10_edg4_score">-</span>
+                      <input type="hidden" name="agc10_depressao_value" id="agc10_depressao_value" />
+                    </div>
+                  </div>
                 </div>
                 <div class="q">
                   <label>9) Nutrição</label>
@@ -485,6 +498,18 @@
               <input type="radio" name="katz_continencia" value="1" />
               <input type="radio" name="katz_alimentacao" value="0" />
               <input type="radio" name="katz_alimentacao" value="1" />
+            </div>
+
+            <!-- Campos ocultos para armazenar resultado da EDG-4 (preenchidos pelo modal) -->
+            <div id="edg4-hidden-fields" style="visibility: hidden; height: 0; overflow: hidden;">
+              <input type="radio" name="edg4_satisfeito" value="0" />
+              <input type="radio" name="edg4_satisfeito" value="1" />
+              <input type="radio" name="edg4_abandonou" value="0" />
+              <input type="radio" name="edg4_abandonou" value="1" />
+              <input type="radio" name="edg4_feliz" value="0" />
+              <input type="radio" name="edg4_feliz" value="1" />
+              <input type="radio" name="edg4_prefere_casa" value="0" />
+              <input type="radio" name="edg4_prefere_casa" value="1" />
             </div>
 
             <section class="collapsible">
@@ -1711,6 +1736,7 @@
                 </div>
               </div>
               <div id="resultado-gds" class="resultado"></div>
+              <div id="resultado-edg4" class="resultado"></div>
               <div class="actions">
                 <button type="button" class="secondary" data-action="limpar-gds">Limpar</button>
               </div>
@@ -1944,6 +1970,52 @@
 
           <div style="margin-top: 20px;">
             <button type="button" id="btn-concluir-katz" style="width: 100%;">Concluir e Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="edg4-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button-edg4" style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
+        <h2>Escala de Depressão Geriátrica (EDG-4)</h2>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 20px;">Responda Sim ou Não para cada pergunta. A pontuação varia de 0 a 4 pontos.</p>
+
+        <form id="form-edg4-modal">
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>1) Você está satisfeito com a sua vida?</strong></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_edg4_satisfeito" value="0" required /> Sim (0)</label>
+              <label><input type="radio" name="modal_edg4_satisfeito" value="1" /> Não (1)</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>2) Você abandonou muitas das suas atividades e dos seus interesses?</strong></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_edg4_abandonou" value="1" required /> Sim (1)</label>
+              <label><input type="radio" name="modal_edg4_abandonou" value="0" /> Não (0)</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>3) Você se sente feliz a maior parte do tempo?</strong></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_edg4_feliz" value="0" required /> Sim (0)</label>
+              <label><input type="radio" name="modal_edg4_feliz" value="1" /> Não (1)</label>
+            </div>
+          </div>
+
+          <div class="q" style="margin-bottom: 20px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 8px;"><strong>4) Você prefere ficar em casa ao invés de sair e fazer coisas novas?</strong></label>
+            <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="modal_edg4_prefere_casa" value="1" required /> Sim (1)</label>
+              <label><input type="radio" name="modal_edg4_prefere_casa" value="0" /> Não (0)</label>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <button type="button" id="btn-concluir-edg4" style="width: 100%;">Concluir e Salvar</button>
           </div>
         </form>
       </div>

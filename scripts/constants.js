@@ -25,6 +25,7 @@ export const campos10CSMemoria = ['cs_mem_vaso', 'cs_mem_carro', 'cs_mem_tijolo'
 export const campos10CS = [...campos10CSOrientacao, ...campos10CSMemoria, 'cs_fluencia', 'cs_escolaridade'];
 export const camposZucchelli = ['zuc_idade', 'zuc_demencia', 'zuc_auditivo', 'zuc_psicotropicos'];
 export const camposCAM = ['cam1', 'cam2', 'cam3', 'cam4'];
+export const camposEDG4 = ['edg4_satisfeito', 'edg4_abandonou', 'edg4_feliz', 'edg4_prefere_casa'];
 export const camposAGC10 = [
   'agc10_suporte_social', 'agc10_sistema_saude', 'agc10_quedas',
   'agc10_medicacoes', 'agc10_funcionalidade', 'agc10_cognicao',
@@ -48,7 +49,7 @@ export const resultadoIds = [
   'resultado-srh', 'resultado-ivcf', 'resultado-cfs', 'resultado-frail',
   'resultado-sarcf', 'resultado-barthel', 'resultado-katz', 'resultado-lawton',
   'resultado-pfeffer', 'resultado-man', 'resultado-10cs', 'resultado-zucchelli',
-  'resultado-cam', 'resultado-gds', 'resultado-apgar', 'resultado-agc10',
+  'resultado-cam', 'resultado-gds', 'resultado-edg4', 'resultado-apgar', 'resultado-agc10',
   'resultado-meem'
 ];
 

@@ -278,6 +278,37 @@ export function calcularKatz() {
 }
 
 /**
+ * Calcula a EDG-4 (Escala de Depressão Geriátrica de 4 itens)
+ */
+export function calcularEDG4() {
+  let respondidas = 0;
+  let pontos = 0;
+
+  constants.camposEDG4.forEach(campo => {
+    const element = document.querySelector(`input[name="${campo}"]:checked`);
+    if (element) {
+      const valor = parseInt(element.value, 10);
+      pontos += valor;
+      respondidas++;
+    }
+  });
+
+  if (respondidas === 0) {
+    return null;
+  }
+
+  const totalPerguntas = constants.camposEDG4.length;
+  const completo = respondidas === totalPerguntas;
+
+  let classificacao = '';
+  if (pontos <= 1) classificacao = 'Sem suspeita de depressão (0–1)';
+  else if (pontos === 2) classificacao = 'Suspeita de depressão leve (2)';
+  else classificacao = 'Suspeita de depressão (3–4)';
+
+  return { pontos, classificacao, respondidas, totalPerguntas, completo };
+}
+
+/**
  * Calcula o GDS-15 (Escala de Depressão Geriátrica)
  */
 export function calcularGDS() {

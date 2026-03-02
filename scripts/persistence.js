@@ -16,7 +16,7 @@ export function salvarFormulario() {
   const elementos = main.querySelectorAll('input, textarea, select');
 
   // Campos que não devem ser persistidos
-  const excludedFields = ['katz_banho', 'katz_vestir', 'katz_banheiro', 'katz_mobilidade', 'katz_continencia', 'katz_alimentacao'];
+  const excludedFields = ['katz_banho', 'katz_vestir', 'katz_banheiro', 'katz_mobilidade', 'katz_continencia', 'katz_alimentacao', 'edg4_satisfeito', 'edg4_abandonou', 'edg4_feliz', 'edg4_prefere_casa'];
 
   elementos.forEach(el => {
     const key = el.name || el.id;

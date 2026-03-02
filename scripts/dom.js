@@ -66,6 +66,7 @@ export function atualizarResumo() {
     ['Zucchelli', 'resultado-zucchelli'],
     ['CAM', 'resultado-cam'],
     ['GDS-15', 'resultado-gds'],
+    ['EDG-4', 'resultado-edg4'],
     ['APGAR', 'resultado-apgar'],
     ['AGC-10', 'resultado-agc10'],
     ['MEEM', 'resultado-meem'],
