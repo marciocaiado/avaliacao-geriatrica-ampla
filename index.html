@@ -393,32 +393,28 @@
                 </div>
                 <div class="q">
                   <label>5) Funcionalidade (Índice de Katz) — Baseado nas 6 atividades</label>
-                  <div class="q">
-                    <div id="agc10_katz_vazio" style="color: #666; font-size: 0.9em;">
-                      <button type="button" id="btn-ir-katz" class="secondary" style="margin-bottom: 10px;">
-                        Ir para Teste de Katz
-                      </button>
-                    </div>
-                    <div class="column">
-                      <label><input type="radio" name="agc10_katz_resultado" value="0.0" required /> katz 0 pontos (0,0)</label>
-                      <label><input type="radio" name="agc10_katz_resultado" value="0.5" required /> katz entre 1 e 2 pontos (0,5)</label>
-                      <label><input type="radio" name="agc10_katz_resultado" value="1.0" required /> katz entre 3 e 6 pontos (1,0)</label>
-                    </div>
-                  </div>
+                  <button type="button" id="btn-ir-katz" class="secondary" style="margin-bottom: 10px;">
+                    Ir para Teste de Katz
+                  </button>
                   <div id="agc10_katz_resultado" style="display: none; margin-bottom: 10px;">
                     <div style="padding: 10px; background-color: #f0f8ff; border-left: 4px solid #2196F3; border-radius: 4px;">
                       <strong>Resultado do Katz:</strong> <span id="agc10_katz_score">-</span>
                       <input type="hidden" name="agc10_funcionalidade" id="agc10_funcionalidade_value" />
                     </div>
                   </div>
+                  <div class="q">
+                    <div class="column">
+                      <label><input type="radio" name="agc10_katz_resultado" value="0.0" required /> katz 0 pontos (0,0)</label>
+                      <label><input type="radio" name="agc10_katz_resultado" value="0.5" required /> katz entre 1 e 2 pontos (0,5)</label>
+                      <label><input type="radio" name="agc10_katz_resultado" value="1.0" required /> katz entre 3 e 6 pontos (1,0)</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="q">
                   <label>6) Cognição (10-CS)</label>
-                  <div id="agc10_10cs_vazio" style="color: #666; font-size: 0.9em;">
-                    <button type="button" id="btn-ir-10cs" class="secondary" style="margin-bottom: 10px;">
-                      Ir para Teste 10-CS
-                    </button>
-                  </div>
+                  <button type="button" id="btn-ir-10cs" class="secondary" style="margin-bottom: 10px;">
+                    Ir para Teste 10-CS
+                  </button>
                   <div class="column">
                     <label><input type="radio" name="agc10_cognicao" value="0.0" required /> 10-CS ≥ 8 pontos (0,0)</label>
                     <label><input type="radio" name="agc10_cognicao" value="0.5" required /> 10-CS entre 6 e 7 pontos (0,5)</label>
@@ -437,22 +433,20 @@
                 </div>
                 <div class="q">
                   <label>8) Sintomas Depressivos (Escala de Depressão Geriátrica de 4 itens)</label>
-                  <div class="q">
-                    <div id="agc10_edg4_vazio" style="color: #666; font-size: 0.9em;">
-                      <button type="button" id="btn-ir-edg4" class="secondary" style="margin-bottom: 10px;">
-                        Ir para Escala de Depressão Geriátrica (EDG-4)
-                      </button>
+                  <button type="button" id="btn-ir-edg4" class="secondary">
+                    Ir para Escala de Depressão Geriátrica (EDG-4)
+                  </button>
+                  <div id="agc10_edg4_resultado" style="display: none; margin-bottom: 10px; margin-top: 10px;">
+                    <div style="padding: 10px; background-color: #f0f8ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                      <strong>Resultado da EDG-4:</strong> <span id="agc10_edg4_score">-</span>
+                      <input type="hidden" name="agc10_depressao_value" id="agc10_depressao_value" />
                     </div>
+                  </div>
+                  <div class="q">
                     <div class="column">
                       <label><input type="radio" name="agc10_depressao" value="0.0" required /> 0 a 1 ponto (0,0)</label>
                       <label><input type="radio" name="agc10_depressao" value="0.5" required /> 2 pontos (0,5)</label>
                       <label><input type="radio" name="agc10_depressao" value="1.0" required /> 3 a 4 pontos (1,0)</label>
-                    </div>
-                  </div>
-                  <div id="agc10_edg4_resultado" style="display: none; margin-bottom: 10px;">
-                    <div style="padding: 10px; background-color: #f0f8ff; border-left: 4px solid #2196F3; border-radius: 4px;">
-                      <strong>Resultado da EDG-4:</strong> <span id="agc10_edg4_score">-</span>
-                      <input type="hidden" name="agc10_depressao_value" id="agc10_depressao_value" />
                     </div>
                   </div>
                 </div>
