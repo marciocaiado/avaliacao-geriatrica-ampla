@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const metaData = document.getElementById('resumo-meta-data');
   const salvarPdfButton = document.getElementById('salvar-pdf-resultado');
   const fabPdfButton = document.getElementById('fab-pdf');
+  const salvarDocxButton = document.getElementById('salvar-docx-resultado');
+  const fabDocxButton = document.getElementById('fab-docx');
 
   const resumoHTML = localStorage.getItem('resumoTestsHTML');
 
@@ -88,6 +90,178 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderPacienteInfo();
+
+  const sanitizeFilePart = (value, fallback = 'paciente') => {
+    const normalized = String(value || fallback)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\/:*?"<>|]+/g, '-')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    return normalized || fallback;
+  };
+
+  const buildDocxRuns = (node, inherited = {}) => {
+    const docxLib = window.docx;
+    if (!docxLib || !node) return [];
+
+    const { TextRun } = docxLib;
+    const runs = [];
+    const style = {
+      bold: Boolean(inherited.bold),
+      italics: Boolean(inherited.italics)
+    };
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent.replace(/\s+/g, ' ').trim();
+      if (text) runs.push(new TextRun({ text, bold: style.bold, italics: style.italics }));
+      return runs;
+    }
+
+    if (node.nodeType !== Node.ELEMENT_NODE) return runs;
+
+    const tagName = node.tagName.toUpperCase();
+    const nextStyle = {
+      bold: style.bold || tagName === 'STRONG' || tagName === 'B',
+      italics: style.italics || tagName === 'EM' || tagName === 'I'
+    };
+
+    if (tagName === 'BR') {
+      runs.push(new TextRun({ text: '', break: 1, bold: nextStyle.bold, italics: nextStyle.italics }));
+      return runs;
+    }
+
+    Array.from(node.childNodes).forEach((child) => {
+      const childRuns = buildDocxRuns(child, nextStyle);
+      childRuns.forEach((run) => runs.push(run));
+    });
+
+    return runs;
+  };
+
+  const textFromElement = (element) => (element ? element.textContent.replace(/\s+/g, ' ').trim() : '');
+
+  const buildResumoDocxChildren = () => {
+    const docxLib = window.docx;
+    const {
+      Paragraph,
+      TextRun,
+      HeadingLevel,
+      AlignmentType
+    } = docxLib;
+
+    const children = [];
+    children.push(new Paragraph({
+      text: 'Resumo dos Testes Aplicados',
+      heading: HeadingLevel.TITLE,
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 240 }
+    }));
+
+    children.push(new Paragraph({
+      children: [
+        new TextRun({ text: 'Paciente: ', bold: true }),
+        new TextRun(pacienteNome || '-'),
+        new TextRun({ text: '   Idade: ', bold: true }),
+        new TextRun(pacienteIdade ? `${pacienteIdade} anos` : '-')
+      ],
+      spacing: { after: 120 }
+    }));
+
+    children.push(new Paragraph({
+      children: [
+        new TextRun({ text: 'Nº Atendimento: ', bold: true }),
+        new TextRun(pacienteAtendimento || '-'),
+        new TextRun({ text: '   Data: ', bold: true }),
+        new TextRun(pacienteData || '-')
+      ],
+      spacing: { after: 240 }
+    }));
+
+    const items = Array.from(document.querySelectorAll('#resumo-tests .item'));
+    items.forEach((item) => {
+      const strong = item.querySelector('strong');
+      const titulo = textFromElement(strong).replace(/:\s*$/, '');
+      if (titulo) {
+        children.push(new Paragraph({
+          text: titulo,
+          heading: HeadingLevel.HEADING_1,
+          spacing: { before: 180, after: 120 }
+        }));
+      }
+
+      const clone = item.cloneNode(true);
+      if (clone.querySelector('strong')) clone.querySelector('strong').remove();
+      const blocks = Array.from(clone.children);
+
+      if (blocks.length) {
+        blocks.forEach((block) => {
+          const text = textFromElement(block);
+          if (text) {
+            children.push(new Paragraph({
+              children: buildDocxRuns(block),
+              spacing: { after: 90 }
+            }));
+          }
+        });
+      } else {
+        const text = textFromElement(clone);
+        if (text) {
+          children.push(new Paragraph({
+            children: buildDocxRuns(clone),
+            spacing: { after: 90 }
+          }));
+        }
+      }
+    });
+
+    if (!items.length) {
+      children.push(new Paragraph({
+        text: 'Não há dados para exibir. Volte e realize a avaliação.'
+      }));
+    }
+
+    return children;
+  };
+
+  const gerarDocxHandler = async () => {
+    const docxLib = window.docx;
+    if (!docxLib || typeof docxLib.Document !== 'function' || typeof docxLib.Packer?.toBlob !== 'function') {
+      alert('A exportação em DOCX não está disponível no momento.');
+      return;
+    }
+
+    const { Document, Packer } = docxLib;
+    const nome = pacienteNome || 'paciente';
+    const data = pacienteData || new Date().toLocaleDateString('pt-BR');
+    const fileName = `resumo-avaliacao-${sanitizeFilePart(nome)}-${sanitizeFilePart(data, 'data')}.docx`;
+
+    try {
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children: buildResumoDocxChildren()
+        }]
+      });
+
+      const blob = await Packer.toBlob(doc);
+      if (typeof window.saveAs === 'function') {
+        window.saveAs(blob, fileName);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error('Erro ao gerar DOCX:', error);
+      alert('Erro ao gerar DOCX. Por favor, tente novamente.');
+    }
+  };
 
   const gerarPdfHandler = () => {
       const { jsPDF } = window.jspdf;
@@ -217,11 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
           offset += cutHeight;
         }
 
-        pdf.save(`resumo-avaliacao-${nome.replace(/\s+/g, '-')}-${data}.pdf`);
+        pdf.save(`resumo-avaliacao-${sanitizeFilePart(nome)}-${sanitizeFilePart(data, 'data')}.pdf`);
       }).catch((e) => {
         console.error('Erro ao gerar PDF:', e);
       });
   };
   if (salvarPdfButton) salvarPdfButton.addEventListener('click', gerarPdfHandler);
   if (fabPdfButton) fabPdfButton.addEventListener('click', gerarPdfHandler);
+  if (salvarDocxButton) salvarDocxButton.addEventListener('click', gerarDocxHandler);
+  if (fabDocxButton) fabDocxButton.addEventListener('click', gerarDocxHandler);
 });

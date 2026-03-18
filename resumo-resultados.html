@@ -28,7 +28,8 @@
     </main>
     <div class="actions">
       <button type="button" class="secondary" onclick="window.location.href='index.html'">Voltar</button>
-      <button id="salvar-pdf-resultado">Salvar como PDF</button>    
+      <button id="salvar-pdf-resultado">Salvar como PDF</button>
+      <button id="salvar-docx-resultado" type="button">Salvar como DOCX</button>
     </div>
   </div>
 
@@ -37,8 +38,14 @@
     <img src="assets/pdf-logo-sem-fundo.png" alt="" width="24" height="24" />
   </button>
 
+  <button id="fab-docx" type="button" title="Salvar como DOCX" aria-label="Salvar como DOCX">
+    <span>DOCX</span>
+  </button>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
   <script src="scripts/resumo-resultado.js?v=4"></script>
 </body>
 </html>

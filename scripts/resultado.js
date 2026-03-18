@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultadoContainer = document.getElementById('resultado-container');
   const salvarPdfButton = document.getElementById('salvar-pdf-resultado');
   const fabPdfButton = document.getElementById('fab-pdf');
+  const salvarDocxButton = document.getElementById('salvar-docx-resultado');
+  const fabDocxButton = document.getElementById('fab-docx');
 
   const dados = JSON.parse(localStorage.getItem('dadosAvaliacao'));
 
@@ -270,6 +272,228 @@ document.addEventListener('DOMContentLoaded', () => {
     resultadoContainer.innerHTML = html;
   }
 
+  const sanitizeFilePart = (value, fallback = 'paciente') => {
+    const normalized = String(value || fallback)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\/:*?"<>|]+/g, '-')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    return normalized || fallback;
+  };
+
+  const buildDocxRuns = (node, inherited = {}) => {
+    const docxLib = window.docx;
+    if (!docxLib || !node) return [];
+
+    const { TextRun } = docxLib;
+    const runs = [];
+    const style = {
+      bold: Boolean(inherited.bold),
+      italics: Boolean(inherited.italics)
+    };
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent.replace(/\s+/g, ' ').trim();
+      if (text) runs.push(new TextRun({ text, bold: style.bold, italics: style.italics }));
+      return runs;
+    }
+
+    if (node.nodeType !== Node.ELEMENT_NODE) return runs;
+
+    const tagName = node.tagName.toUpperCase();
+    const nextStyle = {
+      bold: style.bold || tagName === 'STRONG' || tagName === 'B',
+      italics: style.italics || tagName === 'EM' || tagName === 'I'
+    };
+
+    if (tagName === 'BR') {
+      runs.push(new TextRun({ text: '', break: 1, bold: nextStyle.bold, italics: nextStyle.italics }));
+      return runs;
+    }
+
+    Array.from(node.childNodes).forEach((child) => {
+      const childRuns = buildDocxRuns(child, nextStyle);
+      childRuns.forEach((run) => runs.push(run));
+    });
+
+    return runs;
+  };
+
+  const textFromElement = (element) => (element ? element.textContent.replace(/\s+/g, ' ').trim() : '');
+
+  const buildResultadoDocxChildren = () => {
+    const docxLib = window.docx;
+    const {
+      Paragraph,
+      TextRun,
+      HeadingLevel,
+      AlignmentType
+    } = docxLib;
+
+    const sourcePage = document.querySelector('.page') || document.getElementById('resultado-container');
+    const sections = Array.from(sourcePage.querySelectorAll('#resultado-container > .resultado-body > section, #resultado-container > section'));
+    const children = [];
+    const titulo = 'Resultado da Avaliação';
+
+    children.push(new Paragraph({
+      text: titulo,
+      heading: HeadingLevel.TITLE,
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 240 }
+    }));
+
+    sections.forEach((section) => {
+      const h2 = section.querySelector(':scope > h2');
+      if (h2) {
+        children.push(new Paragraph({
+          text: textFromElement(h2),
+          heading: HeadingLevel.HEADING_1,
+          spacing: { before: 240, after: 120 }
+        }));
+      }
+
+      const body = section.querySelector(':scope > .section-body') || section;
+      Array.from(body.children).forEach((element) => {
+        if (element.matches('h3')) {
+          children.push(new Paragraph({
+            text: textFromElement(element),
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 180, after: 120 }
+          }));
+          return;
+        }
+
+        if (element.matches('.info-grid')) {
+          element.querySelectorAll(':scope > .info-item').forEach((item) => {
+            const label = textFromElement(item.querySelector('.info-label')).replace(/:\s*$/, '');
+            const value = textFromElement(item.querySelector('.info-value'));
+            children.push(new Paragraph({
+              children: [
+                new TextRun({ text: `${label}: `, bold: true }),
+                new TextRun(value || '-')
+              ],
+              spacing: { after: 90 }
+            }));
+          });
+          return;
+        }
+
+        if (element.matches('.texto-item')) {
+          const strong = element.querySelector('strong');
+          const label = textFromElement(strong).replace(/:\s*$/, '');
+          const clone = element.cloneNode(true);
+          if (clone.querySelector('strong')) clone.querySelector('strong').remove();
+          const value = textFromElement(clone);
+          children.push(new Paragraph({
+            children: [
+              new TextRun({ text: `${label}: `, bold: true }),
+              new TextRun(value || '-')
+            ],
+            spacing: { after: 120 }
+          }));
+          return;
+        }
+
+        if (element.matches('.medicamento-card')) {
+          const cardTitle = textFromElement(element.querySelector('h4'));
+          if (cardTitle) {
+            children.push(new Paragraph({
+              text: cardTitle,
+              heading: HeadingLevel.HEADING_3,
+              spacing: { before: 120, after: 80 }
+            }));
+          }
+          element.querySelectorAll('.info-item').forEach((item) => {
+            const label = textFromElement(item.querySelector('.info-label')).replace(/:\s*$/, '');
+            const value = textFromElement(item.querySelector('.info-value'));
+            children.push(new Paragraph({
+              children: [
+                new TextRun({ text: `${label}: `, bold: true }),
+                new TextRun(value || '-')
+              ],
+              spacing: { after: 80 }
+            }));
+          });
+          return;
+        }
+
+        if (element.matches('.resultado')) {
+          const resultBlocks = Array.from(element.children);
+          if (resultBlocks.length) {
+            resultBlocks.forEach((block) => {
+              const text = textFromElement(block);
+              if (text) {
+                children.push(new Paragraph({
+                  children: buildDocxRuns(block),
+                  spacing: { after: 90 }
+                }));
+              }
+            });
+          } else {
+            const text = textFromElement(element);
+            if (text) {
+              children.push(new Paragraph({
+                text,
+                spacing: { after: 90 }
+              }));
+            }
+          }
+          return;
+        }
+
+        const text = textFromElement(element);
+        if (text) {
+          children.push(new Paragraph({
+            children: buildDocxRuns(element),
+            spacing: { after: 90 }
+          }));
+        }
+      });
+    });
+
+    return children;
+  };
+
+  const gerarDocxHandler = async () => {
+    const docxLib = window.docx;
+    if (!docxLib || typeof docxLib.Document !== 'function' || typeof docxLib.Packer?.toBlob !== 'function') {
+      alert('A exportação em DOCX não está disponível no momento.');
+      return;
+    }
+
+    const { Document, Packer } = docxLib;
+    const nome = (dados && dados.nome) || 'paciente';
+    const data = (dados && dados.data) || new Date().toLocaleDateString('pt-BR');
+    const fileName = `avaliacao-${sanitizeFilePart(nome)}-${sanitizeFilePart(data, 'data')}.docx`;
+
+    try {
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children: buildResultadoDocxChildren()
+        }]
+      });
+
+      const blob = await Packer.toBlob(doc);
+      if (typeof window.saveAs === 'function') {
+        window.saveAs(blob, fileName);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error('Erro ao gerar DOCX:', error);
+      alert('Erro ao gerar DOCX. Por favor, tente novamente.');
+    }
+  };
+
   const gerarPdfHandler = () => {
       const { jsPDF } = window.jspdf;
       const sourcePage = document.querySelector('.page') || document.getElementById('resultado-container');
@@ -426,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
           offset += cutHeight;
         }
 
-        pdf.save(`avaliacao-${nome.replace(/\s+/g, '-')}-${data}.pdf`);
+        pdf.save(`avaliacao-${sanitizeFilePart(nome)}-${sanitizeFilePart(data, 'data')}.pdf`);
       }).catch((e) => {
         console.error('Erro ao gerar PDF:', e);
         alert('Erro ao gerar PDF. Por favor, tente novamente.');
@@ -434,6 +658,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   if (salvarPdfButton) salvarPdfButton.addEventListener('click', gerarPdfHandler);
   if (fabPdfButton) fabPdfButton.addEventListener('click', gerarPdfHandler);
+  if (salvarDocxButton) salvarDocxButton.addEventListener('click', gerarDocxHandler);
+  if (fabDocxButton) fabDocxButton.addEventListener('click', gerarDocxHandler);
 });
 
 
