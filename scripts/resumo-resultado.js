@@ -55,12 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderFallbackResumo = () => {
     if (!resumoContainer) return false;
 
-    const itensSnapshot = Array.isArray(resumoSnapshot?.itens) ? resumoSnapshot.itens : [];
-    if (itensSnapshot.length) {
-      resumoContainer.innerHTML = itensSnapshot.map(({ html }) => `<div class="item">${html}</div>`).join('');
-      return true;
-    }
-
     const secoes = Array.isArray(dados?.secoes) ? dados.secoes : [];
     if (!secoes.length) return false;
 

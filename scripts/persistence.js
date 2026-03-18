@@ -16,7 +16,7 @@ export function salvarFormulario() {
   const elementos = main.querySelectorAll('input, textarea, select');
 
   // Campos que não devem ser persistidos
-  const excludedFields = ['katz_banho', 'katz_vestir', 'katz_banheiro', 'katz_mobilidade', 'katz_continencia', 'katz_alimentacao', 'edg4_satisfeito', 'edg4_abandonou', 'edg4_feliz', 'edg4_prefere_casa'];
+  const excludedFields = [];
 
   elementos.forEach(el => {
     const key = el.name || el.id;
@@ -105,7 +105,14 @@ export function restaurarFormulario() {
     const lastColon = parts.lastIndexOf(':');
     const name = parts.substring(0, lastColon);
     const cbValue = parts.substring(lastColon + 1);
-    const cb = main.querySelector(`input[type="checkbox"][name="${name}"][value="${cbValue}"]`);
+    // Buscar por atributo value primeiro; se não encontrar, buscar só por name e comparar a propriedade value
+    let cb = main.querySelector(`input[type="checkbox"][name="${name}"][value="${cbValue}"]`);
+    if (!cb) {
+      const candidates = main.querySelectorAll(`input[type="checkbox"][name="${name}"]`);
+      for (const c of candidates) {
+        if (c.value === cbValue) { cb = c; break; }
+      }
+    }
     if (cb) cb.checked = value;
   }
 }

@@ -4,11 +4,11 @@
  */
 
 // Importações dos módulos
-import * as constants from './constants.js?v=2';
-import * as utils from './utils.js?v=2';
-import * as calculations from './calculations.js?v=2';
-import * as dom from './dom.js?v=2';
-import { salvarFormulario, restaurarFormulario, limparFormularioSalvo } from './persistence.js?v=2';
+import * as constants from './constants.js?v=4';
+import * as utils from './utils.js?v=4';
+import * as calculations from './calculations.js?v=4';
+import * as dom from './dom.js?v=4';
+import { salvarFormulario, restaurarFormulario, limparFormularioSalvo } from './persistence.js?v=4';
 
 // Funções de formatação dos resultados
 
@@ -19,25 +19,11 @@ function formatarIVCF({ pontos, risco, respondidas, totalPerguntas, completo }) 
   return `${cabecalho}${classificacao}${progresso}`;
 }
 
-function formatarSRH({ descricao }) {
-  return `<div><strong>SRH:</strong> ${descricao}</div>`;
-}
-
 function formatarMAN({ pontos, classe, respondidas, totalPerguntas, completo }) {
   const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
   return `
     <div><strong>${completo ? 'MAN' : 'MAN (parcial)'}:</strong> ${pontos} pontos - ${classe}</div>
     <div class="help"><strong>Interpretação (MAN):</strong> ≥ 12 pontos: Estado nutricional normal; 8–11 pontos: Risco de desnutrição; 0–7 pontos: Desnutrido.</div>
-    ${progresso}
-  `;
-}
-
-function formatarPfeffer({ pontos, interpretacao, respondidas, totalPerguntas, completo }) {
-  const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
-  const legenda = `<div class="help"><strong>Interpretação (Pfeffer):</strong> ≥ 6 sugere declínio funcional; < 6 sem evidência de declínio.</div>`;
-  return `
-    <div><strong>${completo ? 'Pfeffer' : 'Pfeffer (parcial)'}:</strong> ${pontos} pontos — ${interpretacao}</div>
-    ${legenda}
     ${progresso}
   `;
 }
@@ -59,14 +45,6 @@ function formatar10CS({ pontos, interpretacao, respondidas, totalPerguntas, comp
   `;
 }
 
-function formatarCFS({ valor, descricao }) {
-  return `
-    <div><strong>Escala Clínica de Fragilidade (CFS):</strong> Opção ${valor} - ${descricao}</div>
-    <div class="score"><strong>Classificação:</strong> ${descricao}</div>
-    <div class="help"><strong>Escala CFS (1–9):</strong> 1 Muito ativo; 2 Ativo; 3 Regular; 4 Vulnerável; 5 Levemente frágil; 6 Moderadamente frágil; 7 Muito frágil; 8 Severamente frágil; 9 Doente terminal.</div>
-  `;
-}
-
 function formatarLawton({ pontos, classificacao, respondidas, totalPerguntas, completo }) {
   const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
   const legenda = `
@@ -76,7 +54,7 @@ function formatarLawton({ pontos, classificacao, respondidas, totalPerguntas, co
       10 a 15 pontos – dependência grave;<br />
       16 a 20 pontos – dependência moderada;<br />
       21 a 25 pontos – dependência leve;<br />
-      25 a 27 pontos – independente.
+      26 a 27 pontos – independente.
     </div>
   `;
   return `
@@ -162,9 +140,9 @@ function formatarKatz({ pontos, classificacao, respondidas, totalPerguntas, comp
   const legenda = `
     <div class="help">
       <strong>Classificação (Escala de Katz):</strong><br>
-      6 pontos: Independente<br>
-      4–5 pontos: Dependência moderada<br>
-      0–3 pontos: Dependência severa
+      0 pontos: Independente<br>
+      1–2 pontos: Dependência moderada<br>
+      3–6 pontos: Dependência grave
     </div>
   `;
   return `
@@ -268,24 +246,12 @@ function mostrarIVCF() {
   dom.exibirResultado('resultado-ivcf', calculations.calcularIVCF, formatarIVCF);
 }
 
-function mostrarSRH() {
-  dom.exibirResultado('resultado-srh', calculations.calcularSRH, formatarSRH);
-}
-
 function mostrarMAN() {
   dom.exibirResultado('resultado-man', calculations.calcularMAN, formatarMAN);
 }
 
-function mostrarPfeffer() {
-  dom.exibirResultado('resultado-pfeffer', calculations.calcularPfeffer, formatarPfeffer);
-}
-
 function mostrar10CS() {
   dom.exibirResultado('resultado-10cs', calculations.calcular10CS, formatar10CS);
-}
-
-function mostrarCFS() {
-  dom.exibirResultado('resultado-cfs', calculations.calcularCFS, formatarCFS);
 }
 
 function mostrarLawton() {
@@ -340,11 +306,8 @@ function mostrarMEEM() {
 // Recalcula todos os testes (usado após restaurar formulário)
 function recalcularTodosResultados() {
   mostrarIVCF();
-  mostrarSRH();
   mostrarMAN();
-  mostrarPfeffer();
   mostrar10CS();
-  mostrarCFS();
   mostrarLawton();
   mostrarZucchelli();
   mostrarCAM();
@@ -355,6 +318,7 @@ function recalcularTodosResultados() {
   mostrarGDS();
   mostrarEDG4();
   mostrarApgar();
+  mostrarAGC10();
   mostrarMEEM();
 }
 
@@ -364,9 +328,7 @@ function aoAlterarResposta(event) {
   if (!name) return;
 
   if (constants.camposIVCF.includes(name)) mostrarIVCF();
-  if (name === 'srh') mostrarSRH();
   if (constants.camposMAN.includes(name)) mostrarMAN();
-  if (constants.camposPfeffer.includes(name)) mostrarPfeffer();
   if (constants.campos10CS.includes(name)) mostrar10CS();
   if (constants.camposZucchelli.includes(name)) mostrarZucchelli();
   if (constants.camposCAM.includes(name)) mostrarCAM();
@@ -375,7 +337,6 @@ function aoAlterarResposta(event) {
   if (constants.camposKatz.includes(name)) mostrarKatz();
   if (constants.camposFrail.includes(name)) mostrarFrail();
   if (constants.camposSarcF.includes(name)) mostrarSarcF();
-  if (name === 'cfs') mostrarCFS();
   if (constants.camposGDS.includes(name)) mostrarGDS();
   if (constants.camposEDG4.includes(name)) mostrarEDG4();
   if (constants.camposApgar.includes(name)) mostrarApgar();
@@ -457,32 +418,32 @@ function visualizarResultado() {
 
   // Coletar resultados dos testes a partir dos divs de resultado
   const coleta = [
-    ['Autoavaliação de Saúde', 'resultado-srh'],
     ['IVCF-20', 'resultado-ivcf'],
-    ['CFS', 'resultado-cfs'],
     ['FRAIL', 'resultado-frail'],
     ['SARC-F', 'resultado-sarcf'],
     ['Barthel', 'resultado-barthel'],
     ['Katz', 'resultado-katz'],
     ['Lawton', 'resultado-lawton'],
-    ['Pfeffer', 'resultado-pfeffer'],
     ['MAN', 'resultado-man'],
     ['10-CS', 'resultado-10cs'],
     ['Zucchelli', 'resultado-zucchelli'],
     ['CAM', 'resultado-cam'],
     ['GDS-15', 'resultado-gds'],
+    ['EDG-4', 'resultado-edg4'],
     ['APGAR Familiar', 'resultado-apgar'],
     ['AGC-10', 'resultado-agc10'],
     ['MEEM', 'resultado-meem'],
+    ['Velocidade de Marcha', 'resultado-marcha'],
+    ['Sentar e Levantar', 'resultado-sentar-levantar'],
   ];
 
   const secoes = [];
   coleta.forEach(([titulo, id]) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const texto = el.textContent.trim();
-    if (!texto) return;
-    secoes.push({ titulo, resultado: texto });
+    const html = el.innerHTML.trim();
+    if (!html) return;
+    secoes.push({ titulo, resultado: html });
   });
 
   const dadosAvaliacao = {
@@ -492,6 +453,7 @@ function visualizarResultado() {
     secoes,
   };
 
+  salvarFormulario();
   localStorage.setItem('dadosAvaliacao', JSON.stringify(dadosAvaliacao));
   window.location.href = 'resultado.html';
 }
@@ -555,6 +517,7 @@ function bindActions() {
   const btnResumo = document.getElementById('btn-resumo');
   if (btnResumo) {
     btnResumo.addEventListener('click', () => {
+      salvarFormulario();
       dom.atualizarResumo();
       window.location.href = 'resumo-resultados.html';
     });
@@ -689,16 +652,13 @@ function setupLimparButtons() {
 
   // Configurar botões específicos de limpar
   const limparConfig = [
-    { action: 'limpar-srh', campos: ['srh'], resultados: ['resultado-srh'] },
     { action: 'limpar-barthel', campos: constants.camposBarthel, resultados: ['resultado-barthel'] },
     { action: 'limpar-katz', campos: constants.camposKatz, resultados: ['resultado-katz'] },
     { action: 'limpar-10cs', campos: constants.campos10CS, resultados: ['resultado-10cs'] },
     { action: 'limpar-zucchelli', campos: constants.camposZucchelli, resultados: ['resultado-zucchelli'] },
-    { action: 'limpar-cfs', campos: ['cfs'], resultados: ['resultado-cfs'] },
     { action: 'limpar-frail', campos: constants.camposFrail, resultados: ['resultado-frail'] },
     { action: 'limpar-sarcf', campos: constants.camposSarcF, resultados: ['resultado-sarcf'] },
     { action: 'limpar-man', campos: constants.camposMAN, resultados: ['resultado-man'] },
-    { action: 'limpar-pfeffer', campos: constants.camposPfeffer, resultados: ['resultado-pfeffer'] },
     { action: 'limpar-lawton', campos: constants.camposLawton, resultados: ['resultado-lawton'] },
     { action: 'limpar-gds', campos: constants.camposGDS, resultados: ['resultado-gds'] },
     { action: 'limpar-apgar', campos: constants.camposApgar, resultados: ['resultado-apgar'] },
@@ -736,8 +696,8 @@ function setupLimparButtons() {
   const limparFisicaButton = document.querySelector('[data-action="limpar-fisica"]');
   if (limparFisicaButton) {
     limparFisicaButton.addEventListener('click', () => {
-      utils.resetRadiosByNames([...constants.camposFrail, ...constants.camposSarcF, 'cfs']);
-      ['resultado-frail', 'resultado-sarcf', 'resultado-cfs'].forEach((id) => {
+      utils.resetRadiosByNames([...constants.camposFrail, ...constants.camposSarcF]);
+      ['resultado-frail', 'resultado-sarcf'].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '';
       });
@@ -1079,6 +1039,35 @@ function setupSentarLevantar() {
       closeModal();
     }
   });
+}
+
+// Restaura os divs de resultado dos testes de mobilidade a partir dos hidden inputs
+function restaurarResultadosMobilidade() {
+  const velocidadeInput = document.getElementById('teste_marcha_velocidade');
+  if (velocidadeInput && velocidadeInput.value) {
+    const velocidade = parseFloat(velocidadeInput.value);
+    if (!isNaN(velocidade) && velocidade > 0) {
+      const resultadoDiv = document.getElementById('resultado-marcha');
+      if (resultadoDiv) {
+        const cor = velocidade < 0.8 ? '#f44336' : '#4caf50';
+        const status = velocidade < 0.8 ? '(Alterado)' : '(Normal)';
+        resultadoDiv.innerHTML = `<strong>Resultado:</strong> <span style="color: ${cor};">${velocidade.toFixed(2)} m/s ${status}</span>`;
+      }
+    }
+  }
+
+  const tempoInput = document.getElementById('teste_sentar_levantar_tempo');
+  if (tempoInput && tempoInput.value) {
+    const tempo = parseFloat(tempoInput.value);
+    if (!isNaN(tempo) && tempo > 0) {
+      const resultadoDiv = document.getElementById('resultado-sentar-levantar');
+      if (resultadoDiv) {
+        const cor = tempo > 15 ? '#f44336' : '#4caf50';
+        const status = tempo > 15 ? '(Alterado)' : '(Normal)';
+        resultadoDiv.innerHTML = `<strong>Resultado:</strong> <span style="color: ${cor};">${tempo.toFixed(1)}s ${status}</span>`;
+      }
+    }
+  }
 }
 
 // Modal de Medicamentos
@@ -1589,13 +1578,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Restaurar formulário salvo na sessão
   restaurarFormulario();
 
-  // Limpar campos do Katz (devem sempre começar vazios)
-  constants.camposKatz.forEach(campo => {
-    const radios = document.querySelectorAll(`input[type="radio"][name="${campo}"]`);
-    radios.forEach(radio => {
-      radio.checked = false;
-    });
-  });
-
   recalcularTodosResultados();
+
+  // Repopular resultado-marcha e resultado-sentar-levantar a partir dos hidden inputs restaurados
+  restaurarResultadosMobilidade();
+
+  // Salvar formulário ao sair da página (segurança para campos não disparados por change)
+  window.addEventListener('beforeunload', () => {
+    salvarFormulario();
+  });
 });

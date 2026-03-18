@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'anamnese_cor': 'Cor',
         'anamnese_estado_civil': 'Estado Civil',
         'anamnese_filhos': 'Filhos',
+        'anamnese_religiao': 'Religião',
         'anamnese_acompanhante': 'Acompanhante',
         'anamnese_grau_parentesco': 'Grau de Parentesco',
         'polifarmacia': 'Polifarmácia',
@@ -52,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'ppi_antipsicoticos': 'PPI - Antipsicóticos',
         'ppi_estabilizadores': 'PPI - Estabilizadores de Humor',
         'medicamentos_alergia': 'Alergias Medicamentosas',
-        'internacoes': 'Internações não programadas',
         'vacina_influenza': 'Vacina Influenza',
         'vacina_pneumonia': 'Vacina Pneumonia',
         'vacina_covid': 'Vacina COVID-19',
@@ -65,9 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'morbidade_diabetes': 'Diabetes',
         'morbidade_renal': 'Doença Renal Crônica',
         'morbidade_outra': 'Outras Morbidades',
-        'patologia_ave': 'AVE',
-        'patologia_iam': 'IAM',
-        'patologia_outra': 'Outras Patologias',
         'cirurgias_previas': 'Cirurgias Prévias',
         'antecedentes_familiares': 'Antecedentes Familiares',
         'habito_tabagismo': 'Tabagismo',
@@ -117,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'exame_cardiovascular': 'Exame Cardiovascular',
         'exame_abdome': 'Exame de Abdome',
         'exame_membros': 'Exame de Membros',
-        'teste_marcha': 'Teste de Velocidade de Marcha',
-        'teste_sentar_levantar': 'Teste Sentar e Levantar',
         'rastreio_delirium': 'Rastreio de Delirium',
         'rastreio_cognitivo': 'Rastreio Cognitivo 10-CS',
         'rastreio_cognitivo_valor': 'Valor do Rastreio Cognitivo',
@@ -130,21 +125,29 @@ document.addEventListener('DOMContentLoaded', () => {
         'anamnese_resultado_hospital': 'Resultado desejado no hospital',
         'anamnese_gostaria_fazer': 'O que gostaria de fazer',
         'anamnese_objetivos': 'Objetivos se a saúde piorar',
-        'anamnese_confia_decisoes': 'Pessoa de confiança'
+        'anamnese_confia_decisoes': 'Pessoa de confiança',
+        'anamnese_procedimentos_invasivos': 'Desejos sobre procedimentos invasivos',
+        'anamnese_morte': 'O que seria pior do que a morte',
+        'perda_peso': 'Perda de peso ≥ 4,5 Kg no último ano',
+        'perda_peso_quantidade': 'Quantidade de perda de peso',
+        'morbidade_ave': 'AVE',
+        'morbidade_iam': 'IAM',
+        'plano_cuidados': 'Plano de Cuidados',
+        'plano_cuidados_ampla': 'Plano de Cuidados'
       };
 
       // Organizar campos por categoria
       const categorias = {
-        'Identificação': ['anamnese_nome', 'anamnese_data_nascimento', 'anamnese_idade', 'anamnese_num_atendimento', 'anamnese_sexo', 'anamnese_aposentado', 'anamnese_profissao', 'anamnese_renda', 'anamnese_naturalidade', 'anamnese_escolaridade', 'anamnese_cor', 'anamnese_estado_civil', 'anamnese_filhos'],
+        'Identificação': ['anamnese_nome', 'anamnese_data_nascimento', 'anamnese_idade', 'anamnese_num_atendimento', 'anamnese_sexo', 'anamnese_aposentado', 'anamnese_profissao', 'anamnese_renda', 'anamnese_naturalidade', 'anamnese_escolaridade', 'anamnese_cor', 'anamnese_estado_civil', 'anamnese_filhos', 'anamnese_religiao'],
         'Acompanhante': ['anamnese_acompanhante', 'anamnese_grau_parentesco'],
-        'Valores': ['anamnese_bom_dia', 'anamnese_importante', 'anamnese_alegria', 'anamnese_vale_pena', 'anamnese_medos', 'anamnese_resultado_hospital', 'anamnese_gostaria_fazer', 'anamnese_objetivos', 'anamnese_confia_decisoes'],
+        'Valores': ['anamnese_bom_dia', 'anamnese_importante', 'anamnese_alegria', 'anamnese_vale_pena', 'anamnese_medos', 'anamnese_resultado_hospital', 'anamnese_gostaria_fazer', 'anamnese_objetivos', 'anamnese_confia_decisoes', 'anamnese_procedimentos_invasivos', 'anamnese_morte'],
         'Medicamentos - Informações Gerais': ['polifarmacia', 'ppi_benzodiazepinicos', 'ppi_opioides', 'ppi_anticolinergicos', 'ppi_sedativos', 'ppi_relaxantes', 'ppi_antidepressivos', 'ppi_antipsicoticos', 'ppi_estabilizadores', 'medicamentos_alergia'],
-        'Multicomplexidade': ['internacoes', 'vacina_influenza', 'vacina_pneumonia', 'vacina_covid', 'vacina_tetano', 'vacina_herpes', 'vacina_vsr', 'vacina_meningococica', 'vacina_hepatite', 'morbidade_hipertensao', 'morbidade_diabetes', 'morbidade_renal', 'morbidade_outra', 'patologia_ave', 'patologia_iam', 'patologia_outra', 'cirurgias_previas', 'antecedentes_familiares', 'habito_tabagismo', 'habito_etilismo', 'habito_sedentarismo', 'habitos_observacao'],
+        'Multicomplexidade': ['perda_peso', 'perda_peso_quantidade', 'vacina_influenza', 'vacina_pneumonia', 'vacina_covid', 'vacina_tetano', 'vacina_herpes', 'vacina_vsr', 'vacina_meningococica', 'vacina_hepatite', 'morbidade_hipertensao', 'morbidade_diabetes', 'morbidade_renal', 'morbidade_ave', 'morbidade_iam', 'morbidade_outra', 'cirurgias_previas', 'antecedentes_familiares', 'habito_tabagismo', 'habito_etilismo', 'habito_sedentarismo', 'habitos_observacao'],
         'Inventário Alimentar': ['consumo_leite', 'consumo_frutas', 'consumo_proteinas', 'ingesta_hidrica'],
         'Interrogatório Sintomatológico': ['perda_ponderal', 'sintomas_gerais', 'aparelho_respiratorio', 'aparelho_cardiovascular', 'sistema_digestorio', 'protese_dentaria', 'lesoes_orais', 'disfagia', 'incontinencia_fecal', 'sistema_genitourinario', 'incontinencia_urinaria', 'sistema_osteoarticular', 'quedas_ultimo_ano', 'dispositivo_marcha', 'sono', 'humor', 'neurologico', 'cognicao', 'deficit_visual', 'deficit_auditivo'],
-        'Exame Físico': ['peso', 'altura', 'imc', 'forca_preensao', 'circunferencia_panturrilha', 'pas', 'pad', 'fc', 'fr', 'sat', 'tec', 'hgt', 'exame_geral', 'exame_neuro', 'exame_respiratorio', 'exame_cardiovascular', 'exame_abdome', 'exame_membros'],
-        'Mobilidade': ['teste_marcha', 'teste_sentar_levantar'],
-        'Mente': ['rastreio_delirium', 'rastreio_cognitivo', 'rastreio_cognitivo_valor']
+        'Exame Físico': ['panturrilha', 'peso', 'altura', 'imc', 'forca_preensao', 'circunferencia_panturrilha', 'pas', 'pad', 'fc', 'fr', 'sat', 'tec', 'hgt', 'exame_geral', 'exame_neuro', 'exame_respiratorio', 'exame_cardiovascular', 'exame_abdome', 'exame_membros'],
+        'Mente': ['rastreio_delirium', 'rastreio_cognitivo', 'rastreio_cognitivo_valor'],
+        'Plano de Cuidados': ['plano_cuidados', 'plano_cuidados_ampla']
       };
 
       // Renderizar por categoria
@@ -174,25 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const label = labelMap[campo] || campo;
               let valor = getValor(campo);
 
-              // Formatar campos especiais de testes de mobilidade
-              let displayValue = valor;
-              if (campo === 'teste_marcha' && (valor === 'sim' || valor === 'nao')) {
-                const velocidade = getValor('teste_marcha_velocidade');
-                if (velocidade) {
-                  const vel = parseFloat(velocidade);
-                  const status = vel < 0.8 ? 'Alterado' : 'Normal';
-                  displayValue = `${velocidade} m/s (${status})`;
-                }
-              } else if (campo === 'teste_sentar_levantar' && (valor === 'sim' || valor === 'nao')) {
-                const tempo = getValor('teste_sentar_levantar_tempo');
-                if (tempo) {
-                  const t = parseFloat(tempo);
-                  const status = t > 15 ? 'Alterado' : 'Normal';
-                  displayValue = `${tempo}s (${status})`;
-                }
-              }
-
-              html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${displayValue}</span></div>`;
+              html += `<div class="info-item"><span class="info-label">${label}:</span> <span class="info-value">${valor}</span></div>`;
             });
             html += `</div>`;
           }

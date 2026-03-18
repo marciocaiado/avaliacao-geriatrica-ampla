@@ -46,11 +46,12 @@ export const camposMEEM = [...camposMEEMPontuacao, 'meem_escolaridade'];
 
 // IDs dos elementos de resultado
 export const resultadoIds = [
-  'resultado-srh', 'resultado-ivcf', 'resultado-cfs', 'resultado-frail',
+  'resultado-ivcf', 'resultado-frail',
   'resultado-sarcf', 'resultado-barthel', 'resultado-katz', 'resultado-lawton',
-  'resultado-pfeffer', 'resultado-man', 'resultado-10cs', 'resultado-zucchelli',
+  'resultado-man', 'resultado-10cs', 'resultado-zucchelli',
   'resultado-cam', 'resultado-gds', 'resultado-edg4', 'resultado-apgar', 'resultado-agc10',
-  'resultado-meem'
+  'resultado-meem',
+  'resultado-marcha', 'resultado-sentar-levantar'
 ];
 
 // Constantes do modal de fluência

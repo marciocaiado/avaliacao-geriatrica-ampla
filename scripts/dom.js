@@ -52,15 +52,12 @@ export function atualizarResumo() {
   const secoes = [];
 
   const coleta = [
-    ['SRH', 'resultado-srh'],
     ['IVCF-20', 'resultado-ivcf'],
-    ['CFS', 'resultado-cfs'],
     ['FRAIL', 'resultado-frail'],
     ['SARC-F', 'resultado-sarcf'],
     ['Barthel', 'resultado-barthel'],
     ['Katz', 'resultado-katz'],
     ['Lawton', 'resultado-lawton'],
-    ['Pfeffer', 'resultado-pfeffer'],
     ['MAN', 'resultado-man'],
     ['10-CS', 'resultado-10cs'],
     ['Zucchelli', 'resultado-zucchelli'],
@@ -70,6 +67,8 @@ export function atualizarResumo() {
     ['APGAR', 'resultado-apgar'],
     ['AGC-10', 'resultado-agc10'],
     ['MEEM', 'resultado-meem'],
+    ['Velocidade de Marcha', 'resultado-marcha'],
+    ['Sentar e Levantar', 'resultado-sentar-levantar'],
   ];
 
   coleta.forEach(([titulo, id]) => {
