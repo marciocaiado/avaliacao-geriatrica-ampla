@@ -528,8 +528,13 @@ function bindActions() {
   if (btnNovo) {
     btnNovo.addEventListener('click', () => {
       if (confirm('Deseja limpar todos os dados do teste? Esta ação não pode ser desfeita.')) {
-        // Limpar sessionStorage
+        // Impedir que beforeunload salve novamente
+        window._limpandoFormulario = true;
+
+        // Limpar sessionStorage e localStorage
         limparFormularioSalvo();
+        localStorage.removeItem('dadosAvaliacao');
+        localStorage.removeItem('resumoTestsHTML');
 
         // Limpar todos os campos do formulário
         const formElement = document.getElementById('form-ivcf');
@@ -1585,6 +1590,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Salvar formulário ao sair da página (segurança para campos não disparados por change)
   window.addEventListener('beforeunload', () => {
-    salvarFormulario();
+    if (!window._limpandoFormulario) {
+      salvarFormulario();
+    }
   });
 });
