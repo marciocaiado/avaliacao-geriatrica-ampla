@@ -106,7 +106,11 @@ export function resetRadiosByNames(names) {
  */
 export function formatDateInput(input) {
   input.addEventListener('input', (e) => {
-    let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+    if (e.inputType && e.inputType.startsWith('delete')) {
+      return;
+    }
+
+    let value = e.target.value.replace(/\D/g, '');
 
     if (value.length >= 2) {
       value = value.substring(0, 2) + '/' + value.substring(2);
