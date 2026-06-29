@@ -423,3 +423,124 @@ export function calcularMEEM() {
 
   return { pontos, interpretacao, respondidas, totalPerguntas, completo, escolaridadeCorte };
 }
+
+const FAST_INTERPRETACOES = {
+  '1':  { descricao: 'Nenhuma dificuldade objetiva ou subjetiva', interpretacao: 'Adulto normal' },
+  '2':  { descricao: 'Queixas de esquecimento de locais ou objetos. Dificuldades subjetivas no trabalho', interpretacao: 'Idoso normal' },
+  '3':  { descricao: 'Decréscimo do funcionamento no trabalho, evidente para colegas. Dificuldades nas viagens para novas localidades', interpretacao: 'DA incipiente' },
+  '4':  { descricao: 'Decréscimo na habilidade de execução de tarefas complexas, manejo de finanças pessoais, execução de compras, etc.', interpretacao: 'DA leve' },
+  '5':  { descricao: 'Requer assistência na escolha de trajes adequados', interpretacao: 'DA moderada' },
+  '6A': { descricao: 'Dificuldade em vestir-se adequadamente', interpretacao: 'DA moderada a grave' },
+  '6B': { descricao: 'Incapaz de banhar-se adequadamente, pode desenvolver medo de banho', interpretacao: 'DA moderada a grave' },
+  '6C': { descricao: 'Incapacidade de manuseio de toalete', interpretacao: 'DA moderada a grave' },
+  '6D': { descricao: 'Incontinência urinária', interpretacao: 'DA moderada a grave' },
+  '6E': { descricao: 'Incontinência fecal', interpretacao: 'DA moderada a grave' },
+  '7A': { descricao: 'Capacidade de falar limitada a meia dúzia de palavras ou menos, no curso médio de um dia', interpretacao: 'DA grave' },
+  '7B': { descricao: 'Capacidade de falar limitada a uma única palavra inteligível no curso médio de um dia', interpretacao: 'DA grave' },
+  '7C': { descricao: 'Capacidade de deambulação perdida', interpretacao: 'DA grave' },
+  '7D': { descricao: 'Perda da capacidade de se sentar sem assistência', interpretacao: 'DA grave' },
+  '7E': { descricao: 'Perda da capacidade de sorrir', interpretacao: 'DA grave' },
+  '7F': { descricao: 'Perda da capacidade de levantar a cabeça', interpretacao: 'DA grave' },
+  '7G': { descricao: 'Postura fletida', interpretacao: 'DA grave' },
+};
+
+/**
+ * Calcula o PPS — Escala de Performance Paliativa
+ */
+export function calcularPPS() {
+  const fd = getFormData(constants);
+  const respondidas = constants.camposPPS.filter(c => fd.get(c) !== null && fd.get(c) !== '').length;
+  if (!respondidas) return null;
+
+  const totalPerguntas = constants.camposPPS.length;
+  const completo = respondidas === totalPerguntas;
+
+  let pps = 100;
+  constants.camposPPS.forEach(campo => {
+    const val = fd.get(campo);
+    if (val !== null && val !== '') pps = Math.min(pps, parseInt(val, 10));
+  });
+
+  let descricao;
+  if (pps === 100) descricao = 'Saúde normal, sem evidência de doença';
+  else if (pps >= 70) descricao = 'Deambulando, alguma evidência de doença';
+  else if (pps >= 50) descricao = 'Redução funcional significativa, doença extensa';
+  else if (pps >= 30) descricao = 'Acamado, necessita de assistência';
+  else if (pps >= 10) descricao = 'Totalmente acamado, dependência completa';
+  else descricao = 'Morte';
+
+  return { pps, descricao, respondidas, totalPerguntas, completo };
+}
+
+/**
+ * Calcula o SPICT-BR
+ */
+export function calcularSPICT() {
+  const fd = getFormData(constants);
+  const respondidas = contarRespostas(fd, constants.camposSPICT);
+  if (!respondidas) return null;
+
+  const totalPerguntas = constants.camposSPICT.length;
+  const completo = respondidas === totalPerguntas;
+
+  const geralSim = somarCampos(fd, constants.camposSPICTGeral);
+  const clinicoSim = somarCampos(fd, constants.camposSPICTClinico);
+  const positivo = geralSim >= 2 && clinicoSim >= 1;
+
+  return { positivo, geralSim, clinicoSim, respondidas, totalPerguntas, completo };
+}
+
+/**
+ * Calcula o PHQ-9
+ */
+export function calcularPHQ9() {
+  const fd = getFormData(constants);
+  const respondidas = contarRespostas(fd, constants.camposPHQ9);
+  if (!respondidas) return null;
+
+  const totalPerguntas = constants.camposPHQ9.length;
+  const completo = respondidas === totalPerguntas;
+  const pontos = somarCampos(fd, constants.camposPHQ9);
+
+  let classificacao;
+  if (pontos <= 4) classificacao = 'Ausência de depressão (0–4)';
+  else if (pontos <= 9) classificacao = 'Depressão leve (5–9)';
+  else if (pontos <= 14) classificacao = 'Depressão moderada (10–14)';
+  else if (pontos <= 19) classificacao = 'Depressão moderadamente grave (15–19)';
+  else classificacao = 'Depressão grave (20–27)';
+
+  return { pontos, classificacao, respondidas, totalPerguntas, completo };
+}
+
+/**
+ * Calcula o Índice de Comorbidade de Charlson
+ */
+export function calcularCharlson() {
+  const fd = getFormData(constants);
+  const marcadas = contarRespostas(fd, constants.camposCharlson);
+  if (!marcadas) return null;
+
+  const pontos = somarCampos(fd, constants.camposCharlson);
+
+  let mortalidade;
+  if (pontos === 0) mortalidade = '12% (0 pontos)';
+  else if (pontos <= 2) mortalidade = '26% (1–2 pontos)';
+  else if (pontos <= 4) mortalidade = '52% (3–4 pontos)';
+  else mortalidade = '85% (> 4 pontos)';
+
+  return { pontos, mortalidade, marcadas };
+}
+
+/**
+ * Calcula o FAST (Functional Assessment Staging)
+ */
+export function calcularFAST() {
+  const fd = getFormData(constants);
+  const estadio = fd.get('fast_estadio');
+  if (!estadio) return null;
+
+  const dados = FAST_INTERPRETACOES[estadio];
+  if (!dados) return null;
+
+  return { estadio, descricao: dados.descricao, interpretacao: dados.interpretacao };
+}

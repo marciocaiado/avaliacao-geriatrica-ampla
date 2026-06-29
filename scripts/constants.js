@@ -43,6 +43,32 @@ export const camposMEEMPontuacao = [
   'meem_li_leitura', 'meem_li_escrita', 'meem_li_copia'
 ];
 export const camposMEEM = [...camposMEEMPontuacao, 'meem_escolaridade'];
+export const camposFAST = ['fast_estadio'];
+export const camposPHQ9 = Array.from({ length: 9 }, (_, i) => `phq9_${i + 1}`);
+export const camposSPICTGeral = [
+  'spict_geral_1', 'spict_geral_2', 'spict_geral_3',
+  'spict_geral_4', 'spict_geral_5', 'spict_geral_6',
+];
+export const camposSPICTClinico = [
+  'spict_cancer_1', 'spict_cancer_2',
+  'spict_demencia_1', 'spict_demencia_2', 'spict_demencia_3',
+  'spict_demencia_4', 'spict_demencia_5', 'spict_demencia_6',
+  'spict_neuro_1', 'spict_neuro_2', 'spict_neuro_3', 'spict_neuro_4',
+  'spict_cardio_1', 'spict_cardio_2',
+  'spict_resp_1', 'spict_resp_2', 'spict_resp_3',
+  'spict_renal_1', 'spict_renal_2', 'spict_renal_3',
+  'spict_hepatica_1',
+  'spict_outras_1',
+];
+export const camposSPICT = [...camposSPICTGeral, ...camposSPICTClinico];
+export const camposPPS = ['pps_deambulacao', 'pps_atividade', 'pps_autocuidado', 'pps_ingestao', 'pps_consciencia'];
+export const camposCharlson = [
+  'charlson_infarto', 'charlson_icc', 'charlson_dvp', 'charlson_dcv', 'charlson_demencia',
+  'charlson_dpoc', 'charlson_reumatologica', 'charlson_ulcera', 'charlson_hepatica_leve',
+  'charlson_diabetes_simples', 'charlson_hemiplegia', 'charlson_diabetes_comp',
+  'charlson_renal_mod', 'charlson_neoplasia', 'charlson_leucemia', 'charlson_linfoma',
+  'charlson_hepatica_grave', 'charlson_neoplasia_meta', 'charlson_aids',
+];
 
 // IDs dos elementos de resultado
 export const resultadoIds = [
@@ -51,7 +77,8 @@ export const resultadoIds = [
   'resultado-man', 'resultado-10cs', 'resultado-zucchelli',
   'resultado-cam', 'resultado-gds', 'resultado-edg4', 'resultado-apgar', 'resultado-agc10',
   'resultado-meem',
-  'resultado-marcha', 'resultado-sentar-levantar'
+  'resultado-marcha', 'resultado-sentar-levantar',
+  'resultado-fast', 'resultado-charlson', 'resultado-phq9', 'resultado-spict', 'resultado-pps'
 ];
 
 // Constantes do modal de fluência
