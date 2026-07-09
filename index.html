@@ -151,7 +151,7 @@
           </div>
 
           <div class="q">
-            <label>Presença de Prescrição Potencialmente Inapropriada</label>
+            <label>Prescrição Potencialmente Inapropriada</label>
             <div class="column">
               <label><input type="checkbox" name="nao" /> Não</label>
               <label><input type="checkbox" name="ppi_benzodiazepinicos" /> Benzodiazepínicos</label>
@@ -173,6 +173,203 @@
 
         <h3>MULTICOMPLEXIDADE</h3>
         <div class="group">
+            <div class="group">
+              <div class="q">
+                <label for="cirurgias_previas">Cirurgias prévias</label>
+                <textarea class="form-input" id="cirurgias_previas" name="cirurgias_previas" rows="2"></textarea>
+              </div>
+
+              <div class="q">
+                <label for="antecedentes_familiares">Antecedentes familiares</label>
+                <textarea class="form-input" id="antecedentes_familiares" name="antecedentes_familiares" rows="2"></textarea>
+              </div>
+
+              <div class="q">
+                <label>Hábitos de Vida</label>
+                <div class="row">
+                  <label><input type="checkbox" name="habito_tabagismo" /> Tabagismo</label>
+                  <label><input type="checkbox" name="habito_etilismo" /> Etilismo</label>
+                  <label><input type="checkbox" name="habito_sedentarismo" /> Sedentarismo</label>
+                </div>
+                <div class="q">
+                  <label for="habitos_observacao">Observação</label>
+                  <textarea class="form-input" id="habitos_observacao" name="habitos_observacao" rows="2"></textarea>
+                </div>
+              </div>
+
+              <h4>Inventário alimentar</h4>
+              <div class="q">
+                <label for="consumo_leite">Consumo de leite e derivados diário</label>
+                <input class="form-input" type="text" id="consumo_leite" name="consumo_leite" />
+              </div>
+              <div class="q">
+                <label for="consumo_frutas">Consumo de frutas e verduras diário</label>
+                <input class="form-input" type="text" id="consumo_frutas" name="consumo_frutas" />
+              </div>
+              <div class="q">
+                <label for="consumo_proteinas">Consumo de proteínas diário</label>
+                <input class="form-input" type="text" id="consumo_proteinas" name="consumo_proteinas" />
+              </div>
+              <div class="q">
+                <label for="ingesta_hidrica">Ingesta hídrica diária</label>
+                <input class="form-input" type="text" id="ingesta_hidrica" name="ingesta_hidrica" />
+              </div>
+
+              <h4>Interrogatório sintomatológico</h4>
+              <div class="q">
+                <label for="perda_ponderal">Perda ponderal</label>
+                <input class="form-input" type="text" id="perda_ponderal" name="perda_ponderal" />
+              </div>
+              <div class="q">
+                <label for="sintomas_gerais">Outros sintomas gerais</label>
+                <input class="form-input" type="text" id="sintomas_gerais" name="sintomas_gerais" />
+              </div>
+              <div class="q">
+                <label for="aparelho_respiratorio">Aparelho respiratório</label>
+                <input class="form-input" type="text" id="aparelho_respiratorio" name="aparelho_respiratorio" />
+              </div>
+              <div class="q">
+                <label for="aparelho_cardiovascular">Aparelho cardiovascular</label>
+                <input class="form-input" type="text" id="aparelho_cardiovascular" name="aparelho_cardiovascular" />
+              </div>
+              <div class="q">
+                <label for="sistema_digestorio">Sistema digestório</label>
+                <input class="form-input" type="text" id="sistema_digestorio" name="sistema_digestorio" />
+              </div>
+              <div class="q">
+                <label>Sistema digestório - alterações</label>
+                <div class="column">
+                  <label><input type="checkbox" name="protese_dentaria" /> Uso de prótese dentária inadequada</label>
+                  <label><input type="checkbox" name="lesoes_orais" /> Presença lesões orais</label>
+                  <label><input type="checkbox" name="disfagia" /> Presença de disfagia</label>
+                  <label><input type="checkbox" name="incontinencia_fecal" /> Presença de incontinência fecal</label>
+                </div>
+              </div>
+              <div class="q">
+                <label for="sistema_genitourinario">Sistema genitourinário</label>
+                <input class="form-input" type="text" id="sistema_genitourinario" name="sistema_genitourinario" />
+              </div>
+              <div class="q">
+                <label>Sistema genitourinário - alterações</label>
+                <div class="column">
+                  <label><input type="checkbox" name="incontinencia_urinaria" /> Presença de incontinência urinária</label>
+                </div>
+              </div>
+              <div class="q">
+                <label for="sistema_osteoarticular">Sistema osteoarticular</label>
+                <input class="form-input" type="text" id="sistema_osteoarticular" name="sistema_osteoarticular" />
+              </div>
+              <div class="q">
+                <label for="quedas_ultimo_ano">Quedas no último ano</label>
+                <input class="form-input" type="text" id="quedas_ultimo_ano" name="quedas_ultimo_ano" />
+              </div>
+              <div class="q">
+                <label for="dispositivo_marcha">Uso de dispositivo auxiliar de marcha</label>
+                <input class="form-input" type="text" id="dispositivo_marcha" name="dispositivo_marcha" />
+              </div>
+              <div class="q">
+                <label for="sono">Sono</label>
+                <input class="form-input" type="text" id="sono" name="sono" />
+              </div>
+              <div class="q">
+                <label for="humor">Humor</label>
+                <input class="form-input" type="text" id="humor" name="humor" />
+              </div>
+              <div class="q">
+                <label for="neurologico">Neurológico</label>
+                <input class="form-input" type="text" id="neurologico" name="neurologico" />
+              </div>
+              <div class="q">
+                <label for="cognicao">Cognição</label>
+                <input class="form-input" type="text" id="cognicao" name="cognicao" />
+              </div>
+              <div class="q">
+                <label>Déficits sensoriais</label>
+                <div class="column">
+                  <label><input type="checkbox" name="deficit_visual" /> Presença de déficit visual</label>
+                  <label><input type="checkbox" name="deficit_auditivo" /> Presença de déficit auditivo</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>Vacinas atualizadas</label>
+                <div class="column">
+                  <div class="row">
+                    <label><input type="checkbox" name="vacina_influenza" /> Influenza</label>
+                    <label><input type="checkbox" name="vacina_pneumonia" /> Pneumonia</label>
+                    <label><input type="checkbox" name="vacina_covid" /> COVID-19</label>
+                    <label><input type="checkbox" name="vacina_tetano" /> Tétano</label>
+                  </div>
+                  <div class="row">
+                    <label><input type="checkbox" name="vacina_herpes" /> Herpes Zoster</label>
+                    <label><input type="checkbox" name="vacina_vsr" /> VSR</label>
+                    <label><input type="checkbox" name="vacina_meningococica" /> Menincocócica</label>
+                    <label><input type="checkbox" name="vacina_hepatite" /> Hepatite B</label>
+                  </div>
+                </div>
+              </div>
+
+              <h4>Exame Físico</h4>
+              <div class="grid-container">
+                <div class="q">
+                  <label for="forca_preensao">Força de preensão palmar</label>
+                  <input class="form-input" type="text" id="forca_preensao" name="forca_preensao" inputmode="numeric" />
+                </div>
+              </div>
+              <div class="grid-container-7">
+                <div class="q">
+                  <label for="pas">PAS</label>
+                  <input class="form-input" type="text" id="pas" name="pas" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="pad">PAD</label>
+                  <input class="form-input" type="text" id="pad" name="pad" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="fc">FC</label>
+                  <input class="form-input" type="text" id="fc" name="fc" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="fr">FR</label>
+                  <input class="form-input" type="text" id="fr" name="fr" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="sat">Sat</label>
+                  <input class="form-input" type="text" id="sat" name="sat" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="tec">TEC</label>
+                  <input class="form-input" type="text" id="tec" name="tec" inputmode="numeric" />
+                </div>
+                <div class="q">
+                  <label for="hgt">HGT</label>
+                  <input class="form-input" type="text" id="hgt" name="hgt" inputmode="numeric" />
+                </div>
+              </div>
+              <div class="q">
+                <label for="exame_geral">Geral</label>
+                <textarea class="form-input" id="exame_geral" name="exame_geral" rows="2"></textarea>
+              </div>
+              <div class="q">
+                <label for="exame_neuro">Neuro</label>
+                <textarea class="form-input" id="exame_neuro" name="exame_neuro" rows="2"></textarea>
+              </div>
+              <div class="q">
+                <label for="exame_respiratorio">Aparelho respiratório</label>
+                <textarea class="form-input" id="exame_respiratorio" name="exame_respiratorio" rows="2"></textarea>
+              </div>
+              <div class="q">
+                <label for="exame_cardiovascular">Aparelho cardiovascular</label>
+                <textarea class="form-input" id="exame_cardiovascular" name="exame_cardiovascular" rows="2"></textarea>
+              </div>
+              <div class="q">
+                <label for="exame_abdome">Abdome</label>
+                <textarea class="form-input" id="exame_abdome" name="exame_abdome" rows="2"></textarea>
+              </div>
+              <div class="q">
+                <label for="exame_membros">Membros</label>
+                <textarea class="form-input" id="exame_membros" name="exame_membros" rows="2"></textarea>
+              </div>
+            </div>
           <div class="grid-container-4">
             <div class="q">
               <label for="panturrilha">Panturrilha</label>
@@ -702,212 +899,6 @@
     <section class="collapsible">
       <h1>Avaliação Geriátrica Ampla</h1>
       <div class="section-body">
-        <section class="collapsible">
-        <h1>Avaliação complementar</h1>
-          <div class="section-body">
-            <div class="group">
-              <div class="q">
-                <label for="cirurgias_previas">Cirurgias prévias</label>
-                <textarea class="form-input" id="cirurgias_previas" name="cirurgias_previas" rows="2"></textarea>
-              </div>
-
-              <div class="q">
-                <label for="antecedentes_familiares">Antecedentes familiares</label>
-                <textarea class="form-input" id="antecedentes_familiares" name="antecedentes_familiares" rows="2"></textarea>
-              </div>
-
-              <div class="q">
-                <label>Hábitos de Vida</label>
-                <div class="row">
-                  <label><input type="checkbox" name="habito_tabagismo" /> Tabagismo</label>
-                  <label><input type="checkbox" name="habito_etilismo" /> Etilismo</label>
-                  <label><input type="checkbox" name="habito_sedentarismo" /> Sedentarismo</label>
-                </div>
-                <div class="q">
-                  <label for="habitos_observacao">Observação</label>
-                  <textarea class="form-input" id="habitos_observacao" name="habitos_observacao" rows="2"></textarea>
-                </div>
-              </div>
-
-              <h4>Inventário alimentar</h4>
-              <div class="q">
-                <label for="consumo_leite">Consumo de leite e derivados diário</label>
-                <input class="form-input" type="text" id="consumo_leite" name="consumo_leite" />
-              </div>
-              <div class="q">
-                <label for="consumo_frutas">Consumo de frutas e verduras diário</label>
-                <input class="form-input" type="text" id="consumo_frutas" name="consumo_frutas" />
-              </div>
-              <div class="q">
-                <label for="consumo_proteinas">Consumo de proteínas diário</label>
-                <input class="form-input" type="text" id="consumo_proteinas" name="consumo_proteinas" />
-              </div>
-              <div class="q">
-                <label for="ingesta_hidrica">Ingesta hídrica diária</label>
-                <input class="form-input" type="text" id="ingesta_hidrica" name="ingesta_hidrica" />
-              </div>
-
-              <h4>Interrogatório sintomatológico</h4>
-              <div class="q">
-                <label for="perda_ponderal">Perda ponderal</label>
-                <input class="form-input" type="text" id="perda_ponderal" name="perda_ponderal" />
-              </div>
-              <div class="q">
-                <label for="sintomas_gerais">Outros sintomas gerais</label>
-                <input class="form-input" type="text" id="sintomas_gerais" name="sintomas_gerais" />
-              </div>
-              <div class="q">
-                <label for="aparelho_respiratorio">Aparelho respiratório</label>
-                <input class="form-input" type="text" id="aparelho_respiratorio" name="aparelho_respiratorio" />
-              </div>
-              <div class="q">
-                <label for="aparelho_cardiovascular">Aparelho cardiovascular</label>
-                <input class="form-input" type="text" id="aparelho_cardiovascular" name="aparelho_cardiovascular" />
-              </div>
-              <div class="q">
-                <label for="sistema_digestorio">Sistema digestório</label>
-                <input class="form-input" type="text" id="sistema_digestorio" name="sistema_digestorio" />
-              </div>
-              <div class="q">
-                <label>Sistema digestório - alterações</label>
-                <div class="column">
-                  <label><input type="checkbox" name="protese_dentaria" /> Uso de prótese dentária inadequada</label>
-                  <label><input type="checkbox" name="lesoes_orais" /> Presença lesões orais</label>
-                  <label><input type="checkbox" name="disfagia" /> Presença de disfagia</label>
-                  <label><input type="checkbox" name="incontinencia_fecal" /> Presença de incontinência fecal</label>
-                </div>
-              </div>
-              <div class="q">
-                <label for="sistema_genitourinario">Sistema genitourinário</label>
-                <input class="form-input" type="text" id="sistema_genitourinario" name="sistema_genitourinario" />
-              </div>
-              <div class="q">
-                <label>Sistema genitourinário - alterações</label>
-                <div class="column">
-                  <label><input type="checkbox" name="incontinencia_urinaria" /> Presença de incontinência urinária</label>
-                </div>
-              </div>
-              <div class="q">
-                <label for="sistema_osteoarticular">Sistema osteoarticular</label>
-                <input class="form-input" type="text" id="sistema_osteoarticular" name="sistema_osteoarticular" />
-              </div>
-              <div class="q">
-                <label for="quedas_ultimo_ano">Quedas no último ano</label>
-                <input class="form-input" type="text" id="quedas_ultimo_ano" name="quedas_ultimo_ano" />
-              </div>
-              <div class="q">
-                <label for="dispositivo_marcha">Uso de dispositivo auxiliar de marcha</label>
-                <input class="form-input" type="text" id="dispositivo_marcha" name="dispositivo_marcha" />
-              </div>
-              <div class="q">
-                <label for="sono">Sono</label>
-                <input class="form-input" type="text" id="sono" name="sono" />
-              </div>
-              <div class="q">
-                <label for="humor">Humor</label>
-                <input class="form-input" type="text" id="humor" name="humor" />
-              </div>
-              <div class="q">
-                <label for="neurologico">Neurológico</label>
-                <input class="form-input" type="text" id="neurologico" name="neurologico" />
-              </div>
-              <div class="q">
-                <label for="cognicao">Cognição</label>
-                <input class="form-input" type="text" id="cognicao" name="cognicao" />
-              </div>
-              <div class="q">
-                <label>Déficits sensoriais</label>
-                <div class="column">
-                  <label><input type="checkbox" name="deficit_visual" /> Presença de déficit visual</label>
-                  <label><input type="checkbox" name="deficit_auditivo" /> Presença de déficit auditivo</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Vacinas atualizadas</label>
-                <div class="column">
-                  <div class="row">
-                    <label><input type="checkbox" name="vacina_influenza" /> Influenza</label>
-                    <label><input type="checkbox" name="vacina_pneumonia" /> Pneumonia</label>
-                    <label><input type="checkbox" name="vacina_covid" /> COVID-19</label>
-                    <label><input type="checkbox" name="vacina_tetano" /> Tétano</label>
-                  </div>
-                  <div class="row">
-                    <label><input type="checkbox" name="vacina_herpes" /> Herpes Zoster</label>
-                    <label><input type="checkbox" name="vacina_vsr" /> VSR</label>
-                    <label><input type="checkbox" name="vacina_meningococica" /> Menincocócica</label>
-                    <label><input type="checkbox" name="vacina_hepatite" /> Hepatite B</label>
-                  </div>
-                </div>
-              </div>
-
-              <h4>Exame Físico</h4>
-              <div class="grid-container">
-                <div class="q">
-                  <label for="forca_preensao">Força de preensão palmar</label>
-                  <input class="form-input" type="text" id="forca_preensao" name="forca_preensao" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="circunferencia_panturrilha">Circunferência da Panturrilha</label>
-                  <input class="form-input" type="text" id="circunferencia_panturrilha" name="circunferencia_panturrilha" inputmode="numeric" />
-                </div>
-              </div>
-              <div class="grid-container-7">
-                <div class="q">
-                  <label for="pas">PAS</label>
-                  <input class="form-input" type="text" id="pas" name="pas" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="pad">PAD</label>
-                  <input class="form-input" type="text" id="pad" name="pad" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="fc">FC</label>
-                  <input class="form-input" type="text" id="fc" name="fc" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="fr">FR</label>
-                  <input class="form-input" type="text" id="fr" name="fr" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="sat">Sat</label>
-                  <input class="form-input" type="text" id="sat" name="sat" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="tec">TEC</label>
-                  <input class="form-input" type="text" id="tec" name="tec" inputmode="numeric" />
-                </div>
-                <div class="q">
-                  <label for="hgt">HGT</label>
-                  <input class="form-input" type="text" id="hgt" name="hgt" inputmode="numeric" />
-                </div>
-              </div>
-              <div class="q">
-                <label for="exame_geral">Geral</label>
-                <textarea class="form-input" id="exame_geral" name="exame_geral" rows="2"></textarea>
-              </div>
-              <div class="q">
-                <label for="exame_neuro">Neuro</label>
-                <textarea class="form-input" id="exame_neuro" name="exame_neuro" rows="2"></textarea>
-              </div>
-              <div class="q">
-                <label for="exame_respiratorio">Aparelho respiratório</label>
-                <textarea class="form-input" id="exame_respiratorio" name="exame_respiratorio" rows="2"></textarea>
-              </div>
-              <div class="q">
-                <label for="exame_cardiovascular">Aparelho cardiovascular</label>
-                <textarea class="form-input" id="exame_cardiovascular" name="exame_cardiovascular" rows="2"></textarea>
-              </div>
-              <div class="q">
-                <label for="exame_abdome">Abdome</label>
-                <textarea class="form-input" id="exame_abdome" name="exame_abdome" rows="2"></textarea>
-              </div>
-              <div class="q">
-                <label for="exame_membros">Membros</label>
-                <textarea class="form-input" id="exame_membros" name="exame_membros" rows="2"></textarea>
-              </div>
-            </div>
-          </div>
-        </section>
         <section class="collapsible">
         <h1>Dimensão Física</h1>
         <div class="section-body">
