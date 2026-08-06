@@ -44,6 +44,61 @@ export function limparResultados() {
 /**
  * Atualiza o resumo de todos os testes
  */
+const collectMedicamentosFromDOM = () => {
+  const medicamentos = [];
+  document.querySelectorAll('.medicamento-item').forEach((item, index) => {
+    const id = item.getAttribute('data-medicamento-id') || index + 1;
+    const medNome = item.querySelector(`[name="med${id}_nome"]`)?.value?.trim() || '';
+    const justificativa = item.querySelector(`[name="med${id}_justificativa"]`)?.value?.trim() || '';
+    const dose = item.querySelector(`[name="med${id}_dose"]`)?.value?.trim() || '';
+    const tempo = item.querySelector(`[name="med${id}_tempo"]`)?.value?.trim() || '';
+
+    if (medNome || justificativa || dose || tempo) {
+      medicamentos.push({ nome: medNome, justificativa, dose, tempo });
+    }
+  });
+  return medicamentos;
+};
+
+const buildMedicamentosResumoHTML = (medicamentos) => {
+  if (!Array.isArray(medicamentos) || medicamentos.length === 0) return '';
+
+  const itens = medicamentos
+    .map((med, index) => {
+      const campos = [];
+      if (med.nome) {
+        campos.push(`<div class="info-item"><span class="info-label">Nome:</span> <span class="info-value">${med.nome}</span></div>`);
+      }
+      if (med.justificativa) {
+        campos.push(`<div class="info-item"><span class="info-label">Justificativa:</span> <span class="info-value">${med.justificativa}</span></div>`);
+      }
+      if (med.dose) {
+        campos.push(`<div class="info-item"><span class="info-label">Dose e Posologia:</span> <span class="info-value">${med.dose}</span></div>`);
+      }
+      if (med.tempo) {
+        campos.push(`<div class="info-item"><span class="info-label">Tempo de Uso:</span> <span class="info-value">${med.tempo}</span></div>`);
+      }
+      if (!campos.length) return '';
+      return `
+        <div class="item medicamento-card">
+          <h4>Medicamento ${index + 1}</h4>
+          <div class="info-grid">
+            ${campos.join('')}
+          </div>
+        </div>`;
+    })
+    .filter(Boolean)
+    .join('');
+
+  if (!itens) return '';
+
+  return `
+    <div class="item medicamento-summary">
+      <h3>Medicamentos em Uso</h3>
+      ${itens}
+    </div>`;
+};
+
 export function atualizarResumo() {
   const el = resumoElement();
   if (!el) return;
@@ -82,6 +137,12 @@ export function atualizarResumo() {
       });
     }
   });
+
+  const medicamentos = collectMedicamentosFromDOM();
+  const medicamentosResumo = buildMedicamentosResumoHTML(medicamentos);
+  if (medicamentosResumo) {
+    blocos.push(medicamentosResumo);
+  }
 
   el.innerHTML = blocos.join('');
 

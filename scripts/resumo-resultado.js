@@ -54,11 +54,63 @@ document.addEventListener('DOMContentLoaded', () => {
     emptyStateElement.hidden = !!hasContent;
   };
 
+  const buildMedicamentosResumo = (medicamentos) => {
+    if (!Array.isArray(medicamentos) || medicamentos.length === 0) return '';
+
+    const itens = medicamentos
+      .map((med, index) => {
+        const partes = [];
+
+        if (med.nome) {
+          partes.push(`<div class="info-item"><span class="info-label">Nome:</span> <span class="info-value">${med.nome}</span></div>`);
+        }
+        if (med.justificativa) {
+          partes.push(`<div class="info-item"><span class="info-label">Justificativa:</span> <span class="info-value">${med.justificativa}</span></div>`);
+        }
+        if (med.dose) {
+          partes.push(`<div class="info-item"><span class="info-label">Dose e Posologia:</span> <span class="info-value">${med.dose}</span></div>`);
+        }
+        if (med.tempo) {
+          partes.push(`<div class="info-item"><span class="info-label">Tempo de Uso:</span> <span class="info-value">${med.tempo}</span></div>`);
+        }
+
+        if (!partes.length) return '';
+
+        return `
+          <div class="item medicamento-card">
+            <h4>Medicamento ${index + 1}</h4>
+            <div class="info-grid">
+              ${partes.join('')}
+            </div>
+          </div>`;
+      })
+      .filter(Boolean)
+      .join('');
+
+    if (!itens) return '';
+
+    return `
+      <div class="item medicamento-summary">
+        <h3>Medicamentos em Uso</h3>
+        ${itens}
+      </div>`;
+  };
+
+  const appendMedicamentosResumo = () => {
+    if (!resumoContainer) return;
+    const medicamentos = dados?.anamnese?.medicamentos;
+    if (!Array.isArray(medicamentos) || medicamentos.length === 0) return;
+    if (resumoContainer.querySelector('.medicamento-summary')) return;
+
+    const html = buildMedicamentosResumo(medicamentos);
+    if (html) resumoContainer.insertAdjacentHTML('beforeend', html);
+  };
+
   const renderFallbackResumo = () => {
     if (!resumoContainer) return false;
 
     const secoes = Array.isArray(dados?.secoes) ? dados.secoes : [];
-    if (!secoes.length) return false;
+    const hasSecoes = secoes.length > 0;
 
     const blocos = secoes.map(({ titulo, resultado }) => {
       const linhas = (resultado || '')
@@ -70,19 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 
     resumoContainer.innerHTML = blocos;
-    return true;
+    return hasSecoes;
   };
 
   if (resumoContainer) {
     if (resumoHTML && resumoHTML.trim()) {
       resumoContainer.innerHTML = resumoHTML;
-      toggleEmptyState(true);
-    } else if (renderFallbackResumo()) {
-      toggleEmptyState(true);
-    } else {
+    } else if (!renderFallbackResumo()) {
       resumoContainer.innerHTML = '';
-      toggleEmptyState(false);
     }
+
+    appendMedicamentosResumo();
+    toggleEmptyState(resumoContainer.innerHTML.trim().length > 0);
   } else if (resultadoContainer && !resultadoContainer.querySelector('#resumo-vazio')) {
     const fallbackMessage = document.createElement('p');
     fallbackMessage.textContent = 'Não há dados para exibir. Volte e realize a avaliação.';

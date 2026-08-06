@@ -46,14 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'anamnese_acompanhante': 'Acompanhante',
         'anamnese_grau_parentesco': 'Grau de Parentesco',
         'polifarmacia': 'Polifarmácia',
-        'ppi_benzodiazepinicos': 'PPI - Benzodiazepínicos',
-        'ppi_opioides': 'PPI - Opioides',
-        'ppi_anticolinergicos': 'PPI - Anticolinérgicos',
-        'ppi_sedativos': 'PPI - Sedativos',
-        'ppi_relaxantes': 'PPI - Relaxantes Musculares',
-        'ppi_antidepressivos': 'PPI - Antidepressivos Tricíclicos',
-        'ppi_antipsicoticos': 'PPI - Antipsicóticos',
-        'ppi_estabilizadores': 'PPI - Estabilizadores de Humor',
+        'ppi_benzodiazepinicos': 'Benzodiazepínicos',
+        'ppi_opioides': 'Opioides',
+        'ppi_anticolinergicos': 'Anticolinérgicos',
+        'ppi_sedativos': 'Sedativos',
+        'ppi_relaxantes': 'Relaxantes Musculares',
+        'ppi_antidepressivos': 'Antidepressivos Tricíclicos',
+        'ppi_antipsicoticos': 'Antipsicóticos',
+        'ppi_estabilizadores': 'Estabilizadores de Humor',
         'medicamentos_alergia': 'Alergias Medicamentosas',
         'vacina_influenza': 'Vacina Influenza',
         'vacina_pneumonia': 'Vacina Pneumonia',
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Identificação': ['anamnese_nome', 'anamnese_data_nascimento', 'anamnese_idade', 'anamnese_num_atendimento', 'anamnese_sexo', 'anamnese_aposentado', 'anamnese_profissao', 'anamnese_renda', 'anamnese_naturalidade', 'anamnese_escolaridade', 'anamnese_cor', 'anamnese_estado_civil', 'anamnese_filhos', 'anamnese_religiao'],
         'Acompanhante': ['anamnese_acompanhante', 'anamnese_grau_parentesco'],
         'Valores': ['anamnese_bom_dia', 'anamnese_importante', 'anamnese_alegria', 'anamnese_vale_pena', 'anamnese_medos', 'anamnese_resultado_hospital', 'anamnese_gostaria_fazer', 'anamnese_objetivos', 'anamnese_confia_decisoes', 'anamnese_procedimentos_invasivos', 'anamnese_morte'],
-        'Medicamentos - Informações Gerais': ['polifarmacia', 'ppi_benzodiazepinicos', 'ppi_opioides', 'ppi_anticolinergicos', 'ppi_sedativos', 'ppi_relaxantes', 'ppi_antidepressivos', 'ppi_antipsicoticos', 'ppi_estabilizadores', 'medicamentos_alergia'],
+        'Medicamentos - Prescrição Potencialmente Inapropriada': ['polifarmacia', 'ppi_benzodiazepinicos', 'ppi_opioides', 'ppi_anticolinergicos', 'ppi_sedativos', 'ppi_relaxantes', 'ppi_antidepressivos', 'ppi_antipsicoticos', 'ppi_estabilizadores', 'medicamentos_alergia'],
         'Multicomplexidade': ['perda_peso', 'perda_peso_quantidade', 'vacina_influenza', 'vacina_pneumonia', 'vacina_covid', 'vacina_tetano', 'vacina_herpes', 'vacina_vsr', 'vacina_meningococica', 'vacina_hepatite', 'morbidade_hipertensao', 'morbidade_diabetes', 'morbidade_renal', 'morbidade_ave', 'morbidade_iam', 'morbidade_outra', 'cirurgias_previas', 'antecedentes_familiares', 'habito_tabagismo', 'habito_etilismo', 'habito_sedentarismo', 'habitos_observacao'],
         'Inventário Alimentar': ['consumo_leite', 'consumo_frutas', 'consumo_proteinas', 'ingesta_hidrica'],
         'Interrogatório Sintomatológico': ['perda_ponderal', 'sintomas_gerais', 'aparelho_respiratorio', 'aparelho_cardiovascular', 'sistema_digestorio', 'protese_dentaria', 'lesoes_orais', 'disfagia', 'incontinencia_fecal', 'sistema_genitourinario', 'incontinencia_urinaria', 'sistema_osteoarticular', 'quedas_ultimo_ano', 'dispositivo_marcha', 'sono', 'humor', 'neurologico', 'cognicao', 'deficit_visual', 'deficit_auditivo'],
@@ -330,13 +330,45 @@ document.addEventListener('DOMContentLoaded', () => {
       Paragraph,
       TextRun,
       HeadingLevel,
-      AlignmentType
+      AlignmentType,
+      Table,
+      TableRow,
+      TableCell,
+      WidthType,
+      BorderStyle
     } = docxLib;
 
     const sourcePage = document.querySelector('.page') || document.getElementById('resultado-container');
     const sections = Array.from(sourcePage.querySelectorAll('#resultado-container > .resultado-body > section, #resultado-container > section'));
     const children = [];
     const titulo = 'Resultado da Avaliação';
+
+    const noBorder = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+    const noCellBorders = {
+      top: noBorder,
+      bottom: noBorder,
+      left: noBorder,
+      right: noBorder,
+      insideHorizontal: noBorder,
+      insideVertical: noBorder
+    };
+
+    const buildTwoColumnTable = (rowsOfRuns) => {
+      const rows = rowsOfRuns.map((pair) => new TableRow({
+        children: pair.map((runs) => new TableCell({
+          children: [new Paragraph({ children: runs || [] })],
+          width: { size: 50, type: WidthType.PERCENTAGE },
+          borders: noCellBorders,
+          margins: { top: 40, bottom: 40, left: 0, right: 120 }
+        }))
+      }));
+
+      return new Table({
+        width: { size: 100, type: WidthType.PERCENTAGE },
+        borders: noCellBorders,
+        rows
+      });
+    };
 
     children.push(new Paragraph({
       text: titulo,
@@ -347,51 +379,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sections.forEach((section) => {
       const h2 = section.querySelector(':scope > h2');
+      const sectionTitle = h2 ? textFromElement(h2) : '';
+
       if (h2) {
         children.push(new Paragraph({
-          text: textFromElement(h2),
+          text: sectionTitle,
           heading: HeadingLevel.HEADING_1,
           spacing: { before: 240, after: 120 }
         }));
       }
 
       const body = section.querySelector(':scope > .section-body') || section;
+      let currentSubsectionTitle = sectionTitle;
+      const buildLabelValueRuns = (label, value, labelOnly = false) => {
+        const cleanLabel = String(label || '').replace(/:\s*$/, '');
+        const cleanValue = String(value || '').trim();
+        if (!cleanValue && !cleanLabel) return [];
+
+        if (labelOnly && cleanLabel) {
+          return [new TextRun(cleanLabel)];
+        }
+
+        if (cleanLabel && cleanLabel === cleanValue) {
+          return [new TextRun(cleanValue)];
+        }
+
+        if (cleanLabel) {
+          return [
+            new TextRun({ text: `${cleanLabel}: `, bold: true }),
+            new TextRun(cleanValue || '-')
+          ];
+        }
+
+        return [new TextRun(cleanValue)];
+      };
+
+      const medicamentoOptionLabels = new Set([
+        'Polifarmácia',
+        'Benzodiazepínicos',
+        'Opioides',
+        'Anticolinérgicos',
+        'Sedativos',
+        'Relaxantes Musculares',
+        'Antidepressivos Tricíclicos',
+        'Antipsicóticos',
+        'Estabilizadores de Humor',
+        'Alergias Medicamentosas'
+      ]);
+
       Array.from(body.children).forEach((element) => {
         if (element.matches('h3')) {
+          currentSubsectionTitle = textFromElement(element);
           children.push(new Paragraph({
-            text: textFromElement(element),
+            text: currentSubsectionTitle,
             heading: HeadingLevel.HEADING_2,
             spacing: { before: 180, after: 120 }
           }));
           return;
         }
 
+        const isMedicamentosElement = currentSubsectionTitle.trim().includes('Medicamentos -');
+
         if (element.matches('.info-grid')) {
-          element.querySelectorAll(':scope > .info-item').forEach((item) => {
-            const label = textFromElement(item.querySelector('.info-label')).replace(/:\s*$/, '');
+          const items = Array.from(element.querySelectorAll(':scope > .info-item')).map((item) => {
+            const label = textFromElement(item.querySelector('.info-label'));
+            const cleanLabel = String(label || '').replace(/:\s*$/, '');
             const value = textFromElement(item.querySelector('.info-value'));
-            children.push(new Paragraph({
-              children: [
-                new TextRun({ text: `${label}: `, bold: true }),
-                new TextRun(value || '-')
-              ],
-              spacing: { after: 90 }
-            }));
+            const useLabelOnly = isMedicamentosElement || medicamentoOptionLabels.has(cleanLabel);
+            return buildLabelValueRuns(label, value, useLabelOnly);
           });
+
+          if (isMedicamentosElement && items.length > 0) {
+            const rowsOfRuns = [];
+            for (let i = 0; i < items.length; i += 2) {
+              rowsOfRuns.push([items[i], items[i + 1] || []]);
+            }
+            children.push(buildTwoColumnTable(rowsOfRuns));
+          } else {
+            items.forEach((runs) => {
+              children.push(new Paragraph({
+                children: runs,
+                spacing: { after: 90 }
+              }));
+            });
+          }
           return;
         }
 
         if (element.matches('.texto-item')) {
           const strong = element.querySelector('strong');
-          const label = textFromElement(strong).replace(/:\s*$/, '');
+          const label = textFromElement(strong);
           const clone = element.cloneNode(true);
           if (clone.querySelector('strong')) clone.querySelector('strong').remove();
           const value = textFromElement(clone);
           children.push(new Paragraph({
-            children: [
-              new TextRun({ text: `${label}: `, bold: true }),
-              new TextRun(value || '-')
-            ],
+            children: buildLabelValueRuns(label, value, isMedicamentosElement),
             spacing: { after: 120 }
           }));
           return;
@@ -407,13 +489,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }));
           }
           element.querySelectorAll('.info-item').forEach((item) => {
-            const label = textFromElement(item.querySelector('.info-label')).replace(/:\s*$/, '');
+            const label = textFromElement(item.querySelector('.info-label'));
             const value = textFromElement(item.querySelector('.info-value'));
             children.push(new Paragraph({
-              children: [
-                new TextRun({ text: `${label}: `, bold: true }),
-                new TextRun(value || '-')
-              ],
+              children: buildLabelValueRuns(label, value),
               spacing: { after: 80 }
             }));
           });

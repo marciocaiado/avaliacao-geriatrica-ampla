@@ -9,8 +9,11 @@
  * @returns {string|null} Valor selecionado ou null
  */
 export function getCheckedValue(name) {
-  const el = document.querySelector(`input[name="${name}"]:checked`);
-  return el ? el.value : null;
+  const radio = document.querySelector(`input[name="${name}"]:checked`);
+  if (radio) return radio.value;
+  const select = document.querySelector(`select[name="${name}"]`);
+  if (select && select.value !== '') return select.value;
+  return null;
 }
 
 /**
@@ -63,6 +66,26 @@ export function getFormData(constants = {}) {
 
   if (constants.camposMEEM) {
     collectFromNames(fd, constants.camposMEEM);
+  }
+
+  if (constants.camposFAST) {
+    collectFromNames(fd, constants.camposFAST);
+  }
+
+  if (constants.camposPHQ9) {
+    collectFromNames(fd, constants.camposPHQ9);
+  }
+
+  if (constants.camposSPICT) {
+    collectFromNames(fd, constants.camposSPICT);
+  }
+
+  if (constants.camposPPS) {
+    collectFromNames(fd, constants.camposPPS);
+  }
+
+  if (constants.camposCharlson) {
+    collectFromNames(fd, constants.camposCharlson);
   }
 
   return fd;

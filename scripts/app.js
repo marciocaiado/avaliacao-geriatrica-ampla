@@ -240,6 +240,86 @@ function formatarMEEM({ pontos, interpretacao, respondidas, totalPerguntas, comp
   `;
 }
 
+function formatarPPS({ pps, descricao, respondidas, totalPerguntas, completo }) {
+  const progresso = `<div class="score">Dimensões respondidas: ${respondidas}/${totalPerguntas}</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>PPS final:</strong> menor valor marcado entre as cinco dimensões.<br />
+      100%: saúde normal | 70–90%: ambulatório | 50–60%: redução funcional significativa | 30–40%: acamado | 10–20%: dependência completa | 0%: morte
+    </div>
+  `;
+  return `
+    <div><strong>${completo ? 'PPS' : 'PPS (parcial)'}:</strong> ${pps}%</div>
+    <div class="score"><strong>Descrição:</strong> ${descricao}</div>
+    ${legenda}
+    ${progresso}
+  `;
+}
+
+function formatarSPICT({ positivo, geralSim, clinicoSim, respondidas, totalPerguntas, completo }) {
+  const status = positivo
+    ? 'SPICT-BR <strong>POSITIVO</strong> — paciente pode se beneficiar de cuidados paliativos'
+    : 'SPICT-BR <strong>NEGATIVO</strong>';
+  const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+  const detalhe = `<div class="score">Gerais com "Sim": ${geralSim}/6 &nbsp;|&nbsp; Clínicos com "Sim": ${clinicoSim}/22</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>Critério de positividade:</strong> ≥ 2 "Sim" nos indicadores gerais <strong>E</strong> ≥ 1 "Sim" nos indicadores clínicos.
+    </div>
+  `;
+  return `
+    <div>${completo ? '' : '(parcial) '}${status}</div>
+    ${detalhe}
+    ${legenda}
+    ${progresso}
+  `;
+}
+
+function formatarPHQ9({ pontos, classificacao, respondidas, totalPerguntas, completo }) {
+  const progresso = `<div class="score">Respostas: ${respondidas}/${totalPerguntas}</div>`;
+  const legenda = `
+    <div class="help">
+      <strong>Interpretação (PHQ-9):</strong><br />
+      0–4: Ausência de depressão | 5–9: Leve | 10–14: Moderada | 15–19: Moderadamente grave | 20–27: Grave
+    </div>
+  `;
+  return `
+    <div><strong>${completo ? 'PHQ-9' : 'PHQ-9 (parcial)'}:</strong> ${pontos}/27 pontos</div>
+    <div class="score"><strong>Classificação:</strong> ${classificacao}</div>
+    ${legenda}
+    ${progresso}
+  `;
+}
+
+function formatarCharlson({ pontos, mortalidade, marcadas }) {
+  const legenda = `
+    <div class="help">
+      <strong>Mortalidade em 1 ano (Charlson):</strong><br />
+      0 pontos: 12% | 1–2: 26% | 3–4: 52% | > 4: 85%
+    </div>
+  `;
+  return `
+    <div><strong>Charlson:</strong> ${pontos} ponto${pontos !== 1 ? 's' : ''} (${marcadas} comorbidade${marcadas !== 1 ? 's' : ''} marcada${marcadas !== 1 ? 's' : ''})</div>
+    <div class="score"><strong>Mortalidade estimada em 1 ano:</strong> ${mortalidade}</div>
+    ${legenda}
+  `;
+}
+
+function formatarFAST({ estadio, descricao, interpretacao }) {
+  const legenda = `
+    <div class="help">
+      <strong>Interpretação (FAST):</strong><br />
+      1: Adulto normal | 2: Idoso normal | 3: DA incipiente | 4: DA leve | 5: DA moderada<br />
+      6A–6E: DA moderada a grave | 7A–7G: DA grave
+    </div>
+  `;
+  return `
+    <div><strong>FAST — Estágio ${estadio}:</strong> ${descricao}</div>
+    <div class="score"><strong>Interpretação:</strong> ${interpretacao}</div>
+    ${legenda}
+  `;
+}
+
 // Funções de exibição (wrapper das funções de cálculo e formatação)
 
 function mostrarIVCF() {
@@ -303,6 +383,26 @@ function mostrarMEEM() {
   dom.exibirResultado('resultado-meem', calculations.calcularMEEM, formatarMEEM);
 }
 
+function mostrarFAST() {
+  dom.exibirResultado('resultado-fast', calculations.calcularFAST, formatarFAST);
+}
+
+function mostrarCharlson() {
+  dom.exibirResultado('resultado-charlson', calculations.calcularCharlson, formatarCharlson);
+}
+
+function mostrarPHQ9() {
+  dom.exibirResultado('resultado-phq9', calculations.calcularPHQ9, formatarPHQ9);
+}
+
+function mostrarSPICT() {
+  dom.exibirResultado('resultado-spict', calculations.calcularSPICT, formatarSPICT);
+}
+
+function mostrarPPS() {
+  dom.exibirResultado('resultado-pps', calculations.calcularPPS, formatarPPS);
+}
+
 // Recalcula todos os testes (usado após restaurar formulário)
 function recalcularTodosResultados() {
   mostrarIVCF();
@@ -320,6 +420,11 @@ function recalcularTodosResultados() {
   mostrarApgar();
   mostrarAGC10();
   mostrarMEEM();
+  mostrarFAST();
+  mostrarCharlson();
+  mostrarPHQ9();
+  mostrarSPICT();
+  mostrarPPS();
 }
 
 // Handler de mudanças nos inputs
@@ -342,6 +447,11 @@ function aoAlterarResposta(event) {
   if (constants.camposApgar.includes(name)) mostrarApgar();
   if (constants.camposAGC10.includes(name)) mostrarAGC10();
   if (constants.camposMEEM.includes(name)) mostrarMEEM();
+  if (constants.camposFAST.includes(name)) mostrarFAST();
+  if (constants.camposCharlson.includes(name)) mostrarCharlson();
+  if (constants.camposPHQ9.includes(name)) mostrarPHQ9();
+  if (constants.camposSPICT.includes(name)) mostrarSPICT();
+  if (constants.camposPPS.includes(name)) mostrarPPS();
 }
 
 // Função para visualizar resultado completo
@@ -435,6 +545,11 @@ function visualizarResultado() {
     ['MEEM', 'resultado-meem'],
     ['Velocidade de Marcha', 'resultado-marcha'],
     ['Sentar e Levantar', 'resultado-sentar-levantar'],
+    ['FAST', 'resultado-fast'],
+    ['Charlson', 'resultado-charlson'],
+    ['PHQ-9', 'resultado-phq9'],
+    ['SPICT-BR', 'resultado-spict'],
+    ['PPS', 'resultado-pps'],
   ];
 
   const secoes = [];
@@ -670,6 +785,9 @@ function setupLimparButtons() {
     { action: 'limpar-cam', campos: constants.camposCAM, resultados: ['resultado-cam'] },
     { action: 'limpar-agc10', campos: constants.camposAGC10, resultados: ['resultado-agc10', 'resultado-agc10-inline'] },
     { action: 'limpar-meem', campos: constants.camposMEEM, resultados: ['resultado-meem'] },
+    { action: 'limpar-fast', campos: constants.camposFAST, resultados: ['resultado-fast'] },
+    { action: 'limpar-phq9', campos: constants.camposPHQ9, resultados: ['resultado-phq9'] },
+    { action: 'limpar-spict', campos: constants.camposSPICT, resultados: ['resultado-spict'] },
   ];
 
   limparConfig.forEach(({ action, campos, resultados }) => {
@@ -684,6 +802,28 @@ function setupLimparButtons() {
       });
     }
   });
+
+  // Charlson usa checkboxes — reset via form.reset()
+  const limparCharlsonButton = document.querySelector('[data-action="limpar-charlson"]');
+  const formCharlson = document.getElementById('form-charlson');
+  if (limparCharlsonButton && formCharlson) {
+    limparCharlsonButton.addEventListener('click', () => {
+      formCharlson.reset();
+      const el = document.getElementById('resultado-charlson');
+      if (el) el.innerHTML = '';
+    });
+  }
+
+  // PPS usa selects — reset via form.reset()
+  const limparPPSButton = document.querySelector('[data-action="limpar-pps"]');
+  const formPPS = document.getElementById('form-pps');
+  if (limparPPSButton && formPPS) {
+    limparPPSButton.addEventListener('click', () => {
+      formPPS.reset();
+      const el = document.getElementById('resultado-pps');
+      if (el) el.innerHTML = '';
+    });
+  }
 
   // Botões compostos
   const limparFuncionalButton = document.querySelector('[data-action="limpar-funcional"]');
