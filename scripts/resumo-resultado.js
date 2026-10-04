@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn('[Resumo] Não foi possível ler dadosAvaliacao do localStorage:', error);
   }
 
-  // Ler dados do formulário do sessionStorage (persistence.js) como fonte principal
+  // Ler dados do formulário salvos por persistence.js como fonte principal
   let formState = null;
   try {
-    const rawForm = sessionStorage.getItem('formState');
-    formState = rawForm ? JSON.parse(rawForm) : null;
+    const rawForm = localStorage.getItem('formState');
+    formState = rawForm ? JSON.parse(rawForm)?.state ?? null : null;
   } catch (error) {
-    console.warn('[Resumo] Não foi possível ler formState do sessionStorage:', error);
+    console.warn('[Resumo] Não foi possível ler formState do localStorage:', error);
   }
 
   const pacienteNome = safeTrim(formState?.anamnese_nome) || safeTrim(dados?.nome);
@@ -64,14 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (med.nome) {
           partes.push(`<div class="info-item"><span class="info-label">Nome:</span> <span class="info-value">${med.nome}</span></div>`);
         }
-        if (med.justificativa) {
-          partes.push(`<div class="info-item"><span class="info-label">Justificativa:</span> <span class="info-value">${med.justificativa}</span></div>`);
-        }
         if (med.dose) {
           partes.push(`<div class="info-item"><span class="info-label">Dose e Posologia:</span> <span class="info-value">${med.dose}</span></div>`);
-        }
-        if (med.tempo) {
-          partes.push(`<div class="info-item"><span class="info-label">Tempo de Uso:</span> <span class="info-value">${med.tempo}</span></div>`);
         }
 
         if (!partes.length) return '';

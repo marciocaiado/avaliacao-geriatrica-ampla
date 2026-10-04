@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Avaliação Geriátrica</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <script src="scripts/data.js"></script>
 <body>
@@ -15,7 +15,7 @@
     </div>
   </header>
   <main>
-    <div style="padding: 20px 0; text-align: left;">
+    <div class="barra-novo">
       <button type="button" id="btn-novo" class="primary" style="margin: 0;">Novo</button>
     </div>
     <section class="collapsible">
@@ -377,15 +377,15 @@
             </div>
             <div class="q">
               <label for="peso">Peso</label>
-              <input class="form-input" type="text" id="peso" name="peso" inputmode="numeric" />
+              <input class="form-input" type="text" id="peso" name="peso" inputmode="decimal" placeholder="kg" />
             </div>
             <div class="q">
               <label for="altura">Altura</label>
-              <input class="form-input" type="text" id="altura" name="altura" inputmode="numeric" />
+              <input class="form-input" type="text" id="altura" name="altura" inputmode="decimal" placeholder="cm" />
             </div>
             <div class="q">
               <label for="imc">IMC</label>
-              <input class="form-input" type="text" id="imc" name="imc" inputmode="numeric" />
+              <input class="form-input form-input--calculado" type="text" id="imc" name="imc" readonly tabindex="-1" aria-label="IMC (calculado automaticamente)" />
             </div>
           </div>
 
@@ -674,7 +674,6 @@
               </div>
             </section>
 
-          <form id="form-ivcf">
             <!-- Campos ocultos para armazenar resultado do Katz (preenchidos pelo modal) -->
             <div id="katz-hidden-fields" style="visibility: hidden; height: 0; overflow: hidden;">
               <input type="radio" name="katz_banho" value="0" />
@@ -702,181 +701,6 @@
               <input type="radio" name="edg4_prefere_casa" value="0" />
               <input type="radio" name="edg4_prefere_casa" value="1" />
             </div>
-
-            <section class="collapsible">
-              <h2>IVCF‑20 — Índice de Vulnerabilidade Clínico‑Funcional</h2>
-              <div class="section-body">
-              <div class="group">
-                <div class="q" data-weight="idade">
-                  <label>1) Qual é a sua idade?</label>
-                  <div class="column">
-                    <label><input type="radio" name="idade" value="0" required /> 60–74 anos (0)</label>
-                    <label><input type="radio" name="idade" value="1" /> 75–84 anos (1)</label>
-                    <label><input type="radio" name="idade" value="3" /> ≥ 85 anos (3)</label>
-                  </div>
-                </div>
-
-                <div class="q" data-weight="percepcao">
-                  <label>2) Em geral, comparando com pessoas da sua mesma idade, você diria que a sua saúde é:</label>
-                  <div class="column">
-                    <label><input type="radio" name="percepcao" value="0" required /> Excelente/Muito boa/Boa (0)</label>
-                    <label><input type="radio" name="percepcao" value="1" /> Regular ou Ruim (1)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>3) Por causa de sua saúde ou condição física, você deixou de fazer compras?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q3" value="4" required /> Sim (4)</label>
-                    <label><input type="radio" name="q3" value="0" /> Não/por outros motivos (0)</label>
-                  </div>
-                  <div class="help">AVD instrumental — pontuação máx. desta sub‑seção: 4</div>
-                </div>
-
-                <div class="q">
-                  <label>4) Por causa de sua saúde ou condição física, você deixou de controlar seu dinheiro, gasto, ou pagar as contas de sua casa?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q4" value="4" required /> Sim (4)</label>
-                    <label><input type="radio" name="q4" value="0" /> Não/por outros motivos (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>5) Por causa de sua saúde ou condição física, você deixou de realizar pequenos trabalhos domésticos, como lavar louça, arrumar a casa ou fazer limpeza leve?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q5" value="4" required /> Sim (4)</label>
-                    <label><input type="radio" name="q5" value="0" /> Não/por outros motivos (0)</label>
-                  </div>
-                </div>
-                <div class="help">Observação: AVD instrumental tem pontuação máxima combinada 4, mesmo com múltiplos “Sim”. O cálculo abaixo aplica este teto.</div>
-
-                <div class="q">
-                  <label>6) Por causa da saúde, deixou de tomar banho sozinho?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q6" value="6" required /> Sim (6)</label>
-                    <label><input type="radio" name="q6" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>7) Algum familiar ou amigo falou que você está ficando esquecido?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q7" value="1" required /> Sim (1)</label>
-                    <label><input type="radio" name="q7" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>8) Este esquecimento está piorando nos últimos meses?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q8" value="1" required /> Sim (1)</label>
-                    <label><input type="radio" name="q8" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>9) Este esquecimento está impedindo alguma atividade do cotidiano?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q9" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q9" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>10) No último mês, ficou com desânimo, tristeza ou desesperança?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q10" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q10" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>11) No último mês, perdeu o interesse ou prazer em atividades?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q11" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q11" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>12) Incapaz de elevar os braços acima dos ombros?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q12" value="1" required /> Sim (1)</label>
-                    <label><input type="radio" name="q12" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>13) Incapaz de manusear/segurar pequenos objetos?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q13" value="1" required /> Sim (1)</label>
-                    <label><input type="radio" name="q13" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>14) Alguma das condições abaixo?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q14" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q14" value="0" /> Não (0)</label>
-                  </div>
-                  <div class="help">Ex.: perda de peso não intencional de 4,5kg ou 5% do peso corporal no último ano, ou 6kg nos últimos 6 meses ou 3kg no último mês, IMC&lt;22, panturrilha &lt;31 cm, velocidade de marcha 4m &gt;5s.</div>
-                </div>
-
-                <div class="q">
-                  <label>15) Dificuldade para caminhar que impede alguma atividade?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q15" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q15" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>16) Duas ou mais quedas no último ano?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q16" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q16" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>17) Perde urina ou fezes sem querer?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q17" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q17" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>18) Problemas de visão que impedem alguma atividade? (uso de óculos permitido)</label>
-                  <div class="column">
-                    <label><input type="radio" name="q18" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q18" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-                <div class="q">
-                  <label>19) Problemas de audição que impedem alguma atividade? (aparelho permitido)</label>
-                  <div class="column">
-                    <label><input type="radio" name="q19" value="2" required /> Sim (2)</label>
-                    <label><input type="radio" name="q19" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-
-                <div class="q">
-                  <label>20) Alguma das condições: ≥5 doenças crônicas; uso regular de ≥5 medicamentos; internação nos últimos 6 meses?</label>
-                  <div class="column">
-                    <label><input type="radio" name="q20" value="4" required /> Sim (4)</label>
-                    <label><input type="radio" name="q20" value="0" /> Não (0)</label>
-                  </div>
-                </div>
-              </div>
-              <div class="actions">
-                <button type="button" class="secondary" data-action="limpar">Limpar</button>
-              </div>
-              <div id="resultado-ivcf" class="resultado"></div>
-              <div class="help" id="legenda-ivcf">
-                <strong>Risco de fragilidade clínico funcional:</strong><br />
-                Baixa (0 a 6 pontos),<br />
-                Moderada (7 a 14 pontos)<br />
-                Alta vulnerabilidade (≥ 15 pontos) clínico funcional
-              </div>
-              </div>
-            </section>
           </form>
           <div class="q">
             <label for="plano_cuidados">Plano de Cuidados</label>
@@ -1815,6 +1639,183 @@
       <h1>Outros Testes</h1>
       <div class="section-body">
 
+        <form id="form-ivcf">
+          <section class="collapsible">
+            <h2>IVCF‑20 — Índice de Vulnerabilidade Clínico‑Funcional</h2>
+            <div class="section-body">
+            <div class="group">
+              <div class="q" data-weight="idade">
+                <label>1) Qual é a sua idade?</label>
+                <div class="column">
+                  <label><input type="radio" name="idade" value="0" required /> 60–74 anos (0)</label>
+                  <label><input type="radio" name="idade" value="1" /> 75–84 anos (1)</label>
+                  <label><input type="radio" name="idade" value="3" /> ≥ 85 anos (3)</label>
+                </div>
+              </div>
+
+              <div class="q" data-weight="percepcao">
+                <label>2) Em geral, comparando com pessoas da sua mesma idade, você diria que a sua saúde é:</label>
+                <div class="column">
+                  <label><input type="radio" name="percepcao" value="0" required /> Excelente/Muito boa/Boa (0)</label>
+                  <label><input type="radio" name="percepcao" value="1" /> Regular ou Ruim (1)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>3) Por causa de sua saúde ou condição física, você deixou de fazer compras?</label>
+                <div class="column">
+                  <label><input type="radio" name="q3" value="4" required /> Sim (4)</label>
+                  <label><input type="radio" name="q3" value="0" /> Não/por outros motivos (0)</label>
+                </div>
+                <div class="help">AVD instrumental — pontuação máx. desta sub‑seção: 4</div>
+              </div>
+
+              <div class="q">
+                <label>4) Por causa de sua saúde ou condição física, você deixou de controlar seu dinheiro, gasto, ou pagar as contas de sua casa?</label>
+                <div class="column">
+                  <label><input type="radio" name="q4" value="4" required /> Sim (4)</label>
+                  <label><input type="radio" name="q4" value="0" /> Não/por outros motivos (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>5) Por causa de sua saúde ou condição física, você deixou de realizar pequenos trabalhos domésticos, como lavar louça, arrumar a casa ou fazer limpeza leve?</label>
+                <div class="column">
+                  <label><input type="radio" name="q5" value="4" required /> Sim (4)</label>
+                  <label><input type="radio" name="q5" value="0" /> Não/por outros motivos (0)</label>
+                </div>
+              </div>
+              <div class="help">Observação: AVD instrumental tem pontuação máxima combinada 4, mesmo com múltiplos “Sim”. O cálculo abaixo aplica este teto.</div>
+
+              <div class="q">
+                <label>6) Por causa da saúde, deixou de tomar banho sozinho?</label>
+                <div class="column">
+                  <label><input type="radio" name="q6" value="6" required /> Sim (6)</label>
+                  <label><input type="radio" name="q6" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>7) Algum familiar ou amigo falou que você está ficando esquecido?</label>
+                <div class="column">
+                  <label><input type="radio" name="q7" value="1" required /> Sim (1)</label>
+                  <label><input type="radio" name="q7" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>8) Este esquecimento está piorando nos últimos meses?</label>
+                <div class="column">
+                  <label><input type="radio" name="q8" value="1" required /> Sim (1)</label>
+                  <label><input type="radio" name="q8" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>9) Este esquecimento está impedindo alguma atividade do cotidiano?</label>
+                <div class="column">
+                  <label><input type="radio" name="q9" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q9" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>10) No último mês, ficou com desânimo, tristeza ou desesperança?</label>
+                <div class="column">
+                  <label><input type="radio" name="q10" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q10" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>11) No último mês, perdeu o interesse ou prazer em atividades?</label>
+                <div class="column">
+                  <label><input type="radio" name="q11" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q11" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>12) Incapaz de elevar os braços acima dos ombros?</label>
+                <div class="column">
+                  <label><input type="radio" name="q12" value="1" required /> Sim (1)</label>
+                  <label><input type="radio" name="q12" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>13) Incapaz de manusear/segurar pequenos objetos?</label>
+                <div class="column">
+                  <label><input type="radio" name="q13" value="1" required /> Sim (1)</label>
+                  <label><input type="radio" name="q13" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>14) Alguma das condições abaixo?</label>
+                <div class="column">
+                  <label><input type="radio" name="q14" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q14" value="0" /> Não (0)</label>
+                </div>
+                <div class="help">Ex.: perda de peso não intencional de 4,5kg ou 5% do peso corporal no último ano, ou 6kg nos últimos 6 meses ou 3kg no último mês, IMC&lt;22, panturrilha &lt;31 cm, velocidade de marcha 4m &gt;5s.</div>
+              </div>
+
+              <div class="q">
+                <label>15) Dificuldade para caminhar que impede alguma atividade?</label>
+                <div class="column">
+                  <label><input type="radio" name="q15" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q15" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>16) Duas ou mais quedas no último ano?</label>
+                <div class="column">
+                  <label><input type="radio" name="q16" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q16" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>17) Perde urina ou fezes sem querer?</label>
+                <div class="column">
+                  <label><input type="radio" name="q17" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q17" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>18) Problemas de visão que impedem alguma atividade? (uso de óculos permitido)</label>
+                <div class="column">
+                  <label><input type="radio" name="q18" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q18" value="0" /> Não (0)</label>
+                </div>
+              </div>
+              <div class="q">
+                <label>19) Problemas de audição que impedem alguma atividade? (aparelho permitido)</label>
+                <div class="column">
+                  <label><input type="radio" name="q19" value="2" required /> Sim (2)</label>
+                  <label><input type="radio" name="q19" value="0" /> Não (0)</label>
+                </div>
+              </div>
+
+              <div class="q">
+                <label>20) Alguma das condições: ≥5 doenças crônicas; uso regular de ≥5 medicamentos; internação nos últimos 6 meses?</label>
+                <div class="column">
+                  <label><input type="radio" name="q20" value="4" required /> Sim (4)</label>
+                  <label><input type="radio" name="q20" value="0" /> Não (0)</label>
+                </div>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="secondary" data-action="limpar">Limpar</button>
+            </div>
+            <div id="resultado-ivcf" class="resultado"></div>
+            <div class="help" id="legenda-ivcf">
+              <strong>Risco de fragilidade clínico funcional:</strong><br />
+              Baixa (0 a 6 pontos),<br />
+              Moderada (7 a 14 pontos)<br />
+              Alta vulnerabilidade (≥ 15 pontos) clínico funcional
+            </div>
+            </div>
+          </section>
+        </form>
+
         <form id="form-phq9">
           <section class="collapsible">
             <h2>PHQ-9 — Questionário de Saúde do Paciente</h2>
@@ -1917,219 +1918,247 @@
             <div class="section-body">
             <div class="group">
               <div class="help"><strong>Critério de positividade:</strong> ≥ 2 "Sim" nos indicadores gerais <strong>E</strong> ≥ 1 "Sim" nos indicadores clínicos.</div>
-              <h4>Indicadores Gerais</h4>
-              <div class="q">
-                <label>1) A saúde geral está se deteriorando (pior condição em relação a 6–12 meses atrás)?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_1" value="0" /> Não</label>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Gerais</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>1) A saúde geral está se deteriorando (pior condição em relação a 6–12 meses atrás)?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>2) Duas ou mais internações hospitalares não planejadas no último ano?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_2" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>3) Dependente para a maioria das AVDs ou em cuidados em instituição de longa permanência?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_3" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_3" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>4) Limitações funcionais crescentes nas atividades de vida diária?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_4" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_4" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>5) Perda de peso não intencional e/ou diminuição do apetite?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_5" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_5" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>6) Sintomas persistentes de difícil controle apesar do tratamento?</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_geral_6" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_geral_6" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>2) Duas ou mais internações hospitalares não planejadas no último ano?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_2" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Câncer</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>Câncer avançado com metástase ou tumor hematológico sem resposta ao tratamento</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_cancer_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_cancer_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Deterioração clínica rápida e redução da funcionalidade por câncer</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_cancer_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_cancer_2" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>3) Dependente para a maioria das AVDs ou em cuidados em instituição de longa permanência?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_3" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_3" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Demência / Delirium</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>Demência grave (incapaz de se comunicar significativamente)</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Dependente para todas as AVDs</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_2" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Dificuldade de deglutição ou recusa de alimentação</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_3" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_3" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Perda de peso e/ou desnutrição associada à demência</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_4" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_4" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Infecções recorrentes (pneumonia, infecção urinária)</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_5" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_5" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Episódios de delirium ou demência comportamental de difícil controle</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_demencia_6" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_demencia_6" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>4) Limitações funcionais crescentes nas atividades de vida diária?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_4" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_4" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Neurológico</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>AVC com disfagia e/ou deterioração funcional progressiva</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_neuro_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_neuro_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Doença neurológica progressiva (ELA, Parkinson avançado, EM) não responsiva ao tratamento</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_neuro_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_neuro_2" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Piora progressiva do movimento, da comunicação e da deglutição</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_neuro_3" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_neuro_3" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Complicações neurológicas: pneumonia aspirativa, infecções recorrentes</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_neuro_4" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_neuro_4" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>5) Perda de peso não intencional e/ou diminuição do apetite?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_5" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_5" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Cardíaco</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>ICC grave (NYHA III-IV) ou angina grave, refratária ao tratamento</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_cardio_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_cardio_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Deterioração clínica cardíaca apesar do tratamento otimizado</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_cardio_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_cardio_2" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>6) Sintomas persistentes de difícil controle apesar do tratamento?</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_geral_6" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_geral_6" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Respiratório</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>DPOC grave (MRC 4–5) ou doença pulmonar intersticial avançada</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_resp_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_resp_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Necessidade de oxigênio em repouso</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_resp_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_resp_2" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Internações repetidas por exacerbações respiratórias graves</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_resp_3" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_resp_3" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Câncer</h4>
-              <div class="q">
-                <label>Câncer avançado com metástase ou tumor hematológico sem resposta ao tratamento</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_cancer_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_cancer_1" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Renal</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>IRC grave (TFG &lt; 15 mL/min) ou IRC dialítica com deterioração clínica</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_renal_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_renal_1" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Recusa ou contraindicação à diálise</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_renal_2" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_renal_2" value="0" /> Não</label>
+                    </div>
+                  </div>
+                  <div class="q">
+                    <label>Deterioração clínica progressiva apesar da diálise</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_renal_3" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_renal_3" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>Deterioração clínica rápida e redução da funcionalidade por câncer</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_cancer_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_cancer_2" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Hepática</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>Cirrose hepática avançada com complicações (ascite, encefalopatia, sangramento)</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_hepatica_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_hepatica_1" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Demência / Delirium</h4>
-              <div class="q">
-                <label>Demência grave (incapaz de se comunicar significativamente)</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_1" value="0" /> Não</label>
+              </section>
+              <section class="collapsible spict-grupo">
+                <h4>Indicadores Clínicos — Outras condições</h4>
+                <div class="section-body">
+                  <div class="q">
+                    <label>Fragilidade com múltiplas comorbidades e limitação funcional grave</label>
+                    <div class="row">
+                      <label><input type="radio" name="spict_outras_1" value="1" required /> Sim</label>
+                      <label><input type="radio" name="spict_outras_1" value="0" /> Não</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="q">
-                <label>Dependente para todas as AVDs</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_2" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Dificuldade de deglutição ou recusa de alimentação</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_3" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_3" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Perda de peso e/ou desnutrição associada à demência</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_4" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_4" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Infecções recorrentes (pneumonia, infecção urinária)</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_5" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_5" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Episódios de delirium ou demência comportamental de difícil controle</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_demencia_6" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_demencia_6" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Neurológico</h4>
-              <div class="q">
-                <label>AVC com disfagia e/ou deterioração funcional progressiva</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_neuro_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_neuro_1" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Doença neurológica progressiva (ELA, Parkinson avançado, EM) não responsiva ao tratamento</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_neuro_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_neuro_2" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Piora progressiva do movimento, da comunicação e da deglutição</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_neuro_3" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_neuro_3" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Complicações neurológicas: pneumonia aspirativa, infecções recorrentes</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_neuro_4" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_neuro_4" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Cardíaco</h4>
-              <div class="q">
-                <label>ICC grave (NYHA III-IV) ou angina grave, refratária ao tratamento</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_cardio_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_cardio_1" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Deterioração clínica cardíaca apesar do tratamento otimizado</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_cardio_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_cardio_2" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Respiratório</h4>
-              <div class="q">
-                <label>DPOC grave (MRC 4–5) ou doença pulmonar intersticial avançada</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_resp_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_resp_1" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Necessidade de oxigênio em repouso</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_resp_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_resp_2" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Internações repetidas por exacerbações respiratórias graves</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_resp_3" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_resp_3" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Renal</h4>
-              <div class="q">
-                <label>IRC grave (TFG &lt; 15 mL/min) ou IRC dialítica com deterioração clínica</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_renal_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_renal_1" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Recusa ou contraindicação à diálise</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_renal_2" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_renal_2" value="0" /> Não</label>
-                </div>
-              </div>
-              <div class="q">
-                <label>Deterioração clínica progressiva apesar da diálise</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_renal_3" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_renal_3" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Hepática</h4>
-              <div class="q">
-                <label>Cirrose hepática avançada com complicações (ascite, encefalopatia, sangramento)</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_hepatica_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_hepatica_1" value="0" /> Não</label>
-                </div>
-              </div>
-
-              <h4>Indicadores Clínicos — Outras condições</h4>
-              <div class="q">
-                <label>Fragilidade com múltiplas comorbidades e limitação funcional grave</label>
-                <div class="row">
-                  <label><input type="radio" name="spict_outras_1" value="1" required /> Sim</label>
-                  <label><input type="radio" name="spict_outras_1" value="0" /> Não</label>
-                </div>
-              </div>
+              </section>
             </div>
             <div id="resultado-spict" class="resultado"></div>
             <div class="actions">
@@ -2352,16 +2381,8 @@
             <input class="form-input" type="text" id="modal_med_nome" name="modal_med_nome" />
           </div>
           <div class="q">
-            <label for="modal_med_justificativa">Justificativa de uso</label>
-            <input class="form-input" type="text" id="modal_med_justificativa" name="modal_med_justificativa" />
-          </div>
-          <div class="q">
             <label for="modal_med_dose">Dose e posologia</label>
             <input class="form-input" type="text" id="modal_med_dose" name="modal_med_dose" />
-          </div>
-          <div class="q">
-            <label for="modal_med_tempo">Tempo de uso</label>
-            <input class="form-input" type="text" id="modal_med_tempo" name="modal_med_tempo" />
           </div>
           <div class="actions">
             <button type="submit" id="btn-salvar-medicamento">Salvar</button>
@@ -2539,6 +2560,6 @@
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script type="module" src="scripts/app.js?v=4"></script>
+  <script type="module" src="scripts/app.js?v=8"></script>
 </body>
 </html>

@@ -153,11 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       // Renderizar por categoria
+      const categoriaMedicamentos = 'Medicamentos - Prescrição Potencialmente Inapropriada';
+      const temMedicamentos = Array.isArray(dados.anamnese.medicamentos) && dados.anamnese.medicamentos.length > 0;
       for (const [categoria, campos] of Object.entries(categorias)) {
         const camposPreenchidos = campos.filter(c => dados.anamnese[c]);
-        if (camposPreenchidos.length === 0) continue;
+        const mostrarMedicamentos = categoria === categoriaMedicamentos && temMedicamentos;
+        if (camposPreenchidos.length === 0 && !mostrarMedicamentos) continue;
 
-        html += `<h3>${categoria}</h3>`;
+        if (camposPreenchidos.length > 0) html += `<h3>${categoria}</h3>`;
 
         // Se for a categoria Valores, renderizar tudo como texto corrido (linhas)
         if (categoria === 'Valores') {
@@ -197,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
 
-        // Renderizar medicamentos logo após "Medicamentos - Informações Gerais"
-        if (categoria === 'Medicamentos - Informações Gerais' && dados.anamnese.medicamentos && dados.anamnese.medicamentos.length > 0) {
+        // Renderizar medicamentos logo após a categoria de prescrição
+        if (mostrarMedicamentos) {
           html += `<h3>Medicamentos em Uso</h3>`;
 
           dados.anamnese.medicamentos.forEach((med, index) => {
@@ -209,14 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (med.nome) {
               html += `<div class="info-item"><span class="info-label">Nome:</span> <span class="info-value">${med.nome}</span></div>`;
             }
-            if (med.justificativa) {
-              html += `<div class="info-item"><span class="info-label">Justificativa:</span> <span class="info-value">${med.justificativa}</span></div>`;
-            }
             if (med.dose) {
               html += `<div class="info-item"><span class="info-label">Dose e Posologia:</span> <span class="info-value">${med.dose}</span></div>`;
-            }
-            if (med.tempo) {
-              html += `<div class="info-item"><span class="info-label">Tempo de Uso:</span> <span class="info-value">${med.tempo}</span></div>`;
             }
 
             html += `</div></div>`;

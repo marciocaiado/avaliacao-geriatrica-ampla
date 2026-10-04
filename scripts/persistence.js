@@ -1,125 +1,131 @@
 /**
  * Módulo de Persistência do Formulário
- * Salva e restaura o estado do formulário usando sessionStorage
+ * Salva e restaura o estado do formulário usando localStorage, para que a
+ * avaliação sobreviva ao fechamento da aba (comum no mobile quando o
+ * navegador vai para segundo plano).
  */
 
 const STORAGE_KEY = 'formState';
 
+// Avaliações salvas há mais tempo que isso são descartadas (dados sensíveis)
+const EXPIRACAO_MS = 12 * 60 * 60 * 1000;
+
 /**
- * Salva o estado atual de todos os campos do formulário em sessionStorage
+ * Lê o estado atual de todos os campos do formulário
+ * @returns {Object} Mapa de chave → valor dos campos
  */
-export function salvarFormulario() {
+export function capturarEstado() {
   const main = document.querySelector('main');
-  if (!main) return;
-
   const state = {};
-  const elementos = main.querySelectorAll('input, textarea, select');
+  if (!main) return state;
 
-  // Campos que não devem ser persistidos
-  const excludedFields = [];
-
-  elementos.forEach(el => {
+  main.querySelectorAll('input, textarea, select').forEach(el => {
     const key = el.name || el.id;
     if (!key) return;
-
-    // Excluir campos do Katz da persistência
-    if (excludedFields.includes(key)) return;
 
     if (el.type === 'radio') {
       if (el.checked) {
         state[`radio:${key}`] = el.value;
       }
     } else if (el.type === 'checkbox') {
-      const uniqueKey = `checkbox:${key}:${el.value}`;
-      state[uniqueKey] = el.checked;
+      state[`checkbox:${key}:${el.value}`] = el.checked;
     } else {
       state[key] = el.value;
     }
   });
 
-  // Salvar medicamentos adicionados dinamicamente
-  const medicamentos = [];
-  document.querySelectorAll('.medicamento-item').forEach(item => {
-    const nome = item.querySelector('[id^="med_nome_"]');
-    const justificativa = item.querySelector('[id^="med_justificativa_"]');
-    const dose = item.querySelector('[id^="med_dose_"]');
-    const tempo = item.querySelector('[id^="med_tempo_"]');
-    medicamentos.push({
-      nome: nome ? nome.value : '',
-      justificativa: justificativa ? justificativa.value : '',
-      dose: dose ? dose.value : '',
-      tempo: tempo ? tempo.value : '',
-    });
-  });
-
-  if (medicamentos.length > 0) {
-    state['__medicamentos__'] = medicamentos;
-  }
-
-  try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {
-    console.warn('[Persistência] Erro ao salvar:', e);
-  }
+  return state;
 }
 
 /**
- * Restaura o estado do formulário a partir do sessionStorage
+ * Aplica um estado capturado por capturarEstado() aos campos do formulário
+ * @param {Object} state - Estado a aplicar
  */
-export function restaurarFormulario() {
-  let state;
-  try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    state = JSON.parse(raw);
-  } catch (e) {
-    console.warn('[Persistência] Erro ao ler dados salvos:', e);
-    return;
-  }
-
+export function aplicarEstado(state) {
   const main = document.querySelector('main');
-  if (!main) return;
+  if (!main || !state) return;
 
-  // Restaurar campos de texto, textarea e select
   for (const [key, value] of Object.entries(state)) {
-    if (key.startsWith('radio:') || key.startsWith('checkbox:') || key === '__medicamentos__') continue;
-
-    const el = main.querySelector(`[name="${key}"], [id="${key}"]`);
-    if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT')) {
-      el.value = value;
-    }
-  }
-
-  // Restaurar radio buttons
-  for (const [key, value] of Object.entries(state)) {
-    if (!key.startsWith('radio:')) continue;
-    const name = key.substring(6);
-    const radio = main.querySelector(`input[type="radio"][name="${name}"][value="${value}"]`);
-    if (radio) radio.checked = true;
-  }
-
-  // Restaurar checkboxes
-  for (const [key, value] of Object.entries(state)) {
-    if (!key.startsWith('checkbox:')) continue;
-    const parts = key.substring(9);
-    const lastColon = parts.lastIndexOf(':');
-    const name = parts.substring(0, lastColon);
-    const cbValue = parts.substring(lastColon + 1);
-    // Buscar por atributo value primeiro; se não encontrar, buscar só por name e comparar a propriedade value
-    let cb = main.querySelector(`input[type="checkbox"][name="${name}"][value="${cbValue}"]`);
-    if (!cb) {
-      const candidates = main.querySelectorAll(`input[type="checkbox"][name="${name}"]`);
-      for (const c of candidates) {
-        if (c.value === cbValue) { cb = c; break; }
+    if (key.startsWith('radio:')) {
+      const name = key.substring(6);
+      const radio = main.querySelector(`input[type="radio"][name="${name}"][value="${value}"]`);
+      if (radio) radio.checked = true;
+    } else if (key.startsWith('checkbox:')) {
+      const parts = key.substring(9);
+      const lastColon = parts.lastIndexOf(':');
+      const name = parts.substring(0, lastColon);
+      const cbValue = parts.substring(lastColon + 1);
+      const cb = Array.from(main.querySelectorAll(`input[type="checkbox"][name="${name}"]`))
+        .find(c => c.value === cbValue);
+      if (cb) cb.checked = value;
+    } else {
+      const el = main.querySelector(`[name="${key}"], [id="${key}"]`);
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT')) {
+        el.value = value;
       }
     }
-    if (cb) cb.checked = value;
   }
 }
 
 /**
- * Remove os dados salvos do sessionStorage
+ * Salva o estado atual do formulário
+ * @returns {boolean} true se salvou com sucesso
+ */
+export function salvarFormulario() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ savedAt: Date.now(), state: capturarEstado() }));
+    return true;
+  } catch (e) {
+    console.warn('[Persistência] Erro ao salvar:', e);
+    return false;
+  }
+}
+
+/**
+ * Lê a avaliação salva, migrando o formato antigo (sessionStorage) e
+ * descartando avaliações expiradas
+ * @returns {{savedAt: number, state: Object}|null}
+ */
+export function lerEstadoSalvo() {
+  try {
+    const legado = sessionStorage.getItem(STORAGE_KEY);
+    if (legado && !localStorage.getItem(STORAGE_KEY)) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ savedAt: Date.now(), state: JSON.parse(legado) }));
+    }
+    sessionStorage.removeItem(STORAGE_KEY);
+
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const salvo = JSON.parse(raw);
+    if (!salvo?.state || Date.now() - salvo.savedAt > EXPIRACAO_MS) {
+      limparFormularioSalvo();
+      return null;
+    }
+    return salvo;
+  } catch (e) {
+    console.warn('[Persistência] Erro ao ler dados salvos:', e);
+    return null;
+  }
+}
+
+/**
+ * Restaura o estado do formulário salvo
+ * @returns {{savedAt: number, state: Object}|null} A avaliação restaurada, se havia uma
+ */
+export function restaurarFormulario() {
+  const salvo = lerEstadoSalvo();
+  if (salvo) aplicarEstado(salvo.state);
+  return salvo;
+}
+
+/**
+ * Remove os dados salvos
  */
 export function limparFormularioSalvo() {
-  sessionStorage.removeItem(STORAGE_KEY);
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch (e) {
+    console.warn('[Persistência] Erro ao limpar:', e);
+  }
 }

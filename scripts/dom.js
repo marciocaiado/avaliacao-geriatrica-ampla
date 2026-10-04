@@ -49,12 +49,10 @@ const collectMedicamentosFromDOM = () => {
   document.querySelectorAll('.medicamento-item').forEach((item, index) => {
     const id = item.getAttribute('data-medicamento-id') || index + 1;
     const medNome = item.querySelector(`[name="med${id}_nome"]`)?.value?.trim() || '';
-    const justificativa = item.querySelector(`[name="med${id}_justificativa"]`)?.value?.trim() || '';
     const dose = item.querySelector(`[name="med${id}_dose"]`)?.value?.trim() || '';
-    const tempo = item.querySelector(`[name="med${id}_tempo"]`)?.value?.trim() || '';
 
-    if (medNome || justificativa || dose || tempo) {
-      medicamentos.push({ nome: medNome, justificativa, dose, tempo });
+    if (medNome || dose) {
+      medicamentos.push({ nome: medNome, dose });
     }
   });
   return medicamentos;
@@ -69,14 +67,8 @@ const buildMedicamentosResumoHTML = (medicamentos) => {
       if (med.nome) {
         campos.push(`<div class="info-item"><span class="info-label">Nome:</span> <span class="info-value">${med.nome}</span></div>`);
       }
-      if (med.justificativa) {
-        campos.push(`<div class="info-item"><span class="info-label">Justificativa:</span> <span class="info-value">${med.justificativa}</span></div>`);
-      }
       if (med.dose) {
         campos.push(`<div class="info-item"><span class="info-label">Dose e Posologia:</span> <span class="info-value">${med.dose}</span></div>`);
-      }
-      if (med.tempo) {
-        campos.push(`<div class="info-item"><span class="info-label">Tempo de Uso:</span> <span class="info-value">${med.tempo}</span></div>`);
       }
       if (!campos.length) return '';
       return `
@@ -107,7 +99,6 @@ export function atualizarResumo() {
   const secoes = [];
 
   const coleta = [
-    ['IVCF-20', 'resultado-ivcf'],
     ['FRAIL', 'resultado-frail'],
     ['SARC-F', 'resultado-sarcf'],
     ['Barthel', 'resultado-barthel'],
@@ -124,6 +115,12 @@ export function atualizarResumo() {
     ['MEEM', 'resultado-meem'],
     ['Velocidade de Marcha', 'resultado-marcha'],
     ['Sentar e Levantar', 'resultado-sentar-levantar'],
+    ['IVCF-20', 'resultado-ivcf'],
+    ['FAST', 'resultado-fast'],
+    ['Charlson', 'resultado-charlson'],
+    ['PHQ-9', 'resultado-phq9'],
+    ['SPICT-BR', 'resultado-spict'],
+    ['PPS', 'resultado-pps'],
   ];
 
   coleta.forEach(([titulo, id]) => {

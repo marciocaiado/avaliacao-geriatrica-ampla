@@ -7,8 +7,9 @@
 import * as constants from './constants.js?v=4';
 import * as utils from './utils.js?v=4';
 import * as calculations from './calculations.js?v=4';
-import * as dom from './dom.js?v=4';
-import { salvarFormulario, restaurarFormulario, limparFormularioSalvo } from './persistence.js?v=4';
+import * as dom from './dom.js?v=6';
+import { salvarFormulario, restaurarFormulario, limparFormularioSalvo, capturarEstado, aplicarEstado, lerEstadoSalvo } from './persistence.js?v=5';
+import { mostrarSnackbar, confirmar } from './feedback.js?v=1';
 
 // Funções de formatação dos resultados
 
@@ -511,12 +512,10 @@ function visualizarResultado() {
     medicamentoItems.forEach((item, index) => {
       const id = item.getAttribute('data-medicamento-id') || (index + 1);
       const medNome = item.querySelector(`[name="med${id}_nome"]`)?.value || '';
-      const justificativa = item.querySelector(`[name="med${id}_justificativa"]`)?.value || '';
       const dose = item.querySelector(`[name="med${id}_dose"]`)?.value || '';
-      const tempo = item.querySelector(`[name="med${id}_tempo"]`)?.value || '';
 
-      if (medNome || justificativa || dose || tempo) {
-        medicamentos.push({ id, nome: medNome, justificativa, dose, tempo });
+      if (medNome || dose) {
+        medicamentos.push({ id, nome: medNome, dose });
         hasAnamneseData = true;
       }
     });
@@ -528,7 +527,6 @@ function visualizarResultado() {
 
   // Coletar resultados dos testes a partir dos divs de resultado
   const coleta = [
-    ['IVCF-20', 'resultado-ivcf'],
     ['FRAIL', 'resultado-frail'],
     ['SARC-F', 'resultado-sarcf'],
     ['Barthel', 'resultado-barthel'],
@@ -545,6 +543,7 @@ function visualizarResultado() {
     ['MEEM', 'resultado-meem'],
     ['Velocidade de Marcha', 'resultado-marcha'],
     ['Sentar e Levantar', 'resultado-sentar-levantar'],
+    ['IVCF-20', 'resultado-ivcf'],
     ['FAST', 'resultado-fast'],
     ['Charlson', 'resultado-charlson'],
     ['PHQ-9', 'resultado-phq9'],
@@ -605,8 +604,9 @@ function bindActions() {
 
     if (!pesoEl || !alturaEl || !imcEl) return;
 
-    const peso = parseFloat(pesoEl.value);
-    const altura = parseFloat(alturaEl.value) / 100;
+    // Aceita vírgula como separador decimal (teclado pt-BR)
+    const peso = parseFloat(pesoEl.value.replace(',', '.'));
+    const altura = parseFloat(alturaEl.value.replace(',', '.')) / 100;
 
     if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
       imcEl.value = '';
@@ -641,8 +641,14 @@ function bindActions() {
   // Botão Novo
   const btnNovo = document.getElementById('btn-novo');
   if (btnNovo) {
-    btnNovo.addEventListener('click', () => {
-      if (confirm('Deseja limpar todos os dados do teste? Esta ação não pode ser desfeita.')) {
+    btnNovo.addEventListener('click', async () => {
+      const nome = (document.getElementById('anamnese_nome')?.value || '').trim();
+      const confirmado = await confirmar({
+        titulo: nome ? `Apagar avaliação de ${nome}?` : 'Iniciar nova avaliação?',
+        mensagem: 'Todos os dados preenchidos serão apagados. Esta ação não pode ser desfeita.',
+        confirmarLabel: 'Apagar e começar nova',
+      });
+      if (confirmado) {
         // Impedir que beforeunload salve novamente
         window._limpandoFormulario = true;
 
@@ -750,15 +756,54 @@ function setupFecheOlhosFullscreen() {
   }
 }
 
+// "Desfazer" para os botões Limpar: guarda o estado antes de limpar e
+// oferece restaurá-lo por alguns segundos
+function setupDesfazerLimpar() {
+  const main = document.querySelector('main');
+  if (!main) return;
+
+  // Fase de captura: roda antes dos handlers de limpar de cada botão
+  main.addEventListener('click', (e) => {
+    const botao = e.target.closest('[data-action^="limpar"]');
+    if (!botao) return;
+
+    const estadoAnterior = capturarEstado();
+    const tituloSecao = botao.closest('section')?.querySelector(':scope > h1, :scope > h2')?.textContent || '';
+    const nomeTeste = botao.dataset.action === 'limpar-resumo'
+      ? 'Resumo'
+      : (tituloSecao.split('—')[0].trim() || 'Teste');
+
+    // Depois que o handler específico limpou os campos
+    setTimeout(() => {
+      if (botao.dataset.action !== 'limpar-resumo') dom.atualizarResumo();
+      salvarFormulario();
+
+      mostrarSnackbar({
+        mensagem: `${nomeTeste} limpo`,
+        acaoLabel: 'Desfazer',
+        onAcao: () => {
+          aplicarEstado(estadoAnterior);
+          recalcularTodosResultados();
+          restaurarResultadosMobilidade();
+          salvarFormulario();
+          mostrarSnackbar({ mensagem: `${nomeTeste} restaurado`, duracao: 3000 });
+        },
+      });
+    }, 0);
+  }, true);
+}
+
 // Configuração dos botões de limpar
 function setupLimparButtons() {
+  setupDesfazerLimpar();
+
   const limparButton = document.querySelector('[data-action="limpar"]');
   const formElement = document.getElementById('form-ivcf');
   if (limparButton && formElement) {
     limparButton.addEventListener('click', () => {
       formElement.reset();
-      dom.limparResultados();
-      limparFormularioSalvo();
+      const el = document.getElementById('resultado-ivcf');
+      if (el) el.innerHTML = '';
     });
   }
 
@@ -1215,6 +1260,49 @@ function restaurarResultadosMobilidade() {
   }
 }
 
+// Cria o card de um medicamento (valores atribuídos via .value para não
+// interpretar aspas ou HTML digitados pelo usuário)
+function criarItemMedicamento(id, { nome = '', dose = '' } = {}) {
+  const item = document.createElement('div');
+  item.className = 'medicamento-item';
+  item.setAttribute('data-medicamento-id', id);
+  item.innerHTML = `
+    <section class="open">
+      <h4 style="margin: 8px;">Medicamento ${id} <span class="delete-medicamento" style="margin: 8px;" data-id="${id}">&times;</span></h4>
+      <div class="section-body">
+        <div class="q">
+          <label for="med${id}_nome">Nome</label>
+          <input class="form-input" type="text" id="med${id}_nome" name="med${id}_nome" />
+        </div>
+        <div class="q">
+          <label for="med${id}_dose">Dose e posologia</label>
+          <input class="form-input" type="text" id="med${id}_dose" name="med${id}_dose" />
+        </div>
+      </div>
+    </section>
+  `;
+  item.querySelector(`[name="med${id}_nome"]`).value = nome;
+  item.querySelector(`[name="med${id}_dose"]`).value = dose;
+  return item;
+}
+
+// Recria os cards de medicamento salvos, para que restaurarFormulario()
+// encontre os campos med{N}_* e preencha seus valores
+function recriarMedicamentosSalvos() {
+  const container = document.getElementById('medicamentos-container');
+  const salvo = lerEstadoSalvo();
+  if (!container || !salvo) return;
+
+  const ids = new Set();
+  Object.keys(salvo.state).forEach((key) => {
+    const match = key.match(/^med(\d+)_(nome|dose)$/);
+    if (match) ids.add(Number(match[1]));
+  });
+  [...ids].sort((a, b) => a - b).forEach((id) => {
+    container.appendChild(criarItemMedicamento(id));
+  });
+}
+
 // Modal de Medicamentos
 function setupMedicamentosModal() {
   const modal = document.getElementById('medicamento-modal');
@@ -1245,45 +1333,22 @@ function setupMedicamentosModal() {
 
   formModal.onsubmit = function (event) {
     event.preventDefault();
-    const newId = (document.querySelectorAll('.medicamento-item').length || 0) + 1;
+    const ids = Array.from(document.querySelectorAll('.medicamento-item'))
+      .map(item => Number(item.getAttribute('data-medicamento-id')) || 0);
+    const newId = Math.max(0, ...ids) + 1;
 
-    const nome = document.getElementById('modal_med_nome').value;
-    const justificativa = document.getElementById('modal_med_justificativa').value;
-    const dose = document.getElementById('modal_med_dose').value;
-    const tempo = document.getElementById('modal_med_tempo').value;
-
-    const newMedicamento = document.createElement('div');
-    newMedicamento.className = 'medicamento-item';
-    newMedicamento.setAttribute('data-medicamento-id', newId);
-    newMedicamento.innerHTML = `
-      <section class="open">
-        <h4 style="margin: 8px;">Medicamento ${newId} <span class="delete-medicamento" style="margin: 8px;" data-id="${newId}">&times;</span></h4>
-        <div class="section-body">
-          <div class="q">
-            <label for="med${newId}_nome">Nome</label>
-            <input class="form-input" type="text" id="med${newId}_nome" name="med${newId}_nome" value="${nome}" />
-          </div>
-          <div class="q">
-            <label for="med${newId}_justificativa">Justificativa de uso</label>
-            <input class="form-input" type="text" id="med${newId}_justificativa" name="med${newId}_justificativa" value="${justificativa}" />
-          </div>
-          <div class="q">
-            <label for="med${newId}_dose">Dose e posologia</label>
-            <input class="form-input" type="text" id="med${newId}_dose" name="med${newId}_dose" value="${dose}" />
-          </div>
-          <div class="q">
-            <label for="med${newId}_tempo">Tempo de uso</label>
-            <input class="form-input" type="text" id="med${newId}_tempo" name="med${newId}_tempo" value="${tempo}" />
-          </div>
-        </div>
-      </section>
-    `;
+    const newMedicamento = criarItemMedicamento(newId, {
+      nome: document.getElementById('modal_med_nome').value,
+      dose: document.getElementById('modal_med_dose').value,
+    });
 
     medicamentosContainer.appendChild(newMedicamento);
     medicamentosContainer.insertAdjacentElement('afterend', addMedicationButtonContainer);
 
     formModal.reset();
     modal.style.display = 'none';
+    dom.atualizarResumo();
+    salvarFormulario();
   };
 
   medicamentosContainer.addEventListener('click', function (event) {
@@ -1291,6 +1356,8 @@ function setupMedicamentosModal() {
       const medicamentoId = event.target.getAttribute('data-id');
       const medicamentoItem = document.querySelector(`.medicamento-item[data-medicamento-id="${medicamentoId}"]`);
       if (medicamentoItem) medicamentoItem.remove();
+      dom.atualizarResumo();
+      salvarFormulario();
     }
   });
 }
@@ -1313,6 +1380,14 @@ function setupKatzModal() {
   window.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
+
+  // Abrir modal pela seção Funcional
+  const btnAbrirFuncional = document.getElementById('btn-abrir-katz-funcional');
+  if (btnAbrirFuncional) {
+    btnAbrirFuncional.addEventListener('click', () => {
+      modal.style.display = 'block';
+    });
+  }
 
   // Salvar resultado do Katz
   if (btnConcluir) {
@@ -1720,18 +1795,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Restaurar formulário salvo na sessão
-  restaurarFormulario();
+  // Restaurar avaliação salva (inclusive após o navegador encerrar a aba)
+  recriarMedicamentosSalvos();
+  const avaliacaoRestaurada = restaurarFormulario();
 
   recalcularTodosResultados();
 
   // Repopular resultado-marcha e resultado-sentar-levantar a partir dos hidden inputs restaurados
   restaurarResultadosMobilidade();
 
-  // Salvar formulário ao sair da página (segurança para campos não disparados por change)
-  window.addEventListener('beforeunload', () => {
-    if (!window._limpandoFormulario) {
-      salvarFormulario();
-    }
-  });
+  setupSalvamentoAutomatico();
+  avisarAvaliacaoRestaurada(avaliacaoRestaurada);
 });
+
+// Salva durante a digitação e quando o app vai para segundo plano.
+// No mobile, beforeunload não é confiável: o navegador pode encerrar a aba
+// em segundo plano (ex.: ao trocar para outro app) sem dispará-lo.
+function setupSalvamentoAutomatico() {
+  const salvarSeAtivo = () => {
+    if (!window._limpandoFormulario) salvarFormulario();
+  };
+
+  let timer = null;
+  document.querySelector('main')?.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(salvarSeAtivo, 800);
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') salvarSeAtivo();
+  });
+  window.addEventListener('pagehide', salvarSeAtivo);
+}
+
+// Ao reabrir o app com uma avaliação salva de outra sessão, avisa de quem é
+// (evita registrar dados no paciente errado) e oferece começar uma nova
+function avisarAvaliacaoRestaurada(salvo) {
+  const jaAvisado = sessionStorage.getItem('avaliacaoAtiva');
+  sessionStorage.setItem('avaliacaoAtiva', '1');
+  if (!salvo || jaAvisado) return;
+
+  const temDados = Object.entries(salvo.state)
+    .some(([key, value]) => key !== 'data_avaliacao' && value !== '' && value !== false);
+  if (!temDados) return;
+
+  const nome = (salvo.state.anamnese_nome || '').trim();
+  const hora = new Date(salvo.savedAt).toLocaleString('pt-BR', {
+    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit',
+  });
+
+  mostrarSnackbar({
+    mensagem: `Avaliação${nome ? ` de ${nome}` : ''} restaurada (salva em ${hora})`,
+    acaoLabel: 'Nova',
+    onAcao: () => document.getElementById('btn-novo')?.click(),
+    duracao: 10000,
+  });
+}
