@@ -174,7 +174,8 @@ Veja [REFACTORING.md](REFACTORING.md) para detalhes da refatoração.
 ## 🔐 Privacidade
 
 - Todos os dados são armazenados **localmente** no navegador
-- **Nenhum dado** é enviado para servidores externos
+- **Nenhum dado do formulário** é enviado para servidores externos
+- Os acessos são contados de forma anônima pelo [GoatCounter](https://www.goatcounter.com/) (sem cookies, apenas a página visitada)
 - Use o botão "Limpar" para remover dados
 
 ## Publicação no GitHub
